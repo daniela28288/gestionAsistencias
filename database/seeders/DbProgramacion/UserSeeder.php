@@ -51,11 +51,11 @@ class UserSeeder extends Seeder
         //     'password' => bcrypt("123456789")
         // ])->assignRole('Aprendiz');
 
-        // User::create([
-        //     'id_person' => 3,
-        //     'user_name' => '1005188631',
-        //     'password' => bcrypt("1005188631")
-        // ])->assignRole('Aprendiz');
+        User::create([
+            'id_person' => 3,
+            'user_name' => '1005188631',
+            'password' => bcrypt("1005188631")
+        ])->assignRole('Aprendiz');
 
         // User::create([
         //     'id_person' => 4,

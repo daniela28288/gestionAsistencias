@@ -15,7 +15,7 @@ class UserController extends Controller
         return view('pages.error_page');
     }
 
-     public function showChangeForm()
+     public function showChangeForm() 
      {
          return view('pages.entrance.apprentice.apprentice_changePassword');
      }

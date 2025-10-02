@@ -38,6 +38,6 @@
         </form>
     </section>
 
-</x-layout_asistencia>
+</x-layout_asistencia> 
 
 
