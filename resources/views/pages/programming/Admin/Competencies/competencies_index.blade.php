@@ -27,7 +27,7 @@
         }
 
         body {
-            background-color: #f5f5f5;
+            background-color: #ffffff;
             color: #333;
             line-height: 1.6;
         }
