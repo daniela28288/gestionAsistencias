@@ -33,8 +33,14 @@
                     class="{{ Route::is('programing.admin_inicio', 'programing.competencies_program_index') ? 'open' : '' }}">
                     <a
                         class="menu-toggle {{ Route::is('programing.admin_inicio', 'programing.competencies_program_index') ? 'active' : '' }}">
-                        <i class="fas fa-home menu-icon"></i>
-                        <span class="menu-text">Inicio</span>
+                        <div class="left">
+                            <i class="fas fa-home menu-icon"></i>
+                            <span class="menu-text">Inicio</span>
+                        </div>
+                        <div class="icon">
+                            <img src="../icons/flecha-abajo.png" alt="" class="icon-sidebar">
+                            <img src="../icons/flecharriba.png" alt="" class="hidden" style="display: none;">
+                        </div>
                     </a>
                     <ul
                         class="{{ Route::is('programing.admin_inicio', 'programing.competencies_program_index') ? 'show' : '' }}">
@@ -53,9 +59,13 @@
                     class="{{ Route::is('programing.cohort_index', 'programing.list_apprentices', 'programing.add_apprentices_cohorts') ? 'open' : '' }}">
                     <a
                         class="menu-toggle {{ Route::is('programing.cohort_index', 'programing.list_apprentices', 'programing.add_apprentices_cohorts') ? 'active' : '' }}">
-                        <i class="fas fa-folder-open menu-icon"></i>
-                        <span class="menu-text">Fichas</span>
-
+                        <div class="left">
+                            <i class="fas fa-folder-open menu-icon"></i>
+                            <span class="menu-text">Fichas</span>
+                        </div>
+                        <div class="icon">
+                            <img src="../icons/flecha-abajo.png" alt="" class="icon-sidebar">
+                        </div>
                     </a>
                     <ul
                         class="{{ Route::is('programing.cohort_index', 'programing.list_apprentices', 'programing.add_apprentices_cohorts') ? 'show' : '' }}">
@@ -90,8 +100,13 @@
                     class="{{ Route::is('programming.programming_index_states', 'programmig.*', 'programming.register_programming_instructor_index', 'programming.programming_update_index', 'programing.unrecorded_days_index') ? 'open' : '' }}">
                     <a
                         class="menu-toggle {{ Route::is('programming.programming_index_states', 'programmig.*', 'programming.register_programming_instructor_index', 'programming.programming_update_index', 'programing.unrecorded_days_index') ? 'active' : '' }}">
-                        <i class="fas fa-calendar-alt menu-icon"></i>
-                        <span class="menu-text">Programación</span>
+                        <div class="left">
+                            <i class="fas fa-calendar-alt menu-icon"></i>
+                            <span class="menu-text">Programación</span>
+                        </div>
+                        <div class="icon">
+                            <img src="../icons/flecha-abajo.png" alt="" class="icon-sidebar">
+                        </div>
                     </a>
                     <ul
                         class="{{ Route::is('programming.*', 'programmig.*', 'programing.unrecorded_days_index') ? 'show' : '' }}">
@@ -138,8 +153,13 @@
                     class="{{ Route::is('programing.instructor_programan_index', 'programming.programming_instructors_profiles') ? 'open' : '' }}">
                     <a
                         class="menu-toggle {{ Route::is('programing.instructor_programan_index', 'programming.programming_instructors_profiles') ? 'active' : '' }}">
-                        <i class="fas fa-chalkboard-teacher menu-icon"></i>
-                        <span class="menu-text">Instructores</span>
+                        <div class="left">
+                            <i class="fas fa-chalkboard-teacher menu-icon"></i>
+                            <span class="menu-text">Instructores</span>
+                        </div>
+                        <div class="icon">
+                            <img src="../icons/flecha-abajo.png" alt="" class="icon-sidebar">
+                        </div>
                     </a>
                     <ul
                         class="{{ Route::is('programing.instructor_programan_index', 'programming.programming_instructors_profiles') ? 'show' : '' }}">
@@ -157,8 +177,13 @@
                 <!-- AMBIENTES -->
                 <li class="{{ Route::is('ambientes_index') ? 'open' : '' }}">
                     <a class="menu-toggle {{ Route::is('ambientes_index') ? 'active' : '' }}">
-                        <i class="fas fa-door-open menu-icon"></i>
-                        <span class="menu-text">Ambientes</span>
+                        <div class="left">
+                            <i class="fas fa-door-open menu-icon"></i>
+                            <span class="menu-text">Ambientes</span>
+                        </div>
+                        <div class="icon">
+                            <img src="../icons/flecha-abajo.png" alt="" class="icon-sidebar">
+                        </div>
                     </a>
                     <ul class="{{ Route::is('ambientes_index') ? 'show' : '' }}">
                         <li><a href="{{ route('ambientes_index') }}"
@@ -172,8 +197,13 @@
                 <li class="{{ Route::is('entrance.people.index', 'entrance.people.create') ? 'open' : '' }}">
                     <a
                         class="menu-toggle {{ Route::is('entrance.people.index', 'entrance.people.create') ? 'active' : '' }}">
-                        <i class="fas fa-users menu-icon"></i>
-                        <span class="menu-text">Gestión de Personas</span>
+                        <div class="left">
+                            <i class="fas fa-users menu-icon"></i>
+                            <span class="menu-text">Gestión de Personas</span>
+                        </div>
+                        <div class="icon">
+                            <img src="../icons/flecha-abajo.png" alt="" class="icon-sidebar">
+                        </div>
                     </a>
                     <ul class="{{ Route::is('entrance.people.index', 'entrance.people.create') ? 'show' : '' }}">
                         <li><a href="{{ route('entrance.people.index') }}"
@@ -190,8 +220,13 @@
                 <!-- ASISTENCIA -->
                 <li class="{{ Route::is('entrance.assistance.index') ? 'open' : '' }}">
                     <a class="menu-toggle {{ Route::is('entrance.assistance.index') ? 'active' : '' }}">
-                        <i class="fas fa-calendar-check menu-icon"></i>
-                        <span class="menu-text">Asistencia</span>
+                        <div class="left">
+                            <i class="fas fa-calendar-check menu-icon"></i>
+                            <span class="menu-text">Asistencia</span>
+                        </div>
+                        <div class="icon">
+                            <img src="../icons/flecha-abajo.png" alt="" class="icon-sidebar">
+                        </div>
                     </a>
                     <ul class="{{ Route::is('entrance.assistance.index') ? 'show' : '' }}">
                         <li><a href="{{ route('entrance.assistance.index') }}"
@@ -208,7 +243,7 @@
                     @csrf
                     <button type="submit" class="logout-button" title="Cerrar sesión"
                         onclick="return confirm('¿Está seguro que quiere cerrar Sesión?')">
-                        <i class="fa-solid fa-right-from-bracket"></i>
+                        <img src="../icons/logoutblanco.png" alt="">
                         <span>Cerrar sesión</span>
                     </button>
                 </form>
@@ -372,6 +407,8 @@
         document.addEventListener('DOMContentLoaded', function() {
             const sidebar = document.getElementById('sidebar');
             const sidebarToggle = document.getElementById('sidebar-toggle');
+            const arrow = document.querySelector('.icon-sidebar');
+            const arrowTop = document.querySelector('.hidden');
             const mainContent = document.getElementById('main-content');
             const notificationBell = document.getElementById('notificationBell');
             const notificationsPanel = document.getElementById('notificationsPanel');
@@ -406,11 +443,12 @@
 
                     const submenu = this.nextElementSibling;
 
-                    if (window.innerWidth > 768 && sidebar.classList.contains('collapsed')) {
-                        submenu.classList.toggle('show');
-                        this.classList.toggle('active');
-                        return;
-                    }
+                    // if (window.innerWidth > 768 && sidebar.classList.contains('collapsed')) {
+                    //     arrow.style.display = 'none';
+                    //     arrowTop.style.display = 'block';
+                    //     this.classList.toggle('active');
+                    //     return;
+                    // }
 
                     document.querySelectorAll('.sidebar-menu ul').forEach(ul => {
                         if (ul !== submenu && !sidebar.classList.contains('collapsed')) {

@@ -39,7 +39,7 @@ body {
   HEADER
 ===============================*/
 .header {
-    background-color: #e6e6e672;
+    background-color: #f8f8f8;
     color: var(--verde-header);
     padding: 15px 30px;
     display: flex;
@@ -112,10 +112,8 @@ body {
 ===============================*/
 .sidebar {
     width: 300px;
-    background-color: rgb(240, 240, 240);
-    border-right: 1px solid var(--gris-borde);
+    background-color: #f8f8f8;
     padding: 10px 20px 20px 10px;
-    box-shadow: 3px 3px 10px rgb(230, 230, 230);
     transition: var(--transicion);
     overflow-y: auto;
     overflow-x: hidden;
@@ -196,6 +194,7 @@ body {
     color: var(--gris-texto);
     font-weight: 600;
     display: flex;
+    justify-content: space-between;
     align-items: center;
     padding: 12px 20px;
     border-radius: 0 var(--radius) var(--radius) 0;
@@ -209,28 +208,25 @@ body {
 .sidebar-menu>li>a.menu-toggle:hover,
 .sidebar-menu>li>a.menu-toggle.active {
     background-color: rgba(57, 169, 0, 0.1);
-    color: #666666;
     border-left-color: var(--verde-sena);
 }
 
-.sidebar-menu>li>a.menu-toggle::after {
-    content: '▼';
-    font-size: 0.7em;
-    margin-left: auto;
-    transition: var(--transicion);
+.icon-sidebar {
+    width: 20px;
+    
 }
+
 
 .sidebar-menu>li>a.menu-toggle.active::after {
     transform: rotate(-180deg);
 }
 
 .menu-icon {
-    margin-right: 12px;
-    font-size: 18px;
-    width: 24px;
+    width: 20px;
+    margin-right: 5px;
     text-align: center;
     color: #34343c;
-}
+} 
 
 .sidebar-menu li ul {
     list-style: none;
@@ -248,6 +244,7 @@ body {
 .sidebar-menu li ul li a {
     display: flex;
     align-items: center;
+    gap: 5px;
     text-decoration: none;
     color: var(--gris-texto);
     padding: 10px 15px;
@@ -263,7 +260,7 @@ body {
     content: '';
     width: 6px;
     height: 6px;
-    background: var(--verde-sena);
+    background: #34343c;
     border-radius: 50%;
     margin-right: 10px;
     opacity: 0.6;
@@ -282,7 +279,7 @@ body {
 }
 
 .sidebar-menu li ul li a.active-link {
-    background-color: rgba(57, 169, 0, 0.15);
+    background-color: #39a90026;
     color: var(--verde-header-hover);
     font-weight: 600;
 }
@@ -293,7 +290,7 @@ body {
 .content {
     flex-grow: 1;
     padding: 25px;
-    background-color: var(--blanco);
+    background-color: white;
     transition: var(--transicion);
 }
 
@@ -323,9 +320,7 @@ body {
 .dashboard {
     display: flex;
     flex-direction: column;
-
     margin: 0;
-    /* gap: 25px; */
 }
 
 .dashboard-header {
@@ -629,7 +624,7 @@ body {
 
 .quick-actions h2 {
     font-size: 20px;
-    color: var(--verde-sena);
+    color: #34343c;
     margin-bottom: 20px;
 }
 
@@ -646,18 +641,19 @@ body {
     justify-content: center;
     background: var(--blanco);
     border-radius: var(--radius);
-    padding: 20px 15px;
+    padding: 20px;
     text-decoration: none;
     color: var(--gris-texto);
-    box-shadow: 2px 2px 15px rgb(214, 214, 214);
+    box-shadow: 3px 3px 10px #b3b3b333;
     transition: var(--transicion);
     text-align: center;
+    border: 2px solid #ffffff;
 }
 
 .action-btn:hover {
     transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(57, 169, 0, 0.2);
     color: var(--verde-sena);
+    border: 2px solid #d3f6bd;
 }
 
 .action-icon {
@@ -731,9 +727,9 @@ body {
 }
 
 .notification-bell:hover {
-    background: #007bff;
+    background: #348ac7;
     color: white;
-    border-color: #007bff;
+    border-color: #47a4e6;
     transform: scale(1.1);
 }
 
@@ -846,7 +842,7 @@ body {
     color: #007bff;
     cursor: pointer;
     font-size: 0.9rem;
-    text-decoration: underline;
+    text-decoration: none;
 }
 
 .mark-all-read:hover {
@@ -991,11 +987,11 @@ body {
     justify-content: center;
     align-items: center;
     gap: 10px;
-    color: #2e5f94;
+    color: #348ac7;
     padding: 10px 10px 10px 14px;
     border-radius: 100px;
     font-weight: 600;
-    background-color: #2e5f9431;
+    background-color: rgba(46, 95, 148, 0.172)
 }
 
 .usuario-info {
@@ -1004,7 +1000,7 @@ body {
 
 .usuario-info i {
     font-size: 30px;
-    color: #2e5f94;
+    color: #348ac7;
 }
 
 .usuario-info:hover {
@@ -1043,14 +1039,18 @@ form.logout-form {
     width: 100%;
 }
 
+.logout-button img{
+    width: 20px;
+}
+
 .logout-button {
-    background-color: #34343c;
-    color: var(--blanco);
+    color: #ffffff;
+    background-color: #39A900;
     padding: 10px 16px;
     border: none;
     border-radius: var(--radius);
     cursor: pointer;
-    font-weight: 600;
+    font-weight: 100;
     font-size: 14px;
     transition: var(--transicion);
     display: flex;
@@ -1061,8 +1061,7 @@ form.logout-form {
 }
 
 .logout-button:hover {
-    background-color: var(--verde-boton-hover);
-    transform: translateY(-2px);
+    background-color: #2f8504;
 }
 
 /*===============================
@@ -1135,7 +1134,6 @@ form.logout-form {
         width: 100%;
         padding: 10px 0;
         border-right: none;
-        border-bottom: 1px solid var(--gris-borde);
         max-height: 60px;
         overflow: hidden;
         transition: max-height 0.4s ease;
