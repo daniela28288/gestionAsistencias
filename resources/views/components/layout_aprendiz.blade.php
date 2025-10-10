@@ -89,7 +89,7 @@
         /* SIDEBAR */
         .sidebar {
             width: var(--sidebar-width);
-            background-color: var(--verde-sidebar-bg);
+            /* background-color: var(--verde-sidebar-bg); */
             border-right: 1px solid var(--gris-borde);
             padding: 20px 0;
             box-shadow: var(--sombra);
