@@ -7,11 +7,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Dashboard - Sistema SENA</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-        <link rel="stylesheet" href="{{ asset('css/pages/competencies_program_index.blade.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/pages/competencies_program_index.css') }}">
     </head>
 
     <body>
-
         <!-- Contenido principal - DASHBOARD -->
         <main class="content" id="main-content">
             <div class="dashboard">
@@ -71,7 +70,7 @@
                             <div class="stat-value">{{ $programacionesSinRegistrar ?? 0 }}</div>
                             <div class="stat-label">Pendientes por Registrar</div>
                             <span class="stat-trend red-trend">
-                                <i class="fa-solid fa-triangle-exclamation"></i>                                
+                                <i class="fa-solid fa-triangle-exclamation"></i>
                                 Urgente
                             </span>
                             <div class="card-wave red"></div>
@@ -171,8 +170,6 @@
                 </div>
             </div>
         </main>
-        </div>
-
 
     </body>
 
