@@ -13,12 +13,14 @@
 </head>
 
 <body>
-
+<div class="sidebar-toggle" id="sidebar-toggle">
+    <img src="../icons/flecha-left.png" alt="">
+</div>
     <!-- Layout -->
     <div class="main-layout">
         <!-- Sidebar -->
         <nav class="sidebar" aria-label="Menú lateral" id="sidebar">
-            <div class="sidebar-toggle" id="sidebar-toggle"></div>
+            
             <ul class="sidebar-menu">
 
                 <div class="logo">
@@ -92,8 +94,6 @@
                         </li>
                     </ul>
                 </li>
-
-
 
                 <!-- PROGRAMACIÓN ACADÉMICA -->
                 <li
@@ -244,10 +244,11 @@
                     <button type="submit" class="logout-button" title="Cerrar sesión"
                         onclick="return confirm('¿Está seguro que quiere cerrar Sesión?')">
                         <img src="../icons/logoutblanco.png" alt="">
-                        <span>Cerrar sesión</span>
+                        <span class="lgout">Cerrar sesión</span>
                     </button>
                 </form>
             @endauth
+
         </nav>
 
         <!-- Contenido principal -->
@@ -398,6 +399,7 @@
                 </div>
 
             </header>
+
             {{ $slot }}
         </main>
     </div>
