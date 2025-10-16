@@ -20,7 +20,7 @@
                         <div class="texto">
                             <p>📑Resumen General</p>
                             <p class="small-text">Indicadores clave sobre personas, programaciones e instructores
-                                activosv
+                                activos
                             </p>
                         </div>
                         <!-- Estadísticas -->
@@ -188,12 +188,28 @@
 
 
             <div class="right-content">
-                <div class="task-list">
-                    <div class="banner-new">
-                        
+                <div class="banner-noticias">
+                    <div class="texto">
+                        <p>📢Novedades</p>
+                        <p class="small-text">Alertas y eventos relevantes del entorno institucional</p>
                     </div>
+                    <a href="https://www.elheraldo.co/la-guajira/2025/10/09/aprendiz-del-sena-la-guajira-representara-a-colombia-en-worldskills-shanghai-2026/" target="_blank" class="noticia">
+                        <img src="../img/noticiaWorldSkills2025.png" class="imagen-noticia" alt="">
+                        <p>Aprendiz del Sena La Guajira representará a Colombia en WorldSkills Shanghái 2026</p>
+                    </a>
+                    <a href="https://www.sena.edu.co/es-co/Noticias/Paginas/noticia.aspx?IdNoticia=8700" target="_blank" class="noticia">
+                        <img src="../img/noticiaExpoOaxaca.png" class="imagen-noticia" alt="">
+                        <p>El SENA abre caminos de colaboración con Japón y organismos globales</p>
+                    </a>
+                    <a href="https://www.sena.edu.co/es-co/Noticias/Paginas/noticia.aspx?IdNoticia=8692" target="_blank" class="noticia">
+                        <img src="../img/economiaCampo.png" class="imagen-noticia" alt="">
+                        <p>La experiencia del campo y la economía popular se certifica con el SENA</p>
+                    </a>
+                    <a href="https://www.sena.edu.co/es-co/Noticias/Paginas/noticia.aspx?IdNoticia=8687" target="_blank" class="noticia">
+                        <img src="../img/saboresFestival.png" class="imagen-noticia" alt="">
+                        <p>El SENA Cocina 2025 encenderá los fogones en Riohacha: sabores, saberes y tradición en un mismo festival</p>
+                    </a>
                 </div>
-
             </div>
         </main>
 

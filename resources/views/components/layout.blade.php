@@ -5,22 +5,21 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{{ $title ?? 'Sistema SENA' }}</title>
-    <link rel="stylesheet" href="{{ asset('css/components/buttons.css') }}" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    {{-- <link rel="stylesheet" href="{{ asset('css/components/buttons.css') }}" /> --}}
     {{-- llamada de icoconos para el menu --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('css/pages/competencies_program_index.css') }}">
 </head>
 
 <body>
-<div class="sidebar-toggle" id="sidebar-toggle">
-    <img src="../icons/flecha-left.png" alt="">
-</div>
+
     <!-- Layout -->
     <div class="main-layout">
         <!-- Sidebar -->
         <nav class="sidebar" aria-label="Menú lateral" id="sidebar">
-            
+            <div class="sidebar-toggle" id="sidebar-toggle">
+                <img src="../icons/flecha-left.png" alt="">
+            </div>
             <ul class="sidebar-menu">
 
                 <div class="logo">
@@ -421,6 +420,7 @@
                 if (window.innerWidth > 768) {
                     sidebar.classList.toggle('collapsed');
                     mainContent.classList.toggle('expanded');
+
                 } else {
                     sidebar.classList.toggle('active');
                 }
@@ -445,15 +445,8 @@
 
                     const submenu = this.nextElementSibling;
 
-                    // if (window.innerWidth > 768 && sidebar.classList.contains('collapsed')) {
-                    //     arrow.style.display = 'none';
-                    //     arrowTop.style.display = 'block';
-                    //     this.classList.toggle('active');
-                    //     return;
-                    // }
-
                     document.querySelectorAll('.sidebar-menu ul').forEach(ul => {
-                        if (ul !== submenu && !sidebar.classList.contains('collapsed')) {
+                        if (ul !== submenu) {
                             ul.classList.remove('show');
                             if (ul.previousElementSibling) {
                                 ul.previousElementSibling.classList.remove('active');
@@ -464,7 +457,9 @@
                     submenu.classList.toggle('show');
                     this.classList.toggle('active');
                 });
+
             });
+
 
             // Notificaciones
             notificationBell.addEventListener('click', function(e) {
