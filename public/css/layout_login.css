@@ -124,11 +124,11 @@ a{
 }
 
 .btn-banner{
-    padding: 10px 15px;
+    padding: 5px 10px;
     background-color: #ffffff26;
     border: 2px solid white;
     color: white;
-    border-radius: 15px;
+    border-radius: 100px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -268,15 +268,31 @@ select{
     cursor: pointer;
     background: url('../icons/flecha-select.png') no-repeat right 13px center;
     background-size: 15px; /* Tamaño de la flecha */
-}
-
-option{
-    border-radius: 20px;
 
 }
 
-option:disabled{
-    background-color: rgb(233, 233, 233);
+/* Estilos para los options */
+select option {
+  padding: 10px;
+  background-color: #ffffff;
+  color: #333333;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+/* Option cuando está seleccionado/hover */
+select option:hover,
+select option:focus,
+select option:checked {
+  background-color: green;
+  color: #ff1010;
+}
+
+/* Options deshabilitados */
+select option:disabled {
+  color: #999999;
+  background-color: #f5f5f5;
+  cursor: not-allowed;
 }
 
 form button{

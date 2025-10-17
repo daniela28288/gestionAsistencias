@@ -408,6 +408,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             const sidebar = document.getElementById('sidebar');
             const sidebarToggle = document.getElementById('sidebar-toggle');
+            const sidebarMenu = document.querySelector('.sidebar-menu');
             const arrow = document.querySelector('.icon-sidebar');
             const arrowTop = document.querySelector('.hidden');
             const mainContent = document.getElementById('main-content');
@@ -438,7 +439,17 @@
 
             // Manejo de submenús
             document.querySelectorAll('.menu-toggle').forEach(menu => {
-                menu.addEventListener('click', function(e) {
+                const handler = function(e) {
+                    const isCollapsed = sidebar.classList.contains('collapsed');
+
+                    if ((e.type === 'mouseenter' && !isCollapsed) ||
+                        (e.type === 'click' && isCollapsed)) {
+                        sidebarMenu.style.maxHeight = 'none';
+                        return
+                    }
+
+                    
+
                     if (window.innerWidth <= 768) {
                         e.stopPropagation();
                     }
@@ -451,14 +462,64 @@
                             if (ul.previousElementSibling) {
                                 ul.previousElementSibling.classList.remove('active');
                             }
+
                         }
                     });
 
                     submenu.classList.toggle('show');
                     this.classList.toggle('active');
-                });
-
+                }
+                
+                menu.addEventListener('click', handler);
+                menu.addEventListener('mouseenter', handler);
             });
+
+
+            // if (menu.classList.contains('collapsed')) {
+            //     document.querySelectorAll('.menu-toggle').forEach(menu => {
+            //         menu.addEventListener('mouseenter', function(e) {
+            //             if (window.innerWidth > 768) {
+            //                 e.stopPropagation();
+            //             }
+
+            //             const submenu = this.nextElementSibling;
+
+            //             document.querySelectorAll('.sidebar-menu ul').forEach(ul => {
+            //                 if (ul !== submenu) {
+            //                     ul.classList.remove('show');
+            //                     if (ul.previousElementSibling) {
+            //                         ul.previousElementSibling.classList.remove('active');
+            //                     }
+            //                 }
+            //             });
+
+            //             submenu.classList.toggle('show');
+            //             this.classList.toggle('active');
+            //         });
+            //     });
+            // } else {
+            //     document.querySelectorAll('.menu-toggle').forEach(menu => {
+            //         menu.addEventListener('click', function(e) {
+            //             if (window.innerWidth > 768) {
+            //                 e.stopPropagation();
+            //             }
+
+            //             const submenu = this.nextElementSibling;
+
+            //             document.querySelectorAll('.sidebar-menu ul').forEach(ul => {
+            //                 if (ul !== submenu) {
+            //                     ul.classList.remove('show');
+            //                     if (ul.previousElementSibling) {
+            //                         ul.previousElementSibling.classList.remove('active');
+            //                     }
+            //                 }
+            //             });
+
+            //             submenu.classList.toggle('show');
+            //             this.classList.toggle('active');
+            //         });
+            //     });
+            // }
 
 
             // Notificaciones

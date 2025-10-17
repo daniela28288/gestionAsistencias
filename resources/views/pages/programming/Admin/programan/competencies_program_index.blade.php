@@ -13,19 +13,16 @@
     <body>
         <!-- Contenido principal - DASHBOARD -->
         <main class="content flex" id="main-content">
-
             <div class="left-content">
                 <div class="dashboard">
                     <div class="contenedor-cards">
                         <div class="texto">
-                            <p>📑Resumen General</p>
+                            <p>📑 Resumen General</p>
                             <p class="small-text">Indicadores clave sobre personas, programaciones e instructores
-                                activos
-                            </p>
+                                activos</p>
                         </div>
                         <!-- Estadísticas -->
                         <div class="stats-grid">
-
                             <div class="stat-card">
                                 <div class="card-icon">
                                     <i class="fas fa-users"></i>
@@ -37,8 +34,8 @@
                                         <i class="fas fa-plus"></i>
                                         12 este mes
                                     </span>
-                                    <div class="card-wave"></div>
                                 </div>
+                                <div class="card-wave"></div>
                             </div>
 
                             <div class="stat-card border-orange">
@@ -52,8 +49,8 @@
                                         <i class="fa-solid fa-plus"></i>
                                         3 esta semana
                                     </span>
-                                    <div class="card-wave orange"></div>
                                 </div>
+                                <div class="card-wave orange"></div>
                             </div>
 
                             <div class="stat-card border-green">
@@ -67,8 +64,8 @@
                                         <i class="fa-solid fa-plus"></i>
                                         2 este mes
                                     </span>
-                                    <div class="card-wave green-wave"></div>
                                 </div>
+                                <div class="card-wave green-wave"></div>
                             </div>
 
                             <div class="stat-card red-border">
@@ -82,73 +79,16 @@
                                         <i class="fa-solid fa-triangle-exclamation"></i>
                                         Urgente
                                     </span>
-                                    <div class="card-wave red"></div>
                                 </div>
+                                <div class="card-wave red"></div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Gráficos y programaciones recientes -->
-                    {{-- <div class="dashboard-grid">
-                <div class="chart-container">
-                    <div class="chart-header">
-                        <h2>Programaciones por Estado</h2>
-                        <a href="#" class="view-all">Ver reporte completo</a>
-                    </div>
-                    <div class="chart-placeholder">
-                        <i class="fas fa-chart-pie" style="font-size: 24px; margin-right: 10px;"></i>
-                        Gráfico de programaciones por estado
-                    </div>
-                </div>
-
-                <div class="recent-container">
-                    <div class="recent-header">
-                        <h2>Programaciones Recientes</h2>
-                        <a href="#" class="view-all">Ver todas</a>
-                    </div>
-                    <table class="recent-table">
-                        <thead>
-                            <tr>
-                                <th>Programación</th>
-                                <th>Fecha</th>
-                                <th>Estado</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>ADSO-2023-01</td>
-                                <td>15/08/2023</td>
-                                <td><span class="status-badge status-completed">Completada</span></td>
-                            </tr>
-                            <tr>
-                                <td>ADSI-2023-02</td>
-                                <td>18/08/2023</td>
-                                <td><span class="status-badge status-pending">Pendiente</span></td>
-                            </tr>
-                            <tr>
-                                <td>ADSO-2023-03</td>
-                                <td>20/08/2023</td>
-                                <td><span class="status-badge status-completed">Completada</span></td>
-                            </tr>
-                            <tr>
-                                <td>ADSI-2023-04</td>
-                                <td>22/08/2023</td>
-                                <td><span class="status-badge status-delayed">Atrasada</span></td>
-                            </tr>
-                            <tr>
-                                <td>ADSO-2023-05</td>
-                                <td>25/08/2023</td>
-                                <td><span class="status-badge status-pending">Pendiente</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div> --}}
-
                     <!-- Acciones rápidas -->
                     <div class="quick-actions">
                         <div class="texto">
-                            <p>⚡Acciones Rápidas</p>
+                            <p>⚡ Acciones Rápidas</p>
                             <p class="small-text">Monitorea el avance de registros, programaciones e instructores este
                                 mes</p>
                         </div>
@@ -168,7 +108,7 @@
                                 <div class="action-label">Registrar Aprendiz</div>
                             </a>
 
-                            <a href="{{ route('programing.instructor_programan_index') }}        " class="action-btn">
+                            <a href="{{ route('programing.instructor_programan_index') }}" class="action-btn">
                                 <div class="action-icon">
                                     <i class="fas fa-chalkboard-teacher"></i>
                                 </div>
@@ -193,21 +133,26 @@
                         <p>📢Novedades</p>
                         <p class="small-text">Alertas y eventos relevantes del entorno institucional</p>
                     </div>
-                    <a href="https://www.elheraldo.co/la-guajira/2025/10/09/aprendiz-del-sena-la-guajira-representara-a-colombia-en-worldskills-shanghai-2026/" target="_blank" class="noticia">
+                    <a href="https://www.elheraldo.co/la-guajira/2025/10/09/aprendiz-del-sena-la-guajira-representara-a-colombia-en-worldskills-shanghai-2026/"
+                        target="_blank" class="noticia">
                         <img src="../img/noticiaWorldSkills2025.png" class="imagen-noticia" alt="">
                         <p>Aprendiz del Sena La Guajira representará a Colombia en WorldSkills Shanghái 2026</p>
                     </a>
-                    <a href="https://www.sena.edu.co/es-co/Noticias/Paginas/noticia.aspx?IdNoticia=8700" target="_blank" class="noticia">
+                    <a href="https://www.sena.edu.co/es-co/Noticias/Paginas/noticia.aspx?IdNoticia=8700" target="_blank"
+                        class="noticia">
                         <img src="../img/noticiaExpoOaxaca.png" class="imagen-noticia" alt="">
                         <p>El SENA abre caminos de colaboración con Japón y organismos globales</p>
                     </a>
-                    <a href="https://www.sena.edu.co/es-co/Noticias/Paginas/noticia.aspx?IdNoticia=8692" target="_blank" class="noticia">
+                    <a href="https://www.sena.edu.co/es-co/Noticias/Paginas/noticia.aspx?IdNoticia=8692" target="_blank"
+                        class="noticia">
                         <img src="../img/economiaCampo.png" class="imagen-noticia" alt="">
                         <p>La experiencia del campo y la economía popular se certifica con el SENA</p>
                     </a>
-                    <a href="https://www.sena.edu.co/es-co/Noticias/Paginas/noticia.aspx?IdNoticia=8687" target="_blank" class="noticia">
+                    <a href="https://www.sena.edu.co/es-co/Noticias/Paginas/noticia.aspx?IdNoticia=8687" target="_blank"
+                        class="noticia">
                         <img src="../img/saboresFestival.png" class="imagen-noticia" alt="">
-                        <p>El SENA Cocina 2025 encenderá los fogones en Riohacha: sabores, saberes y tradición en un mismo festival</p>
+                        <p>El SENA Cocina 2025 encenderá los fogones en Riohacha: sabores, saberes y tradición en un
+                            mismo festival</p>
                     </a>
                 </div>
             </div>
