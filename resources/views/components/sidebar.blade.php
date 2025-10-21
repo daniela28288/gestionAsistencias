@@ -38,7 +38,7 @@
                         <span class="menu-text">Inicio</span>
                     </div>
                     <div class="icon">
-                        <img src="../icons/flecha-abajo.png" alt="" class="icon-sidebar">
+                        <img src="{{asset('icons/flecha-abajo.png')}}" alt="" class="icon-sidebar">
                         <img src="../icons/flecharriba.png" alt="" class="hidden" style="display: none;">
                     </div>
                 </a>
@@ -64,7 +64,7 @@
                         <span class="menu-text">Fichas</span>
                     </div>
                     <div class="icon">
-                        <img src="../icons/flecha-abajo.png" alt="" class="icon-sidebar">
+                        <img src="{{asset('icons/flecha-abajo.png')}}" alt="" class="icon-sidebar">
                     </div>
                 </a>
                 <ul
@@ -103,7 +103,7 @@
                         <span class="menu-text">Programación</span>
                     </div>
                     <div class="icon">
-                        <img src="../icons/flecha-abajo.png" alt="" class="icon-sidebar">
+                        <img src="{{asset('icons/flecha-abajo.png')}}" alt="" class="icon-sidebar">
                     </div>
                 </a>
                 <ul
@@ -156,7 +156,7 @@
                         <span class="menu-text">Instructores</span>
                     </div>
                     <div class="icon">
-                        <img src="../icons/flecha-abajo.png" alt="" class="icon-sidebar">
+                        <img src="{{asset('icons/flecha-abajo.png')}}" alt="" class="icon-sidebar">
                     </div>
                 </a>
                 <ul
@@ -180,7 +180,7 @@
                         <span class="menu-text">Ambientes</span>
                     </div>
                     <div class="icon">
-                        <img src="../icons/flecha-abajo.png" alt="" class="icon-sidebar">
+                        <img src="{{asset('icons/flecha-abajo.png')}}" alt="" class="icon-sidebar">
                     </div>
                 </a>
                 <ul class="{{ Route::is('ambientes_index') ? 'show' : '' }}">
@@ -200,7 +200,7 @@
                         <span class="menu-text">Gestión de Personas</span>
                     </div>
                     <div class="icon">
-                        <img src="../icons/flecha-abajo.png" alt="" class="icon-sidebar">
+                        <img src="{{asset('icons/flecha-abajo.png')}}" alt="" class="icon-sidebar">
                     </div>
                 </a>
                 <ul class="{{ Route::is('entrance.people.index', 'entrance.people.create') ? 'show' : '' }}">
@@ -223,7 +223,7 @@
                         <span class="menu-text">Asistencia</span>
                     </div>
                     <div class="icon">
-                        <img src="../icons/flecha-abajo.png" alt="" class="icon-sidebar">
+                        <img src="{{asset('icons/flecha-abajo.png')}}" alt="" class="icon-sidebar">
                     </div>
                 </a>
                 <ul class="{{ Route::is('entrance.assistance.index') ? 'show' : '' }}">
