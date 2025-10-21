@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     {{-- llamada de icoconos para el menu --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="{{ asset('css/pages/competencies_program_index.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/components/sidebar.css') }}">
 </head>
 
 <body>
@@ -17,7 +17,7 @@
     <!-- Sidebar -->
     <nav class="sidebar" aria-label="Menú lateral" id="sidebar">
         <div class="sidebar-toggle" id="sidebar-toggle">
-            <img src="../icons/flecha-left.png" alt="">
+            <img src="{{ asset('icons/flecha-left.png')}}" alt="">
         </div>
         <ul class="sidebar-menu">
 
@@ -241,7 +241,7 @@
                 @csrf
                 <button type="submit" class="logout-button" title="Cerrar sesión"
                     onclick="return confirm('¿Está seguro que quiere cerrar Sesión?')">
-                    <img src="../icons/logoutblanco.png" alt="">
+                    <img src="{{ asset('icons/logoutblanco.png')}}" alt="">
                     <span class="lgout">Cerrar sesión</span>
                 </button>
             </form>
@@ -249,6 +249,7 @@
 
     </nav>
 
+    <script src="{{ asset('js/sidebar_efectos.js') }}"></script>
 </body>
 
 </html>

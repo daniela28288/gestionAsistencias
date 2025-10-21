@@ -1,0 +1,467 @@
+/* ===============================================
+   HEADER - Barra superior con logo y acciones
+   =============================================== */
+.header {
+    color: white;
+    padding: 0 30px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 110px;
+    gap: 20px;
+    position: sticky;
+    top: 0;
+    z-index: 900;
+    margin: 20px 0;
+    border-bottom: 1px solid rgb(224, 224, 224);
+    background-color: #f0f0f0;
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.dashboard-header h1 {
+    color: #051418;
+    font-size: 28px;
+}
+
+.dashboard-header p {
+    color: #3d3d3d;
+    font-size: 16px;
+    opacity: 0.8;
+}
+
+/* Logo institucional */
+.logo {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    gap: 15px;
+    padding: 10px 10px 20px;
+    margin-bottom: 50px;
+    border-bottom: 1px solid rgb(182, 181, 181);
+    font-weight: 100;
+}
+
+.logo-header {
+    height: 40px;
+    object-fit: contain;
+}
+
+.texto-header {
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    color: #dddddd;
+    line-height: 1.6;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    height: 90px;
+}
+
+/* ===============================================
+   LAYOUT PRINCIPAL - Estructura flex
+   =============================================== */
+.main-layout {
+    display: flex;
+    gap: 0px !important;
+    height: 100vh;
+    overflow: hidden;
+    padding: 10px;
+    margin: 0;
+}
+
+
+/* Etiquetas de texto descriptivo */
+.texto {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    font-weight: 500;
+    font-size: 19px;
+    color: rgb(107, 107, 107);
+    gap: 5px;
+}
+
+.small-text {
+    font-size: 15px;
+    color: rgb(167, 167, 167);
+    font-weight: 400;
+}
+
+/* ===============================================
+   NOTIFICACIONES - Panel de alertas
+   =============================================== */
+.notifications-container {
+    position: relative;
+    display: inline-block;
+}
+
+.notification-bell {
+    position: relative;
+    background: #f8f9fa;
+    border: 2px solid #e9ecef;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transicion);
+    color: #6c757d;
+    font-size: 1.2rem;
+}
+
+.notification-bell:hover {
+    background: #348ac7;
+    color: white;
+    border-color: #47a4e6;
+    transform: scale(1.1);
+}
+
+.notification-bell.alert {
+    animation: pulse 2s infinite;
+    border-color: #dc3545;
+    color: #dc3545;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+.notification-counter {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #dc3545;
+    color: white;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+        transform: translateY(0);
+    }
+
+    40% {
+        transform: translateY(-5px);
+    }
+
+    60% {
+        transform: translateY(-3px);
+    }
+}
+
+.notifications-panel {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 380px;
+    background: white;
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    display: none;
+    margin-top: 10px;
+}
+
+.notifications-panel.show {
+    display: block;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.notifications-header {
+    padding: 20px;
+    border-bottom: 1px solid #e9ecef;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f8f9fa;
+    border-radius: 12px 12px 0 0;
+}
+
+.notifications-header h3 {
+    margin: 0;
+    color: #2c3e50;
+    font-size: 1.2rem;
+}
+
+.mark-all-read {
+    background: none;
+    border: none;
+    color: #007bff;
+    cursor: pointer;
+    font-size: 0.9rem;
+    text-decoration: none;
+}
+
+.mark-all-read:hover {
+    color: #0056b3;
+}
+
+.notifications-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.notification-item {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid #f8f9fa;
+    transition: background 0.2s ease;
+    position: relative;
+}
+
+.notification-item:hover {
+    background: #f8f9fa;
+}
+
+/* Indicador de tipo de notificación */
+.notification-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+}
+
+.notification-item.urgent::before {
+    background: #dc3545;
+}
+
+.notification-item.warning::before {
+    background: #ffc107;
+}
+
+.notification-item.success::before {
+    background: #28a745;
+}
+
+.notification-item.info::before {
+    background: #17a2b8;
+}
+
+.notification-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    font-size: 1.1rem;
+}
+
+.notification-item.urgent .notification-icon {
+    background: #fee;
+    color: #dc3545;
+}
+
+.notification-item.warning .notification-icon {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.notification-item.success .notification-icon {
+    background: #d4edda;
+    color: #155724;
+}
+
+.notification-item.info .notification-icon {
+    background: #d1ecf1;
+    color: #0c5460;
+}
+
+.notification-content {
+    flex: 1;
+}
+
+.notification-title {
+    font-weight: 600;
+    margin: 0 0 5px;
+    color: #2c3e50;
+    font-size: 0.95rem;
+}
+
+.notification-message {
+    margin: 0 0 5px;
+    color: #6c757d;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.notification-time {
+    font-size: 0.8rem;
+    color: #adb5bd;
+}
+
+.notification-empty {
+    padding: 40px 20px;
+    text-align: center;
+    color: #6c757d;
+}
+
+.notification-empty i {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    opacity: 0.5;
+}
+
+/* ===============================================
+   INFORMACIÓN DE USUARIO
+   =============================================== */
+.usuario-info {
+    background: #f8f9fa;
+    border: 2px solid #e9ecef;
+    border-radius: 10px;
+    display: flex;
+    padding: 10px 15px;
+    align-items: center;
+    cursor: pointer;
+    transition: var(--transicion);
+    color: #6c757d;
+    font-size: 1rem;
+    gap: 10px;
+}
+
+.usuario-info i {
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 25px;
+}
+
+.usuario-info:hover {
+    background: #348ac7;
+    color: white;
+    border: 2px solid #47a4e6;
+}
+
+/* Tablets */
+@media (max-width: 992px) {
+    .texto-header {
+        font-size: 18px;
+    }
+
+    .logo-header {
+        height: 50px;
+
+    }
+
+    .logo {
+        border-bottom: none;
+    }
+
+    .header-actions {
+        gap: 12px;
+    }
+
+    .usuario-info span {
+        display: none;
+    }
+
+    .usuario-info,
+    .notificaciones,
+    .programaciones-info {
+        padding: 8px;
+    }
+
+    .usuario-info i,
+    .notificaciones i,
+    .programaciones-info i {
+        margin-right: 0;
+    }
+}
+
+/* Móviles y tablets pequeñas */
+@media (max-width: 768px) {
+    .logo {
+        border-bottom: none;
+    }
+
+    .header {
+        padding: 10px 30px 15px;
+        margin-top: 0 !important;
+    }
+
+    .notifications-panel {
+        position: fixed;
+        top: 60px;
+        right: 10px;
+        left: 10px;
+        width: auto;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .notification-bell {
+        width: 45px;
+        height: 45px;
+        font-size: 1.1rem;
+    }
+}
+
+/* Móviles pequeños */
+@media (max-width: 576px) {
+    .header {
+        gap: 40px;
+        padding: 30px 10px;
+    }
+
+    .header-actions {
+        justify-content: center;
+    }
+
+    .logo-footer {
+        height: 40px;
+    }
+
+    .logo {
+        border-bottom: none;
+    }
+}
