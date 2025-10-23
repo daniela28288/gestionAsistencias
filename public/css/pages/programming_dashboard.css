@@ -4,29 +4,37 @@
     padding: 0;
 }
 
-body{
-    font-family: 'Segoe UI', sans-serif;;
+body {
+    font-family: 'Segoe UI', sans-serif;
+    ;
+
 }
 
+/* Estructura principal: contenedor general de la aplicación (layout) */
 .main-layout {
     display: flex;
     gap: 0px !important;
     height: 100vh;
     overflow: hidden;
-    padding: 10px;
     margin: 0;
 }
 
-.content{
-    background-color: #f0f0f0;
-    transition: var(--transicion);
-    border-radius: 0 20px 20px 0;
-    padding: 0 15px 15px;
+/* Área principal de contenido */
+.content {
+    border-radius: 0px 10px 10px 0px;
     flex-grow: 1;
-    height: auto;
-    max-width: 100%;
+    min-width: 400px;
+    flex-wrap: wrap;
+    background-color: #f0f0f0;
+    overflow: hidden;
 }
 
+/* Quita el margen superior del primer elemento del contenedor */
+.container>*:first-child {
+    margin-top: 0;
+}
+
+/* Contenedor de contenido interno (panel, tarjeta, etc.) */
 .container {
     max-width: 100%;
     padding: 20px;
@@ -35,6 +43,7 @@ body{
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
 }
 
+/* Título de página */
 .page-title {
     margin-bottom: 10px;
     font-weight: 500;
@@ -42,6 +51,7 @@ body{
     border-bottom: 1px solid #eaeaea;
 }
 
+/* Descripción bajo el título */
 .page-description {
     color: #2b2b2b;
     font-size: 16px;
@@ -61,7 +71,7 @@ body{
     align-items: center;
     gap: 5px;
     font-size: 15px;
-    margin-bottom: 10px;
+    margin-bottom: 25px;
     text-decoration: none;
 }
 
@@ -72,15 +82,20 @@ body{
 }
 
 /* Tabla */
+
+
+/* Contenedor de tabla */
 .table-container {
-    max-height: 470px;
+    max-height: 520px;
     overflow-y: auto;
     border-radius: 10px;
     border: 1px solid #dee2e6;
-    margin-top: 20px;
+    /* margin-top: 20px; */
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
+
+/* Tabla general */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -88,6 +103,7 @@ table {
     color: #444;
 }
 
+/* Encabezado de tabla */
 thead th {
     background-color: #f1f5f9;
     font-weight: 700;
@@ -101,20 +117,27 @@ thead th {
     color: #2d3748;
 }
 
+
+/* Celdas del cuerpo */
 tbody td {
     padding: 12px 30px;
     border-bottom: 1px solid #e2e8f0;
 }
 
+/* Efecto hover para filas */
 tbody tr:hover {
     background-color: #f8fafc;
 }
 
+/* Elimina el borde inferior de la última fila */
 table tr:last-child td {
     border-bottom: none;
 }
 
 /* Badge para nivel */
+
+
+/* Estilos para pequeñas etiquetas (badges) */
 .badge {
     padding: 6px 12px;
     border-radius: 16px;
@@ -123,17 +146,22 @@ table tr:last-child td {
     display: inline-block;
 }
 
+
+/* Badge azul para técnico */
 .badge-technical {
     background-color: #e9f5ff;
     color: #0066cc;
 }
 
+/* Badge verde claro para tecnólogo */
 .badge-technologist {
     background-color: #0b8c0b1f;
     color: #0b8c0b;
 }
 
 /* Alertas */
+
+/* ✅ Alerta de éxito */
 .alert-success {
     background-color: #d4edda;
     color: #571515;
@@ -147,6 +175,7 @@ table tr:last-child td {
     border-left: 4px solid #28a745;
 }
 
+/* ❌ Alerta de error */
 .alert-danger {
     background-color: #f8d7da;
     color: #721c24;
@@ -160,11 +189,14 @@ table tr:last-child td {
     border-left: 4px solid #dc3545;
 }
 
+/* Lista dentro de alerta de error */
 .alert-danger ul {
     margin: 10px 0 0 20px;
 }
 
 /* Modal */
+
+/* Fondo oscuro del modal */
 .modal-overlay {
     display: none;
     position: fixed;
@@ -177,6 +209,7 @@ table tr:last-child td {
     backdrop-filter: blur(3px);
 }
 
+/* Contenido del modal */
 .modal-content {
     background-color: #fff;
     padding: 30px;
@@ -188,6 +221,8 @@ table tr:last-child td {
     animation: modalFadeIn 0.3s ease;
 }
 
+
+/* Animación de entrada del modal */
 @keyframes modalFadeIn {
     from {
         opacity: 0;
@@ -200,6 +235,7 @@ table tr:last-child td {
     }
 }
 
+/* Botón para cerrar el modal */
 .close-btn {
     color: #888;
     position: absolute;
@@ -217,6 +253,7 @@ table tr:last-child td {
     color: #444;
 }
 
+/* Título dentro del modal */
 .modal-content h2 {
     margin-bottom: 25px;
     color: #2c3e50;
@@ -231,11 +268,14 @@ table tr:last-child td {
     gap: 20px;
 }
 
+/* Agrupación de campos */
 .form-group {
     display: flex;
     flex-direction: column;
 }
 
+
+/* Etiquetas */
 .form-group label {
     font-weight: 600;
     margin-bottom: 8px;
@@ -243,6 +283,8 @@ table tr:last-child td {
     font-size: 16px;
 }
 
+
+/* Campos de entrada y selectores */
 .form-group input,
 .form-group select {
     padding: 12px 15px;
@@ -252,6 +294,7 @@ table tr:last-child td {
     transition: border-color 0.2s, box-shadow 0.2s;
 }
 
+/* Efecto al enfocar los campos */
 .form-group input:focus,
 .form-group select:focus {
     outline: none;
@@ -259,11 +302,12 @@ table tr:last-child td {
     box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
 }
 
+/* Encabezado del dashboard */
 .dashboard-header {
     margin-bottom: 20px;
 }
 
-
+/* Contenedor de botones del formulario */
 .form-actions {
     display: flex;
     justify-content: flex-end;
@@ -271,6 +315,7 @@ table tr:last-child td {
     margin-top: 20px;
 }
 
+/* Botón de enviar */
 .btn-submit {
     background-color: #28a745;
     color: white;
@@ -286,6 +331,7 @@ table tr:last-child td {
     background-color: #218838;
 }
 
+/* Estado vacío (cuando no hay datos) */
 .empty-state {
     text-align: center;
     padding: 40px 20px;
@@ -298,23 +344,22 @@ table tr:last-child td {
     opacity: 0.5;
 }
 
-/* Responsive */
-@media (max-width: 1024px) {
-    .container {
-        padding: 20px;
-        margin: 15px;
+/* Adaptabilidad (Responsive Design) */
+
+/* Cuando la pantalla es menor a 1803px */
+@media (max-width: 1803px) {
+    .content {
+        overflow-y: auto;
+    }
+}
+
+/* Cuando la pantalla es menor a 768px (móviles) */
+@media (max-width: 768px) {
+    .main-layout {
+        flex-direction: column; /* Cambia layout a vertical */
     }
 
-    .table-container {
-        overflow-x: auto;
-    }
-
-    table {
-        min-width: 800px;
-    }
-
-    .modal-content {
-        margin: 20px;
-        padding: 20px;
+    .content {
+        overflow-y: auto;
     }
 }

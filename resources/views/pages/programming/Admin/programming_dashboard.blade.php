@@ -2,8 +2,7 @@
     <x-slot:page_style>css/pages/programming_dashboard.css</x-slot:page_style>
     <x-slot:title>Gestión de Programas</x-slot:title>
     <link rel="stylesheet" href="{{ asset('css/pages/programming_dashboard.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/components/sidebar.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/components/header.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/pages/competencies_program_index.css') }}">
 
     <div class="content">
         <div class="container">
