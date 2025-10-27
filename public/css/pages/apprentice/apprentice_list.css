@@ -1,18 +1,27 @@
+/* RESET GLOBAL
+   - Aplicar box-sizing, eliminar márgenes y rellenos por defecto.
+   - Base para estilos consistentes en todos los navegadores. */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
+/* TIPOGRAFÍA Y COLORES BASE
+   - Fuente por defecto y color de texto principal. */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #333;
 }
 
+/* CONTENEDOR PRINCIPAL DE PÁGINA
+   - Añade padding al área de contenido. */
 .content{
     padding: 20px;
 }
 
+/* CAJA PRINCIPAL (WRAPPER)
+   - Limita el ancho del contenido, centrado y con sombra/rounded corners. */
 .container {
     max-width: 1400px;
     margin: 30px auto;
@@ -22,7 +31,8 @@ body {
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
 }
 
-/* Alertas */
+/* ALERTAS - mensajes del sistema
+   - Banner para mensajes de éxito/feedback al usuario. */
 .alert-success {
     background-color: #d4edda;
     color: #155724;
@@ -36,7 +46,8 @@ body {
     border-left: 4px solid #28a745;
 }
 
-/* FILTROS - MEJORADOS */
+/* FILTROS - contenedor
+   - Área que agrupa los filtros/inputs de búsqueda. */
 .filters-container {
     background-color: #f8fafc;
     border-radius: 10px;
@@ -45,6 +56,8 @@ body {
     border: 1px solid #e2e8f0;
 }
 
+/* FILTROS - formulario
+   - Layout flexible para inputs/selecciones. */
 .filters-form {
     display: flex;
     flex-wrap: wrap;
@@ -53,11 +66,15 @@ body {
     width: 100%;
 }
 
+/* GRUPO DE FILTRO
+   - Cada control de filtro (label + input/select). */
 .filter-group {
     flex: 1;
     min-width: 250px;
 }
 
+/* ETIQUETA DE FILTRO
+   - Estilo de labels para los controles del formulario. */
 .filter-group label {
     font-weight: 600;
     margin-bottom: 8px;
@@ -66,6 +83,8 @@ body {
     font-size: 15px;
 }
 
+/* CONTROLES DE FILTRO
+   - Inputs y selects con padding, borde y transiciones. */
 .filter-group select,
 .filter-group input {
     width: 100%;
@@ -77,6 +96,8 @@ body {
     background-color: white;
 }
 
+/* SELECT PERSONALIZADO
+   - Añade icono de flecha y estilo de placeholder. */
 .filter-group select{
     color: #a1a1a1;
     appearance: none;
@@ -87,6 +108,8 @@ body {
 
 }
 
+/* ESTADO FOCUS
+   - Resaltar control activo con borde y sombra sutil. */
 .filter-group select:focus,
 .filter-group input:focus {
     outline: none;
@@ -95,16 +118,22 @@ body {
 }
 
 /* Grupo de búsqueda mejorado */
+/* BUSCADOR - grupo
+   - Contenedor principal para la caja de búsqueda y botones. */
 .search-group {
     flex: 2;
     min-width: 300px;
 }
 
+/* BUSCADOR - layout interno
+   - Alinea input y botones de búsqueda. */
 .search-container {
     display: flex;
     gap: 20px;
 }
 
+/* INPUT DE BÚSQUEDA
+   - Icono SVG embebido y padding para que el icono no tape el texto. */
 .search-input {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236c757d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'%3E%3C/circle%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'%3E%3C/line%3E%3C/svg%3E");
     background-repeat: no-repeat;
@@ -113,12 +142,15 @@ body {
     padding-left: 45px !important;
 }
 
+/* FOCUS EN INPUT DE BÚSQUEDA */
 .search-input:focus {
     outline: none;
     border-color: #28a745;
     box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.1);
 }
 
+/* BOTÓN DE BÚSQUEDA
+   - Estilo principal para el botón de enviar búsqueda. */
 .btn-search {
     background-color: #28a745;
     color: white;
@@ -134,12 +166,14 @@ body {
     gap: 8px;
 }
 
+/* HOVER EN BOTÓN DE BÚSQUEDA */
 .btn-search:hover {
     background-color: #218838;
     transform: translateY(-1px);
 }
 
-/* Botón limpiar */
+/* BOTÓN LIMPIAR
+   - Resetea filtros/inputs; estilo secundario gris. */
 .btn-clear {
     background-color: #6c757d;
     color: white;
@@ -155,12 +189,14 @@ body {
     margin-left: 10px;
 }
 
+/* HOVER EN BOTÓN LIMPIAR */
 .btn-clear:hover {
     background-color: #5a6268;
     transform: translateY(-1px);
 }
 
-/* Tabla */
+/* TABLA - contenedor
+   - Wrapper con scroll vertical y estilo de tarjeta. */
 .table-container {
     max-height: 600px;
     overflow-y: auto;
@@ -170,6 +206,7 @@ body {
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
+/* TABLA - estilos base */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -177,6 +214,8 @@ table {
     color: #444;
 }
 
+/* ENCABEZADOS DE TABLA
+   - Fijos al hacer scroll (position: sticky). */
 thead th {
     background-color: #f1f5f9;
     font-weight: 700;
@@ -189,19 +228,24 @@ thead th {
     color: #2d3748;
 }
 
+/* CELDAS DE TABLA */
 tbody td {
     padding: 12px 15px;
     border-bottom: 1px solid #e2e8f0;
 }
 
+/* FILA HOVER */
 tbody tr:hover {
     background-color: #f8fafc;
 }
 
+/* Quitar borde en la última fila */
 table tr:last-child td {
     border-bottom: none;
 }
 
+/* ESTADO VACÍO
+   - Mensaje cuando no hay registros. */
 .empty-state {
     text-align: center;
     padding: 40px 20px;
@@ -210,12 +254,14 @@ table tr:last-child td {
     border-radius: 10px;
 }
 
+/* ICONO EN ESTADO VACÍO */
 .empty-state svg {
     margin-bottom: 15px;
     opacity: 0.5;
 }
 
 /* Badges para etapas */
+/* BADGES - chips informativos */
 .badge {
     padding: 6px 12px;
     border-radius: 20px;
@@ -224,17 +270,21 @@ table tr:last-child td {
     display: inline-block;
 }
 
+/* BADGE - tipo lectiva */
 .badge-lectiva {
     background-color: #e9f5ff;
     color: #0066cc;
     border: 1px solid #b3d9ff;
 }
 
+/* BOTÓN RESET - estilo reutilizable */
 .btn-reset {
     background-color: #6c757d;
     color: #fff;
 }
 
+/* BOTONES (BÚSQUEDA/RESET)
+   - Estilos compartidos para botones principales. */
 .btn-search,
 .btn-reset {
     display: inline-flex;
@@ -252,13 +302,15 @@ table tr:last-child td {
     white-space: nowrap;
 }
 
+/* BADGE - tipo práctica */
 .badge-practica {
     background-color: #e6f7ee;
     color: #0b8c56;
     border: 1px solid #a3e6c5;
 }
 
-/* PAGINACIÓN - NUEVO */
+/* PAGINACIÓN - contenedor
+   - Información y controles de paginación. */
 .pagination-container {
     display: flex;
     justify-content: space-between;
@@ -268,18 +320,22 @@ table tr:last-child td {
     border-top: 1px solid #dee2e6;
 }
 
+/* TEXTO INFORMATIVO DE PAGINACIÓN */
 .pagination-info {
     color: #6b7280;
     font-size: 14px;
     font-weight: 500;
 }
 
+/* CONTROLES DE PAGINACIÓN
+   - Botones y enlaces organizados horizontalmente. */
 .pagination {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
+/* CAJA CON RESUMEN (p.ej. "1-10 de 100") */
 .page-info {
     font-weight: 600;
     color: #374151;
@@ -290,6 +346,8 @@ table tr:last-child td {
     font-size: 14px;
 }
 
+/* ENLACES DE PAGINACIÓN
+   - Botones/links para navegar entre páginas. */
 .pagination a {
     padding: 10px 16px;
     border-radius: 8px;
@@ -301,18 +359,20 @@ table tr:last-child td {
     background-color: white;
 }
 
+/* HOVER EN ENLACES DE PAGINACIÓN */
 .pagination a:hover:not(.disabled) {
     background-color: #e5e7eb;
     border-color: #28a745;
 }
 
+/* ESTADO DISABLED PARA ENLACES */
 .pagination a.disabled {
     opacity: 0.5;
     cursor: not-allowed;
     background-color: #f8f9fa;
 }
 
-/* Responsive */
+/* RESPONSIVE - ajustes para pantallas medianas */
 @media (max-width: 1024px) {
     .container {
         padding: 20px;
@@ -363,6 +423,7 @@ table tr:last-child td {
     }
 }
 
+/* RESPONSIVE - tablets y pantallas pequeñas */
 @media (max-width: 768px) {
     .pagination {
         flex-wrap: wrap;
@@ -378,6 +439,8 @@ table tr:last-child td {
     }
 }
 
+/* RESPONSIVE - móviles
+   - Enlaces de paginación en bloque para mejor interacción táctil. */
 @media (max-width: 576px) {
     .pagination {
         flex-direction: column;

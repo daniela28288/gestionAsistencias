@@ -1,42 +1,60 @@
-// Función para limpiar filtros
+/**
+ * Limpia todos los filtros aplicados y reenvía el formulario
+ * - Resetea el combo de fichas
+ * - Limpia el campo de búsqueda
+ * - Hace submit para actualizar la lista
+ */
 function clearFilters() {
     document.getElementById('combo_ficha').value = '';
     document.getElementById('buscar').value = '';
     document.querySelector('form').submit();
 }
 
-// Sistema de paginación con JavaScript
+/**
+ * Inicialización cuando el DOM está listo
+ * - Configura la paginación si hay datos
+ * - Maneja el autofocus del buscador
+ */
 document.addEventListener('DOMContentLoaded', function () {
     const table = document.getElementById('apprenticesTable');
     const tbody = table.querySelector('tbody');
     const rows = Array.from(tbody.querySelectorAll('tr'));
     const totalItems = rows.length;
 
-    // Solo inicializar paginación si hay registros
+    // Solo inicializar paginación si hay registros y no está en estado vacío
     if (totalItems > 0 && !tbody.querySelector('.empty-state')) {
         initPagination();
     }
 
-    // Focus en campo de búsqueda si está vacío
+    // Autofocus en el buscador si está vacío para UX
     const searchInput = document.getElementById('buscar');
     if (searchInput && !searchInput.value) {
         searchInput.focus();
     }
 });
 
+/**
+ * Inicializa el sistema de paginación
+ * - Configura variables de control
+ * - Calcula páginas totales
+ * - Genera controles de navegación
+ * - Muestra la primera página
+ */
 function initPagination() {
+    // Obtener referencias y calcular totales
     const table = document.getElementById('apprenticesTable');
     const tbody = table.querySelector('tbody');
     const rows = Array.from(tbody.querySelectorAll('tr'));
     const totalItems = rows.length;
-    const itemsPerPage = 10; // Mostrar solo 30 registros por página
+    const itemsPerPage = 10; // Número de registros por página
     let currentPage = 1;
     const totalPages = Math.ceil(totalItems / itemsPerPage);
 
-    // Actualizar información de paginación
+    // Actualizar contador total (variable global desde PHP)
     document.getElementById('totalItems').textContent = totalItemsCount;
 
-updatePaginationInfo();
+    // Inicializar información de paginación
+    updatePaginationInfo();
 
 // Generar controles de paginación
 generatePaginationControls(totalPages);

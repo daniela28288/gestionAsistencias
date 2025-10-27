@@ -1,13 +1,17 @@
 <x-layout>
+    {{-- Título de la página en el componente layout --}}
     <x-slot:title>Listado de Aprendices por Ficha</x-slot:title>
+
+    {{-- Hojas de estilo específicas para esta vista --}}
     <link rel="stylesheet" href="{{asset('css/pages/apprentice/apprentice_list.css')}}">
-        <link rel="stylesheet" href="{{ asset('css/pages/competencies_program_index.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/pages/competencies_program_index.css') }}">
     <link rel="stylesheet" href="{{ asset('css/pages/programming_dashboard.css') }}">
     
-
+    {{-- Estructura principal con layout de dos columnas --}}
     <div class="main-layout">
         <div class="content">
             <div class="container">
+                {{-- Encabezado con título y descripción --}}
                 <div class="dashboard-header">
                     <h3 class="page-title">Gestión de Aprendices por Ficha</h3>
                     <p>En esta sección puede visualizar y gestionar los aprendices asignados a cada ficha de formación.
@@ -17,6 +21,7 @@
                     </p>
                 </div>
 
+                {{-- Mostrar mensajes de éxito (ej: después de actualizar registros) --}}
                 @if (session('success'))
                     <div class="alert-success">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
@@ -29,9 +34,16 @@
                     </div>
                 @endif
 
-                <!-- Filtros mejorados -->
+                {{-- 
+                    SECCIÓN DE FILTROS
+                    - Formulario GET para no perder los filtros al recargar
+                    - Select con autosubmit para actualización inmediata
+                    - Búsqueda por texto con botón submit
+                    - Botón de reset para limpiar filtros
+                --}}
                 <div class="filters-container">
                     <form method="GET" action="" class="filters-form">
+                        {{-- Filtro por ficha y programa con autosubmit --}}
                         <div class="filter-group">
                             <label for="combo_ficha">Ficha y Programa:</label>
                             <select name="combo_ficha" id="combo_ficha" onchange="this.form.submit()">
@@ -45,9 +57,11 @@
                             </select>
                         </div>
 
+                        {{-- Campo de búsqueda con icono y botón --}}
                         <div class="filter-group search-group">
                             <label for="buscar">Buscar aprendiz:</label>
                             <div class="search-container">
+                                {{-- Input mantiene el valor después de submit --}}
                                 <input type="text" name="buscar" id="buscar" class="search-input"
                                     placeholder="Nombre o documento..." value="{{ request('buscar') }}">
                                 <button type="submit" class="btn-search">
@@ -59,13 +73,11 @@
                                     </svg>
                                     Buscar
                                 </button>
-
                             </div>
-
                         </div>
 
+                        {{-- Botón para resetear todos los filtros --}}
                         <div class="filter-group">
-
                             <a href="{{ route('programing.list_apprentices') }}" class="btn-reset">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -78,7 +90,12 @@
                     </form>
                 </div>
 
-                <!-- Tabla con paginación -->
+                {{-- 
+                    TABLA DE APRENDICES
+                    - Contenedor con scroll vertical
+                    - ID usado por JavaScript para paginación
+                    - Encabezados fijos al hacer scroll
+                --}}
                 <div class="table-container">
                     <table id="apprenticesTable">
                         <thead>
@@ -94,6 +111,7 @@
                             </tr>
                         </thead>
                         <tbody>
+                            {{-- Iterar sobre los aprendices o mostrar estado vacío --}}
                             @forelse($apprentices as $index => $apprentice)
                                 <tr>
                                     <td>{{ $index + 1 }}</td>
@@ -106,6 +124,7 @@
                                     <td>{{ $apprentice['end_date'] }}</td>
                                 </tr>
                             @empty
+                                {{-- Estado vacío: Mostrado cuando no hay resultados --}}
                                 <tr>
                                     <td colspan="8">
                                         <div class="empty-state">
@@ -127,7 +146,12 @@
                     </table>
                 </div>
 
-                <!-- Paginación JavaScript -->
+                {{-- 
+                    PAGINACIÓN
+                    - Controlada por JavaScript (apprentice_list.js)
+                    - Muestra contador de elementos y controles de navegación
+                    - Solo se muestra si hay resultados
+                --}}
                 @if (count($apprentices) > 0)
                     <div class="pagination-container" id="paginationContainer">
                         <div class="pagination-info" id="paginationInfo">
@@ -135,7 +159,7 @@
                                 id="totalItems">{{ count($apprentices) }}</span> aprendices
                         </div>
                         <div class="pagination" id="pagination">
-                            <!-- La paginación se generará con JavaScript -->
+                            {{-- Los enlaces de paginación se generan dinámicamente con JS --}}
                         </div>
                     </div>
                 @endif
@@ -143,6 +167,11 @@
         </div>
     </div>
 
+    {{-- 
+        SCRIPTS
+        - Variable global para JS con el total de items
+        - Archivo principal con lógica de paginación
+    --}}
     <script>
         const totalItemsCount = {{ count($apprentices) }};
     </script>
