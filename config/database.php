@@ -9,15 +9,15 @@ return [
 
     'connections' => [
 
-       'mysql' => [
-        'driver' => 'mysql',
-        'host' => env('DB_HOST', '127.0.0.1'),
-        'port' => env('DB_PORT', '3306'),
-        'database' => env('DB_DATABASE', 'db_programacion'),
-        'username' => env('DB_USERNAME', 'root'),
-        'password' => env('DB_PASSWORD', ''),
+        'mysql' => [
+            'driver' => 'mysql',
+            'host' => env('DB_HOST', '127.0.0.1'),
+            'port' => env('DB_PORT', '3306'),
+            'database' => env('DB_DATABASE', 'db_programacion'),
+            'username' => env('DB_USERNAME', 'root'),
+            'password' => env('DB_PASSWORD', ''),
 
-    ],
+        ],
 
 
         'db_programacion' => [
@@ -27,7 +27,7 @@ return [
             'port' => env('DB_PROGRAMACION_PORT', '3306'),
             'database' => env('DB_PROGRAMACION_DATABASE', 'db_programacion'),
             'username' => env('DB_PROGRAMACION_USERNAME', 'root'),
-            'password' => env('DB_PROGRAMACION_PASSWORD', ''),
+            'password' => env('DB_PROGRAMACION_PASSWORD', '0000'),
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => env('DB_CHARSET', 'utf8mb4'),
             'collation' => env('DB_COLLATION', 'utf8mb4_unicode_ci'),

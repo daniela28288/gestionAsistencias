@@ -136,14 +136,20 @@
             </li>
 
             {{-- <!-- COMPETENCIAS -->
-            <li class="{{ Route::is('programing.competencies_index', 'programing.competencies_index_program') ? 'open' : '' }}">
-                <a class="menu-toggle {{ Route::is('programing.competencies_index', 'programing.competencies_index_program') ? 'active' : '' }}">
+            <li
+                class="{{ Route::is('programing.competencies_index', 'programing.competencies_index_program') ? 'open' : '' }}">
+                <a
+                    class="menu-toggle {{ Route::is('programing.competencies_index', 'programing.competencies_index_program') ? 'active' : '' }}">
                     <i class="fas fa-cubes menu-icon"></i>
                     <span class="menu-text">Competencias</span>
                 </a>
-                <ul class="{{ Route::is('programing.competencies_index', 'programing.competencies_index_program') ? 'show' : '' }}">
-                    <li><a href="{{ route('programing.competencies_index') }}" class="{{ Route::is('programing.competencies_index') ? 'active-link' : '' }}"><i class="fas fa-check-square menu-icon"></i> <span class="submenu-text">Gestión de Competencias</span></a></li>
-                                   </ul>
+                <ul
+                    class="{{ Route::is('programing.competencies_index', 'programing.competencies_index_program') ? 'show' : '' }}">
+                    <li><a href="{{ route('programing.competencies_index') }}"
+                            class="{{ Route::is('programing.competencies_index') ? 'active-link' : '' }}"><i
+                                class="fas fa-check-square menu-icon"></i> <span class="submenu-text">Gestión de
+                                Competencias</span></a></li>
+                </ul>
             </li> --}}
 
             <!-- INSTRUCTORES -->
