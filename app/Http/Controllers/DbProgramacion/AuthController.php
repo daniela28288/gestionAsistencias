@@ -29,6 +29,7 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
+            
 
             // Usar el rol seleccionado desde el formulario
             $selectedRole = $request->module;

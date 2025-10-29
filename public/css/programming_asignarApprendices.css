@@ -18,28 +18,6 @@ body {
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
 }
 
-
-.page-title {
-    font-size: 32px;
-    margin-bottom: 15px;
-    color: #28a745;
-    font-weight: 700;
-    text-align: center;
-    padding-bottom: 15px;
-    border-bottom: 2px solid #eaeaea;
-}
-
-.page-description {
-    text-align: center;
-    color: #000;
-    margin-bottom: 30px;
-    font-size: 16px;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-    line-height: 1.5;
-}
-
 /* Alertas */
 .alert-success {
     background-color: #d4edda;
@@ -84,6 +62,7 @@ body {
     display: block;
     color: #374151;
     font-size: 16px;
+    margin-top: 30px;
 }
 
 .form-section select {
@@ -94,6 +73,11 @@ body {
     font-size: 16px;
     transition: border-color 0.2s, box-shadow 0.2s;
     max-width: 600px;
+    color: #a1a1a1;
+    appearance: none;
+    cursor: pointer;
+    background: url('../../icons/flecha-select.png') no-repeat right 13px center;
+    background-size: 15px; /* Tamaño de la flecha */
 }
 
 .form-section select:focus {
@@ -101,6 +85,7 @@ body {
     border-color: #007bff;
     box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
 }
+
 
 /* Tabla */
 .table-container {
@@ -172,17 +157,7 @@ input[type="checkbox"] {
     margin-bottom: 20px;
 }
 
-.dashboard-header h1 {
-    color: var(--verde-sena);
-    font-size: 28px;
-    margin-bottom: 10px;
-}
 
-.dashboard-header p {
-    color: var(--gris-texto);
-    font-size: 16px;
-    opacity: 0.8;
-}
 
 /* Botón */
 .form-buttons {
@@ -211,13 +186,16 @@ input[type="checkbox"] {
     display: flex;
     gap: 10px;
     align-items: center;
+    max-width: 100%;
+    padding: 10px;
 }
+
+
 
 /* Input con ícono de lupa en el lado izquierdo */
 .search-input {
     flex: 1;
     padding: 12px 15px 12px 45px;
-    /* espacio para el icono */
     border: 1px solid #d1d5db;
     border-radius: 8px;
     font-size: 16px;
@@ -269,6 +247,14 @@ input[type="checkbox"] {
 
 /* Responsive */
 @media (max-width: 768px) {
+
+    .search{
+        display: flex;
+        gap: 10px;
+        max-width: 80%;
+        padding: 5px;
+    }
+
     .filters-form {
         flex-direction: column;
         align-items: stretch;

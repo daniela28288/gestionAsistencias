@@ -1,0 +1,291 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Estructura principal: contenedor general de la aplicación (layout) */
+.main-layout {
+    display: flex;
+    width: 100%;
+    gap: 0px !important;
+    height: 100vh;
+    overflow: hidden;
+    margin: 0;
+}
+
+/* Área principal de contenido */
+.content {
+    border-radius: 0px 10px 10px 0px;
+    flex-grow: 1;
+    min-width: 400px;
+    flex-wrap: wrap;
+    background-color: #f0f0f0;
+    overflow: hidden;
+}
+
+/* Quita el margen superior del primer elemento del contenedor */
+.container>*:first-child {
+    margin-top: 0;
+}
+
+/* Contenedor de contenido interno (panel, tarjeta, etc.) */
+.container {
+    max-width: 100%;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+}
+
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th,
+td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f8f9fa;
+    color: #495057;
+    font-weight: 600;
+}
+
+tr:hover {
+    background-color: #f8f9fa;
+}
+
+
+/* Estilos para los estados */
+.status-badge {
+    font-weight: bold;
+    border-radius: 20px;
+    padding: 5px 10px;
+    display: inline-block;
+    font-size: 0.8rem;
+    text-align: center;
+    min-width: 100px;
+    margin-right: 5px;
+}
+
+/* Pendiente */
+.status-pendiente {
+    background-color: #d0e3ff;
+    color: #0047ab;
+}
+
+/* En ejecución */
+.status-en_ejecucion {
+    background-color: #fff3bf;
+    color: #8a6d3b;
+}
+
+/* Finalizada evaluada */
+.status-finalizada_evaluada {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+/* Finalizada no evaluada */
+.status-finalizada_no_evaluada {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* Disponible */
+.status-disponible {
+    background-color: #ffffff;
+    color: #000000;
+    border: 1px solid #ddd;
+}
+
+/* Estado desconocido */
+.status-desconocido {
+    background-color: #e2e3e5;
+    color: #383d41;
+}
+
+.disponible-badge {
+    font-size: 0.7rem;
+    color: #666;
+    background-color: #f0f0f0;
+    padding: 2px 5px;
+    border-radius: 3px;
+    margin-left: 5px;
+    font-weight: normal;
+    border: 1px solid #ddd;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+/* Estilos para los iconos */
+.status-icon {
+    margin-right: 5px;
+}
+
+/* Estilos para los filtros */
+.filters-container {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.filter-group {
+    flex: 1;
+    min-width: 200px;
+}
+
+.filter-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #495057;
+}
+
+.filter-group input {
+    width: 100%;
+    cursor: pointer;
+    padding: 8px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.filter-group select{
+    width: 100%;
+    padding: 13px 20px;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    font-size: 16px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    max-width: 600px;
+    color: #a1a1a1;
+    appearance: none;
+    cursor: pointer;
+    background: url('../../icons/flecha-select.png') no-repeat right 13px center;
+    background-size: 15px; /* Tamaño de la flecha */
+}
+
+.reset-btn {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    align-self: flex-end;
+}
+
+.btn-evaluar {
+    background-color: #28a745;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 6px;
+    border: none;
+}
+
+.btn-reprogramar {
+    background-color: #007bff;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 6px;
+    border: none;
+}
+
+.btn-excel {
+    background-color: #1d6f42;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+}
+
+.btn-excel:hover {
+    background-color: #165a36;
+}
+
+.reset-btn:hover {
+    background-color: #5a6268;
+}
+
+.no-results {
+    text-align: center;
+    padding: 20px;
+    font-style: italic;
+    color: #6c757d;
+    display: none;
+}
+
+.status-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn-programar {
+    background-color: #0047ab;
+    color: white;
+
+    margin-bottom: 2%;
+    padding: 8px 15px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+.btn-programar:hover {
+    background-color: #003a8c;
+}
+
+@media (max-width: 768px) {
+    .filters-container {
+        flex-direction: column;
+    }
+
+    .action-cell form {
+        margin-bottom: 8px;
+    }
+
+
+    .btn-programar,
+    .reset-btn,
+
+    .btn-excel {
+        width: 100%;
+        text-align: center;
+    }
+
+    .filter-group {
+        min-width: 100%;
+    }
+}

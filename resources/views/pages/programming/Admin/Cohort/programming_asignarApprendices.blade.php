@@ -6,7 +6,7 @@
     </script>
     <link rel="stylesheet" href="{{ asset('css/programming_asignarApprendices.css') }}">
     <link rel="stylesheet" href="{{ asset('css/pages/competencies_program_index.css') }}">
-       <link rel="stylesheet" href="{{ asset('css/pages/programming_dashboard.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/pages/programming_dashboard.css') }}">
 
 
     @if (session('success'))
@@ -47,14 +47,14 @@
             <div class="container">
 
                 <div class="dashboard-header">
-                    <h1>Asignación de Aprendices</h1>
+                    <h3 class="page-title">Asignación de Aprendices</h3>
                     <p> En esta sección puede vincular aprendices a programas de formación y fichas específicas.
                         Seleccione la ficha deseada y marque los aprendices que desea asignar.
                         Esta acción asociará los aprendices seleccionados con el programa de formación elegido.
                     </p>
                 </div>
                 <div class="search-wrapper">
-                    <form action="" method="GET">
+                    <form class="search" action="" method="GET">
 
                         <input class="search-input" type="text" value="{{ request('search') }}" name="search"
                             placeholder="documento o nombre">
@@ -86,7 +86,6 @@
                                 </option>
                             @endforeach
                         </select>
-
                     </div>
 
                     <div class="table-container">
