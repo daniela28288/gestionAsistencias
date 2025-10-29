@@ -53,14 +53,14 @@ class UserSeeder extends Seeder
 
         User::create([
             'id_person' => 3,
-            'user_name' => '1005188631',
-            'password' => bcrypt("1005188631")
+            'user_name' => '5314051',
+            'password' => bcrypt("5314051")
         ])->assignRole('Aprendiz');
 
-        // User::create([
-        //     'id_person' => 4,
-        //     'user_name' => '1043434038',
-        //     'password' => bcrypt("1043434038")
-        // ])->assignRole('Aprendiz');
+        User::create([
+            'id_person' => 2,
+            'user_name' => '4444444444',
+            'password' => bcrypt("4444444444")
+        ])->assignRole('Aprendiz');
     }
 }

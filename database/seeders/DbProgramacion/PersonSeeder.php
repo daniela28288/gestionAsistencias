@@ -11,8 +11,8 @@ class PersonSeeder extends Seeder
     {
         $people = [
             [1, 1, '1111111111', 'Marlon Saenz', 'marlonsaenz@gmail.com', 'Calle 20#32-43', '300123123'],
-            [3, 3, '3333333333', 'Carlos Perez', 'carlos.perez@example.com', 'Avenida 5#45-67', '3203334444'],
-            [3, 2, '4444444444', 'Lucia Fernandez', 'lucia.fernandez@example.com', 'Calle 8#23-56', '3004445555'],
+            [3, 3, '5314051', 'Andres Echeverria', 'andres@gmail.com', 'Calle 11 n° 15-29', '3103029788'],
+            [3, 2, '4444444444', 'Daniela Brito', 'dani@gmail.com', 'Calle 8#23-56', '3004445555'],
             [3, 1, '5555555555', 'Miguel Angel Ruiz', 'miguel.ruiz@example.com', 'Carrera 15#10-20', '3015556666'],
             [3, 5, '6666666666', 'Paula Andrea Soto', 'paula.soto@example.com', 'Calle 21#54-32', '3026667777'],
             [3, 3, '7777777777', 'Juan Camilo Vargas', 'juan.vargas@example.com', 'Avenida 7#11-22', '3037778888'],

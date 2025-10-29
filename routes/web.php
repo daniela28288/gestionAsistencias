@@ -14,8 +14,6 @@ use App\Http\Controllers\DbProgramacion\ProgramanController;
 use App\Models\DbEntrada\User;
 use Illuminate\Support\Facades\Route;
 //Pagina inicial
-
-
 Route::get('/', function () {
     return view('pages.start_page');
 })->name('login');

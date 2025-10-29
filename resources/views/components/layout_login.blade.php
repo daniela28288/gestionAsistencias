@@ -47,9 +47,9 @@
                 <h3>Acceder al Portal de Gestión</h3>
 
                 @if ($errors->has('login_error'))
-                    <div class="error-message">
-                        <i class="fas fa-exclamation-circle"></i> {{ $errors->first('login_error') }}
-                    </div>
+                <div class="error-message">
+                    <i class="fas fa-exclamation-circle"></i> {{ $errors->first('login_error') }}
+                </div>
                 @endif
                 <div class="input-group">
                     <label for="user_name_program" class="font-small">Usuario</label>
@@ -69,7 +69,7 @@
                     </div>
                 </div>
 
-                <div class="input-group">
+                <!-- <div class="input-group">
                     <label for="module" class="font-small">Seleccione rol</label>
                     <div class="content">
                         <i><img src="../icons/role.png" alt=""></i>
@@ -82,7 +82,7 @@
                             </option>
                         </select>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="password-config">
                     <div class="remember">
