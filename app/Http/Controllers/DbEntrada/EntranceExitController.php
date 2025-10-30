@@ -8,30 +8,38 @@ use App\Models\DbProgramacion\Person;
 use Carbon\Carbon;
 
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 use function PHPUnit\Framework\isNull;
 
 class EntranceExitController extends Controller
 {
-    public function create(){
+    public function create()
+    {
         return view('pages.entrance.entrance');
     }
     //metodo para la gestion de ingreso y salida controlador
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'document_number' => 'required|string|max:12|min:9'
-        ]);
+
+        try {
+            $data = $request->validate([
+                'document_number' => 'required|string|max:12|min:7'
+            ]);
+        } catch (ValidationException $e) {
+            // Devuelve un JSON limpio, sin la respuesta HTML de Laravel
+            return response()->json([
+                'error' => 'Documento inválido. Verifique el número ingresado.'
+            ], 422);
+        }
 
         $person = Person::where('document_number', $data['document_number'])->first();
 
-        // Si no se encuentra ninguna persona con ese documento
         if (!$person) {
             return response()->json([
-                'action' => "DOCUMENTO NO REGISTRADO",
                 'position' => "N/A",
-                'name' => "Desconocido"
-            ]);
+                'error' => 'Documento no registrado en el sistema.'
+            ], 404);
         }
 
         // Se toma la posición de la persona
@@ -87,7 +95,8 @@ class EntranceExitController extends Controller
                 'id_person' => $person->id,
                 'date_time' => now(),
                 'action' => $action
-            ]);        } else {
+            ]);
+        } else {
             // Entrada normal
             EntranceExit::create([
                 'id_person' => $person->id,

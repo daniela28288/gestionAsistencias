@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="{{ asset('css/pages/entrance/apprentice_entrance.css')}}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
     <!-- Header -->
     <header class="header">
@@ -22,9 +24,6 @@
 
     <!-- Contenido Principal -->
     <main class="main-content">
-        <!-- Elementos decorativos -->
-        <i class="fas fa-calendar-check decoration decoration-1"></i>
-        <i class="fas fa-clock decoration decoration-2"></i>
 
         <div class="content-card">
             <div class="card-title">
@@ -74,37 +73,48 @@
     </main>
 
     <script>
-        // Actualiza la hora y fecha en tiempo real
         function updateDateTime() {
+            // CREA UN OBJECTO "DATE" CON LA FECHA Y HORA ACTUALES DEL SISTEMA
             const now = new Date();
 
-            // Formatear hora
+            // OBTENEMOS LA HORA, LOS MINUTOS Y LOS SEGUNDOS
+            // "toString().padStart(2, '0')" GARANTIZA QUE TENGA DOS DIGITOS EJ:(08 EN VEZ DE 8)
             const hour = now.getHours().toString().padStart(2, '0');
             const minutes = now.getMinutes().toString().padStart(2, '0');
             const seconds = now.getSeconds().toString().padStart(2, '0');
+
+
             document.getElementById('full_hour').textContent = `${hour}:${minutes}:${seconds}`;
 
-            // Formatear fecha
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            // options DEFINE EL FORMATO DE FECHA
+            const options = {
+                weekday: 'long', // "LONG" ES EL FORMATO COMPLETO (LUNES, MARTES, ETC..)
+                year: 'numeric',
+                month: 'long', // (MARZO, ABRIL, ETC...)
+                day: 'numeric'
+            };
+
+            // CONVIERTE LA FECHA  A FORMATO LOCAL EN ESPAÑOL(ESPAÑA) Y LA MUESTRA EN "#full_date"
             document.getElementById('full_date').textContent = now.toLocaleDateString('es-ES', options);
-
-            // Actualizar hora de registro si está visible
-            const registerTime = document.getElementById('register-time');
-            if (registerTime.textContent !== '-') {
-                registerTime.textContent = `${hour}:${minutes}:${seconds}`;
-            }
         }
-
+        // LLAMA A updateDateTime() CADA SEGUNDO PARA ACTUALIZAR LA FECHA Y LA HORA
         setInterval(updateDateTime, 1000);
         updateDateTime();
 
+        // FUNCIONALIDAD CON jQUERY (INTERACCION CON EL USUARIO)
+        // ESPERA A QUE TODO EL DOCUMENTO ESTÉ CARGADO ANTES DE EJECUTAR EL CÓDIGO
         $(document).ready(function() {
+
             // Inicializar el badge de acción
             $('#action').text('ESPERANDO REGISTRO').removeClass('entrada salida');
 
+            // ESTA FUNCION SE ENCARGA DE ENVIAR EL NÚMERO DE DOCUMENTO AL SERVIDOR PARA REGISTRAR LA ENTRADA/SALIDA
             function sendDocumentNumber(documentNumber) {
+                // OBTIENE EL TOKEN CSRF DESDE UNA ETIQUETA META DEL HTML
+                // ESTE TOKEN ES NECESARIO PARA PROTEGER CONTRA ATAQUES CSRF EN FORMULARIOS AJAX
                 let csrfToken = $('meta[name="csrf-token"]').attr('content');
 
+                // HACE UNA PETICION POST A LA RUTA DE LARAVEL
                 $.ajax({
                     url: "{{ route('entrance.store') }}",
                     type: 'POST',
@@ -112,10 +122,12 @@
                         document_number: documentNumber,
                         _token: csrfToken
                     },
+                    // PERO ANTES DE ENVIAR CAMBIA EL ESTADO (#status) Y EL COLOR
                     beforeSend: function() {
                         $('#status').text('Verificando...').css('color', '#FF9800');
                     },
                     success: function(response) {
+                        // SI EL SERVIDOR RESPONDE CON UN CAMPO ERROR, SIGNIFICA QUE HUBO UN PROBLEMA
                         if (response.error) {
                             $('#error_message').text(response.error).show();
                             $('#document_number').val('').focus();
@@ -138,7 +150,7 @@
                             $('#position').text(response.position);
                             $('#name').text(response.name);
                             $('#register-time').text($('#full_hour').text());
-                            $('#status').text('Registro exitoso').css('color', '#2E7D32');
+                            $('#status').text('Exitoso').css('color', '#2E7D32');
                             $('#error_message').hide();
                             $('#document_number').val('').focus();
 
@@ -149,10 +161,37 @@
                             }, 10);
                         }
                     },
-                    error: function() {
-                        $('#error_message').text('Error de conexión. Intente nuevamente.').show();
-                        $('#status').text('Error').css('color', '#C62828');
+                    error: function(xhr, status, error) {
+                        let message = 'Error de conexión. Intente nuevamente.';
+
+                        // Si Laravel devolvió un JSON con mensaje de error, lo usamos directamente
+                        if (xhr.responseJSON && xhr.responseJSON.error) {
+                            message = xhr.responseJSON.error;
+                        }
+                        // SI FUE UN ERROR DE VALIDACION EJ:(documento inválido)
+                        else if (xhr.status === 422) {
+                            message = 'Documento inválido. Verifique el número ingresado.';
+                        }
+                        // SI EL DOCUMENTO NO EXISTE
+                        else if (xhr.status === 404) {
+                            message = 'Documento no registrado en el sistema.';
+                        }
+                        // ERROR INTERNO EN EL SERVIDOR
+                        else if (xhr.status === 500) {
+                            message = 'Error interno del servidor. Contacte al administrador.';
+                        }
+
+                        // Mostrar el mensaje en la interfaz
+                        $('#error_message').text(message).show();
+                        $('#status').text('Fallido').css('color', '#C62828');
+
+                        // Animación opcional (para llamar la atención visualmente)
+                        $('#error_message').css('animation', 'none');
+                        setTimeout(function() {
+                            $('#error_message').css('animation', 'shake 0.5s ease');
+                        }, 10);
                     }
+
                 });
             }
 
@@ -180,4 +219,5 @@
         <p>&copy; {{ date('Y') }} Centro Agroempresarial y Acuícola. Todos los derechos reservados.</p>
     </footer>
 </body>
+
 </html>
