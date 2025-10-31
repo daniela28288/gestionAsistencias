@@ -2,40 +2,84 @@
 
 namespace Database\Seeders\DbProgramacion;
 
+use App\Models\DbEntrada\Position;
 use App\Models\DbProgramacion\Person;
+use App\Models\DbProgramacion\Town;
 use Illuminate\Database\Seeder;
 
 class PersonSeeder extends Seeder
 {
     public function run(): void
     {
-        $people = [
-            [1, 1, '1111111111', 'Marlon Saenz', 'marlonsaenz@gmail.com', 'Calle 20#32-43', '300123123'],
-            [3, 3, '5314051', 'Andres Echeverria', 'andres@gmail.com', 'Calle 11 n° 15-29', '3103029788'],
-            [3, 2, '4444444444', 'Daniela Brito', 'dani@gmail.com', 'Calle 8#23-56', '3004445555'],
-            [3, 1, '5555555555', 'Miguel Angel Ruiz', 'miguel.ruiz@example.com', 'Carrera 15#10-20', '3015556666'],
-            [3, 5, '6666666666', 'Paula Andrea Soto', 'paula.soto@example.com', 'Calle 21#54-32', '3026667777'],
-            [3, 3, '7777777777', 'Juan Camilo Vargas', 'juan.vargas@example.com', 'Avenida 7#11-22', '3037778888'],
-            [4, 4, '8888888888', 'Sara Juliana Lopez', 'sara.lopez@example.com', 'Calle 16#30-40', '3048889999'],
-            [4, 2, '9999999999', 'David Esteban Castro', 'david.castro@example.com', 'Carrera 25#15-60', '3059990000'],
-            [4, 1, '1010101010', 'Westcol hp', 'draxen537@gmail.com', 'Calle 3#9-87', '3061010101'],
-            [4, 5, '1212121212', 'Alexander Loperena', 'alexandersauna05@gmail.com', 'Avenida 12#34-56', '3071212121'],
-        ];
 
-        foreach ($people as $person) {
-            Person::create([
-                'id_position' => $person[0],
-                'id_town' => $person[1],
-                'document_number' => $person[2],
-                'name' => $person[3],
-                'email' => $person[4],
-                'address' => $person[5],
-                'phone_number' => $person[6],
-                'start_date' => '2025-01-23',
-                'end_date' => '2025-12-22',
-                'created_at' => now(),
-                'updated_at' => now()
-            ]);
-        }
+        $positions = Position::pluck('id', 'name');
+        $towns = Town::pluck('id', 'name');
+
+        // ARRAY ASOCIATIVO CON LOS DATOS DE PRUEBA
+        $people = [
+            [
+                'id_position' => $positions['Coordinador'],
+                'id_town' => $towns['San Juan del Cesar'],
+                'document_number' => '1111111111',
+                'name' => 'Marlon Saenz',
+                'email' => 'marlonsaenz@gmail.com',
+                'address' => 'Calle 20#32-43',
+                'phone_number' => '300123123',
+            ],
+            [
+                'id_position' => $positions['Aprendiz'],
+                'id_town' => $towns['Albania'],
+                'document_number' => '5314051',
+                'name' => 'Andres Echeverria',
+                'email' => 'andres@gmail.com',
+                'address' => 'Calle 11 n° 15-29',
+                'phone_number' => '3103029788',
+            ],
+            [
+                'id_position' => $positions['Aprendiz'],
+                'id_town' => $towns['Distracción'],
+                'document_number' => '1122811493',
+                'name' => 'Daniela Brito',
+                'email' => 'daniela@gmail.com',
+                'address' => 'Calle 8#23-56',
+                'phone_number' => '3004445555',
+            ],
+            [
+                'id_position' => $positions['Instructor'],
+                'id_town' => $towns['Distracción'],
+                'document_number' => '8888888888',
+                'name' => 'Sara Juliana Lopez',
+                'email' => 'sara.lopez@example.com',
+                'address' => 'Calle 16#30-40',
+                'phone_number' => '3048889999',
+            ],
+            [
+                'id_position' => $positions['Instructor'],
+                'id_town' => $towns['Fonseca'],
+                'document_number' => '9999999999',
+                'name' => 'David Esteban Castro',
+                'email' => 'david@example.com',
+                'address' => 'Carrera 25#15-60',
+                'phone_number' => '3059990000',
+            ],
+            [
+                'id_position' => $positions['Instructor'],
+                'id_town' => $towns['Fonseca'],
+                'document_number' => '7777777777',
+                'name' => 'Juan Camilo Vargas',
+                'email' => 'camilo@example.com',
+                'address' => 'Avenida 7#11-22',
+                'phone_number' => '3037778888',
+            ],
+
+        ];
+        // SE EVITA USAR "create()" PARA UN MEJOR RENDIMIENTO Y NO TENER QUE HACER UNA CONSULTA POR CADA REGISTRO
+        Person::insert(array_map(fn($p) => array_merge($p, [
+            'start_date' => '2025-01-23',
+            'end_date' => '2025-12-22',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]), $people));
     }
 }
+

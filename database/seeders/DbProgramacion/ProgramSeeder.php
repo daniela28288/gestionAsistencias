@@ -93,7 +93,7 @@ class ProgramSeeder extends Seeder
                 "program_code" => "F0001",
                 "program_version" => "1",
                 "name" => "Diseño de Moda Tecnológica (Wearables)",
-                "instructor_id" => 4
+                "instructor_id" => 3
             ]
         ];
 
@@ -101,8 +101,8 @@ class ProgramSeeder extends Seeder
         foreach ($diversePrograms as $program) {
             Program::create($program);
         }
-       
 
-       
+
+
     }
 }

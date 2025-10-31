@@ -12,7 +12,7 @@ class Person extends Model
     use HasFactory;
     use Notifiable;
 
-    protected $connection = 'db_entrada';
+    protected $connection = 'db_programacion';
     protected $table = 'people';
     protected $guarded = [];
 

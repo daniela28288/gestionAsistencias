@@ -13,7 +13,8 @@ class Position extends Model
     protected $guarded = [];
 
 
-    public function people(){
+    public function people()
+    {
         return $this->hasMany(Person::class);
     }
 }

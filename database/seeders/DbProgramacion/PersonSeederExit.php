@@ -3,32 +3,26 @@
 namespace Database\Seeders\DbProgramacion;
 
 use Illuminate\Database\Seeder;
-use App\Models\DbProgramacion\People_days_available;
+use App\Models\DbProgramacion\Person;
+use \App\Models\DbProgramacion\People_days_available;
 use App\Models\DbProgramacion\EntranceExit;
-use Illuminate\Support\Carbon;
+use Carbon\Carbon;
 
 class PersonSeederExit extends Seeder
 {
     public function run(): void
     {
-        $personas = [
-            ['id' => 1],
-            ['id' => 2],
-            ['id' => 3],
-            ['id' => 4],
-            ['id' => 5],
-            ['id' => 6],
-            ['id' => 7],
-            ['id' => 8],
-            ['id' => 9],
-        ];
+        $personas = Person::all();
+
+        // Obtener todos los IDs de días disponibles
+        $daysIds = \DB::table('days_available')->pluck('id');
 
         foreach ($personas as $persona) {
-            // Todos los días disponibles
-            foreach (range(1, 7) as $day) {
+            // Asociar todos los días disponibles
+            foreach ($daysIds as $dayId) {
                 People_days_available::create([
-                    'id_person' => $persona['id'],
-                    'id_day_available' => $day,
+                    'id_person' => $persona->id,
+                    'id_day_available' => $dayId,
                 ]);
             }
 
@@ -37,13 +31,13 @@ class PersonSeederExit extends Seeder
 
             foreach ($asistencias as $asistencia) {
                 EntranceExit::create([
-                    'id_person' => $persona['id'],
+                    'id_person' => $persona->id,
                     'date_time' => $asistencia['date'] . ' ' . $asistencia['entrada'],
                     'action' => 'entrada',
                 ]);
 
                 EntranceExit::create([
-                    'id_person' => $persona['id'],
+                    'id_person' => $persona->id,
                     'date_time' => $asistencia['date'] . ' ' . $asistencia['salida'],
                     'action' => 'salida',
                 ]);
@@ -51,16 +45,16 @@ class PersonSeederExit extends Seeder
         }
     }
 
-    private function generateAsistenciasParaMeses(int $año, int $mesInicio, int $mesFin): array
+    private function generateAsistenciasParaMeses(int $year, int $monthStart, int $monthEnd): array
     {
         $asistencias = [];
 
-        for ($mes = $mesInicio; $mes <= $mesFin; $mes++) {
-            $cantidad = rand(20, 40); // entre 10 y 30 asistencias por mes
+        for ($mes = $monthStart; $mes <= $monthEnd; $mes++) {
+            $cantidad = rand(20, 40); // entre 20 y 40 asistencias por mes
 
             for ($i = 0; $i < $cantidad; $i++) {
-                $dia = rand(1, 31); // para evitar problemas con días inexistentes
-                $fecha = Carbon::create($año, $mes, $dia)->format('Y-m-d');
+                $dia = rand(1, 28); // asegurar que el día sea válido
+                $fecha = Carbon::create($year, $mes, $dia)->format('Y-m-d');
 
                 $horaEntrada = Carbon::createFromTime(rand(5, 9), rand(0, 59), 0);
                 $horaSalida = (clone $horaEntrada)->addHours(rand(3, 5))->addMinutes(rand(0, 59));

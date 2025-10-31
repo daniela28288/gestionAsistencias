@@ -9,11 +9,12 @@ class Position extends Model
 {
     use HasFactory;
 
-    protected $connection = 'db_entrada';
+    protected $connection = 'db_programacion';
     protected $table = 'positions';
     protected $guarded = [];
 
-    public function people(){
+    public function people()
+    {
         return $this->hasMany(Person::class);
     }
 }
