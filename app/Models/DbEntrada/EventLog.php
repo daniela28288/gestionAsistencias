@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class EventLog extends Model
 {
-    protected $connection = 'db_entrada';
+    protected $connection = 'db_programacion';
     protected $table = 'events_log';
 
     protected $guarded = [];

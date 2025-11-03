@@ -4,30 +4,75 @@ namespace Database\Seeders\DbProgramacion;
 
 use Illuminate\Database\Seeder;
 use App\Models\DbProgramacion\People_days_available;
+use App\Models\DbProgramacion\EntranceExit;
+use Illuminate\Support\Carbon;
 
 class PersonSeederExit extends Seeder
 {
     public function run(): void
     {
-        // CREAMOS UN ARRAY DE ID DE PERSONAS
-        $personIds = range(1, 9);
+        $personas = [
+            ['id' => 1],
+            ['id' => 2],
+            ['id' => 3],
+            ['id' => 4],
+            ['id' => 5],
+            ['id' => 6],
+            ['id' => 7],
+            ['id' => 8],
+            ['id' => 9],
+        ];
 
-        // ITERA SOBRE CADA ID DE PERSONA PARA ASIGNARLE DATOS
-        foreach ($personIds as $personaId) {
-            // SE CONSTRUYE UN ARRAY DE DIAS DISPONIBLES PARA LA PERSONA ACTUAL
-            $daysAvailable = [];
-            foreach (range(1, 7) as $day) { // range(1,7) REPRESENTA LOS 7 DIAS DE LA SEMANA
-                $daysAvailable[] = [
-                    'id_person' => $personaId,
+        foreach ($personas as $persona) {
+            // Todos los días disponibles
+            foreach (range(1, 7) as $day) {
+                People_days_available::create([
+                    'id_person' => $persona['id'],
                     'id_day_available' => $day,
-                ];
+                ]);
             }
 
-            // INSERTAMOS TODOS LOS DIAS DISPONIBLES DE UNA SOLA VEZ
-            People_days_available::insert($daysAvailable);
+            // Generar asistencias entre enero y julio
+            $asistencias = $this->generateAsistenciasParaMeses(2025, 1, 7);
+
+            foreach ($asistencias as $asistencia) {
+                EntranceExit::create([
+                    'id_person' => $persona['id'],
+                    'date_time' => $asistencia['date'] . ' ' . $asistencia['entrada'],
+                    'action' => 'entrada',
+                ]);
+
+                EntranceExit::create([
+                    'id_person' => $persona['id'],
+                    'date_time' => $asistencia['date'] . ' ' . $asistencia['salida'],
+                    'action' => 'salida',
+                ]);
+            }
+        }
+    }
+
+    private function generateAsistenciasParaMeses(int $año, int $mesInicio, int $mesFin): array
+    {
+        $asistencias = [];
+
+        for ($mes = $mesInicio; $mes <= $mesFin; $mes++) {
+            $cantidad = rand(20, 40); // entre 10 y 30 asistencias por mes
+
+            for ($i = 0; $i < $cantidad; $i++) {
+                $dia = rand(1, 31); // para evitar problemas con días inexistentes
+                $fecha = Carbon::create($año, $mes, $dia)->format('Y-m-d');
+
+                $horaEntrada = Carbon::createFromTime(rand(5, 9), rand(0, 59), 0);
+                $horaSalida = (clone $horaEntrada)->addHours(rand(3, 5))->addMinutes(rand(0, 59));
+
+                $asistencias[] = [
+                    'date' => $fecha,
+                    'entrada' => $horaEntrada->format('H:i:s'),
+                    'salida' => $horaSalida->format('H:i:s'),
+                ];
+            }
         }
 
-        // NOTA: No generamos asistencias en esta tabla, 
-        // para que comience vacía y se llenen solo con registros reales
+        return $asistencias;
     }
 }
