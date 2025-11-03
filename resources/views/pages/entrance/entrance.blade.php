@@ -164,34 +164,43 @@
                     error: function(xhr, status, error) {
                         let message = 'Error de conexión. Intente nuevamente.';
 
-                        // Si Laravel devolvió un JSON con mensaje de error, lo usamos directamente
                         if (xhr.responseJSON && xhr.responseJSON.error) {
                             message = xhr.responseJSON.error;
-                        }
-                        // SI FUE UN ERROR DE VALIDACION EJ:(documento inválido)
-                        else if (xhr.status === 422) {
+                        } else if (xhr.status === 422) {
                             message = 'Documento inválido. Verifique el número ingresado.';
-                        }
-                        // SI EL DOCUMENTO NO EXISTE
-                        else if (xhr.status === 404) {
+                        } else if (xhr.status === 404) {
                             message = 'Documento no registrado en el sistema.';
-                        }
-                        // ERROR INTERNO EN EL SERVIDOR
-                        else if (xhr.status === 500) {
+                            // EN CASO DE DUPLICAR ACCIONES
+                        } else if (xhr.status === 429) {
+                            // MOSTRAMOS EL MENSAJE DE ESPERA
+                            $('#error_message').text(xhr.responseJSON.error).show();
+                            $('#status').text('Espere 1 minuto').css('color', '#FF9800');
+                            $('#document_number').prop('disabled', true); // Bloquea temporalmente la entrada
+
+                            // Desbloquear después de 60 segundos
+                            setTimeout(function() {
+                                $('#status').text('Pendiente').css('color', '#000');
+                                $('#document_number').prop('disabled', false).focus();
+                                $('#error_message').hide();
+                            }, 60000);
+
+                            return;
+                        } else if (xhr.status === 500) {
                             message = 'Error interno del servidor. Contacte al administrador.';
                         }
 
-                        // Mostrar el mensaje en la interfaz
+                        // Mostrar el mensaje y estado sólo para errores distintos a 429
                         $('#error_message').text(message).show();
                         $('#status').text('Fallido').css('color', '#C62828');
+                        $('#name').text('-');
+                        $('#position').text('-');
+                        $('#register-time').text('-');
 
-                        // Animación opcional (para llamar la atención visualmente)
                         $('#error_message').css('animation', 'none');
                         setTimeout(function() {
                             $('#error_message').css('animation', 'shake 0.5s ease');
                         }, 10);
                     }
-
                 });
             }
 

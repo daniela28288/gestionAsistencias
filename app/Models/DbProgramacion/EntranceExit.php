@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class EntranceExit extends Model
 {
-    protected $connection = 'db_programacion';
+    // protected $connection = 'db_programacion';
     protected $table = 'entrances_exits';
     protected $guarded = [];
 
@@ -14,11 +14,12 @@ class EntranceExit extends Model
     //carbon y pueda ejecutar metodos que me facilitan la vida con las fechas :P
     protected $dates = ['date_time'];
 
-    protected $casts =[
+    protected $casts = [
         'date_time' => 'datetime'
     ];
 
-    public function people(){
+    public function people()
+    {
         return $this->belongsTo(Person::class, 'id_person');
     }
 }
