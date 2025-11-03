@@ -4,22 +4,27 @@ namespace Database\Seeders\DbProgramacion;
 
 use Illuminate\Database\Seeder;
 use App\Models\DbProgramacion\People_days_available;
+use App\Models\DbProgramacion\Person;
+use Illuminate\Support\Facades\DB;
 
 class PersonSeederExit extends Seeder
 {
     public function run(): void
     {
-        // CREAMOS UN ARRAY DE ID DE PERSONAS
-        $personIds = range(1, 9);
+        // TOMAR LOS IDS DE TODAS LAS PERSONAS EXISTENTES
+        $personIds = Person::pluck('id');
+
+        // Obtener todos los IDs de días disponibles
+        $daysIds = DB::table('days_available')->pluck('id');
 
         // ITERA SOBRE CADA ID DE PERSONA PARA ASIGNARLE DATOS
         foreach ($personIds as $personaId) {
             // SE CONSTRUYE UN ARRAY DE DIAS DISPONIBLES PARA LA PERSONA ACTUAL
             $daysAvailable = [];
-            foreach (range(1, 7) as $day) { // range(1,7) REPRESENTA LOS 7 DIAS DE LA SEMANA
+            foreach ($daysIds as $dayId) {
                 $daysAvailable[] = [
                     'id_person' => $personaId,
-                    'id_day_available' => $day,
+                    'id_day_available' => $dayId,
                 ];
             }
 
