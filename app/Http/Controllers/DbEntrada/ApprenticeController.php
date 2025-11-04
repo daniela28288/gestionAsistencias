@@ -16,16 +16,18 @@ use Illuminate\Validation\Rules\Password;
 
 class ApprenticeController extends Controller
 {
-    public function index(){
+    public function index()
+    {
 
         return "holi";
-
     }
 
     public function show($id)
     {
-        // Obtener usuario
-        $user = DB::table('users')->where('id', $id)->first();
+        // BUSCA UN USUARIO
+        $user = User::find($id);
+
+        // VALIDAMOS EN CASO DE NO HABER NINGUNA COINCIDENCIA
         if (!$user) {
             abort(404, "Usuario no encontrado");
         }
@@ -138,5 +140,4 @@ class ApprenticeController extends Controller
 
         return redirect()->route('password.change')->with('success', '¡Contraseña actualizada correctamente!');
     }
-
 }

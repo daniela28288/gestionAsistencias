@@ -3,7 +3,6 @@
 namespace Database\Seeders\DbProgramacion;
 
 use App\Models\DbProgramacion\Position;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class PositionSeeder extends Seeder
@@ -13,23 +12,36 @@ class PositionSeeder extends Seeder
      */
     public function run(): void
     {
-        Position::create([
-            'name' => 'Coordinador'
-        ]);
-        Position::create([
-            'name' => 'Administrativo'
-        ]);
 
-        Position::create([
-            'name' => 'Aprendiz'
-        ]);
+        $positions = [
+            ['name' => 'Coordinador'],
+            ['name' => 'Administrativo'],
+            ['name' => 'Aprendiz'],
+            ['name' => 'Instructor'],
+            ['name' => 'Visitante'],
+        ];
 
-        Position::create([
-            'name' => 'Instructor'
-        ]);
-
-        Position::create([
-            'name' => 'Visitante'
-        ]);
+        Position::insert($positions);
     }
 }
+
+
+//     Position::create([
+//         'name' => 'Coordinador'
+//     ]);
+//     Position::create([
+//         'name' => 'Administrativo'
+//     ]);
+
+//     Position::create([
+//         'name' => 'Aprendiz'
+//     ]);
+
+//     Position::create([
+//         'name' => 'Instructor'
+//     ]);
+
+//     Position::create([
+//         'name' => 'Visitante'
+//     ]);
+// }

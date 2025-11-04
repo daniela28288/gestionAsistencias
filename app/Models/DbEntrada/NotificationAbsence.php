@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class NotificationAbsence extends Model
 {
-    protected $connection = 'db_entrada';
+    protected $connection = 'db_programacion';
     protected $table = 'notifications_absences';
     protected $guarded = [];
 

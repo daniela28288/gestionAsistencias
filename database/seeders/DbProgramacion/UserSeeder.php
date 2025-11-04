@@ -3,6 +3,7 @@
 namespace Database\Seeders\DbProgramacion;
 
 
+use App\Models\DbProgramacion\Person;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -18,47 +19,24 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        // DB::connection('db_entrada')->table('users')->insert([
-
-        //     // ['id_person'=> 1, 'user_name' => 'MarlonSaenz', 'password' => bcrypt("123123"), 'created_at' => now(), 'updated_at' => now() ],
-
-        // ]);
-
-        // User::create([
-        //     'id_person' => 1,
-        //     'user_name' => 'MarlonSaenz',
-        //     'password' => bcrypt("123123")
-        // ])->assignRole('Administrador_asistencia');
+        $person = Person::first();
 
 
         //usuario general ahora
         User::create([
-            'id_person' => 1,
+            'id_person' => $person->id,
             'user_name' => 'Marlon',
             'password' => bcrypt("123123")
         ])->assignRole('Coordinador');
 
-        // User::create([
-        //     'id_person' => 1,
-        //     'user_name' => 'msentrada',
-        //     'password' => bcrypt("123123")
-        //     #Sena2025
-        // ])->assignRole('Acceso-Entrada');
-
-        // User::create([
-        //     'id_person' => 2,
-        //     'user_name' => '123456789',
-        //     'password' => bcrypt("123456789")
-        // ])->assignRole('Aprendiz');
-
         User::create([
-            'id_person' => 3,
+            'id_person' => $person->id,
             'user_name' => '5314051',
             'password' => bcrypt("5314051")
         ])->assignRole('Aprendiz');
 
         User::create([
-            'id_person' => 2,
+            'id_person' => $person->id,
             'user_name' => '4444444444',
             'password' => bcrypt("4444444444")
         ])->assignRole('Aprendiz');
