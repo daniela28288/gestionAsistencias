@@ -4,20 +4,15 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ $title ?? 'Sistema SENA' }}</title>
     <link rel="stylesheet" href="{{ asset('css/components/buttons.css') }}" />
-    <link rel="stylesheet" href="{{ asset('css/pages/entrance/apprentice_entrance.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/pages/entrance/apprentice_entrance.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 </head>
 
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="header-container">
-            <img src="{{ asset('logoSena.png') }}" alt="Logo Sena" class="logo-header" />
-            <h1 class="texto-header">Centro Agroempresarial y Acuícola</h1>
-        </div>
-    </header>
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -25,31 +20,38 @@
     <!-- Contenido Principal -->
     <main class="main-content">
 
-        <div class="content-card">
+        <div class="columna head">
             <div class="card-title">
-                <h1>REGISTRO DE ENTRADA Y SALIDA</h1>
+                <h1>Control de Acceso</h1>
                 <p>Centro de Formación Agroempresarial y Acuícola</p>
             </div>
-
             <div class="time-display">
                 <div id="full_hour"></div>
                 <div class="date-display" id="full_date"></div>
             </div>
+        </div>
 
-            <div class="input-section">
-                <div class="input-container">
-                    <label for="document_number" class="input-label">INGRESE SU NÚMERO DE DOCUMENTO</label>
-                    <input type="text" id="document_number" class="input-field" placeholder="Ej: 123456789" autofocus>
-                    <i class="fas fa-id-card input-icon"></i>
+        <div class="columna">
+            <div class="content-card">
+                <div class="input-section">
+                    <div class="input-container">
+                        <label for="document_number" class="input-label">INGRESE SU NÚMERO DE DOCUMENTO</label>
+                        <input type="text" id="document_number" class="input-field" placeholder="Ej: 123456789"
+                            autofocus>
+                        <i class="fas fa-id-card input-icon"></i>
+                    </div>
+                </div>
+
+                <div class="action-section">
+                    <span class="action-label">ACCIÓN REGISTRADA</span>
+                    <div class="action-badge" id="action">ESPERANDO REGISTRO</div>
                 </div>
             </div>
 
-            <div class="action-section">
-                <span class="action-label">ACCIÓN REGISTRADA</span>
-                <div class="action-badge" id="action">ESPERANDO REGISTRO</div>
-            </div>
-
             <div class="user-info-card">
+                <div class="title">
+                    <h3>Información del usuario</h3>
+                </div>
                 <div class="info-item">
                     <div class="info-label">Nombre</div>
                     <div class="info-value" id="name">-</div>
@@ -249,22 +251,41 @@
 
                         let message = 'Error de conexión. Intente nuevamente.';
 
+                        // Si Laravel devolvió un JSON con mensaje de error, lo usamos directamente
                         if (xhr.responseJSON && xhr.responseJSON.error) {
                             message = xhr.responseJSON.error;
-                        } else if (xhr.status === 422) {
+                        }
+                        // SI FUE UN ERROR DE VALIDACION EJ:(documento inválido)
+                        else if (xhr.status === 422) {
                             message = 'Documento inválido. Verifique el número ingresado.';
-                        } else if (xhr.status === 404) {
+                        }
+                        // SI EL DOCUMENTO NO EXISTE
+                        else if (xhr.status === 404) {
                             message = 'Documento no registrado en el sistema.';
+                            // EN CASO DE DUPLICAR ACCIONES
+                        } else if (xhr.status === 429) {
+                            // MOSTRAMOS EL MENSAJE DE ESPERA
+                            $('#error_message').text(xhr.responseJSON.error).show();
+                            $('#status').text('Espere 1 minuto').css('color', '#FF9800');
+                            $('#document_number').prop('disabled', true); // Bloquea temporalmente la entrada
+
+                            // Desbloquear después de 60 segundos
+                            setTimeout(function() {
+                                $('#status').text('Pendiente').css('color', '#000');
+                                $('#document_number').prop('disabled', false).focus();
+                                $('#error_message').hide();
+                            }, 60000);
+
+                            return;
                         } else if (xhr.status === 500) {
                             message = 'Error interno del servidor. Contacte al administrador.';
                         }
 
+                        // Mostrar el mensaje y estado sólo para errores distintos a 429
                         $('#error_message').text(message).show();
                         $('#status').text('Fallido').css('color', '#C62828');
-                        $('#name').text('-');
-                        $('#position').text('-');
-                        $('#register-time').text('-');
 
+                        // Animación opcional (para llamar la atención visualmente)
                         $('#error_message').css('animation', 'none');
                         setTimeout(() => {
                             $('#error_message').css('animation', 'shake 0.5s ease');
@@ -276,6 +297,7 @@
                             mostrarContador = true;
                         }, 1500);
                     }
+
                 });
             }
 
@@ -296,12 +318,7 @@
             });
         });
     </script>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <img src="{{ asset('logoSena.png') }}" alt="Logo Sena" class="logo-footer" />
-        <p>&copy; {{ date('Y') }} Centro Agroempresarial y Acuícola. Todos los derechos reservados.</p>
-    </footer>
+    <script src="{{ asset('js/entrada.js') }}"></script>
 </body>
 
 </html>
