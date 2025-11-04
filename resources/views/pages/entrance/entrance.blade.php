@@ -73,6 +73,14 @@
     </main>
 
     <script>
+
+        // VARIABLES GLOBALES PARA EL CONTADOR 
+        let temporizador = null;
+        let tiempoRestante = 0;
+        let temporizadores = {};
+        let ultimoDocumentoConError429 = null;
+        let mostrarContador = true;
+
         function updateDateTime() {
             // CREA UN OBJECTO "DATE" CON LA FECHA Y HORA ACTUALES DEL SISTEMA
             const now = new Date();
@@ -103,7 +111,7 @@
 
         // FUNCIONALIDAD CON jQUERY (INTERACCION CON EL USUARIO)
         // ESPERA A QUE TODO EL DOCUMENTO ESTÉ CARGADO ANTES DE EJECUTAR EL CÓDIGO
-        $(document).ready(function() {
+        $(document).ready(function () {
 
             // Inicializar el badge de acción
             $('#action').text('ESPERANDO REGISTRO').removeClass('entrada salida');
@@ -123,19 +131,19 @@
                         _token: csrfToken
                     },
                     // PERO ANTES DE ENVIAR CAMBIA EL ESTADO (#status) Y EL COLOR
-                    beforeSend: function() {
+                    beforeSend: function () {
                         $('#status').text('Verificando...').css('color', '#FF9800');
                     },
-                    success: function(response) {
+                    success: function (response) {
                         // SI EL SERVIDOR RESPONDE CON UN CAMPO ERROR, SIGNIFICA QUE HUBO UN PROBLEMA
                         if (response.error) {
                             $('#error_message').text(response.error).show();
                             $('#document_number').val('').focus();
-                            $('#status').text('Error').css('color', '#C62828');
+                            $('#status').text('Fallido').css('color', '#C62828');
 
                             // Animación de error
                             $('#error_message').css('animation', 'none');
-                            setTimeout(function() {
+                            setTimeout(function () {
                                 $('#error_message').css('animation', 'shake 0.5s ease');
                             }, 10);
                         } else {
@@ -156,12 +164,89 @@
 
                             // Animación de confirmación
                             $action.css('animation', 'none');
-                            setTimeout(function() {
+                            setTimeout(function () {
                                 $action.css('animation', 'pulse 0.6s ease');
                             }, 10);
                         }
                     },
-                    error: function(xhr, status, error) {
+
+                    // CONTROL DE ERRORES
+                    error: function (xhr, status, error) {
+                        const documentoActual = $('#document_number').val(); // Documento actual
+
+                        // ERROR 429 - DEMASIADAS SOLICITUDES
+                        if (xhr.status === 429) {
+                            const waitTime = 30; // SEGUNDOS
+                            ultimoDocumentoConError429 = documentoActual; // Guardamos el documento bloqueado
+                            mostrarContador = true; // Permitimos que el contador se muestre
+
+                            // Si ya hay un contador activo, solo refrescamos el mensaje
+                            if (temporizadores[documentoActual]) {
+                                if (mostrarContador) {
+                                    $('#error_message')
+                                        .text(
+                                            `Ya registró esta acción recientemente. Espere ${temporizadores[documentoActual].restante} segundos`
+                                        )
+                                        .show();
+                                    $('#status').css('color', '#FF9800');
+                                }
+                                return;
+                            }
+
+                            let tiempoRestante = waitTime;
+
+                            $('#error_message')
+                                .show()
+                                .text(`Ya registró esta acción recientemente. Espere ${tiempoRestante} segundos`);
+                            $('#status').css('color', '#FF9800');
+
+                            // Crear intervalo
+                            // CREAR EL INTERVALO Y GUARDARLO EN EL OBJETO
+                            const intervalo = setInterval(() => {
+                                tiempoRestante--;
+                                temporizadores[documentoActual].restante = tiempoRestante;
+
+                                const documentoVisible = $('#document_number').val().trim();
+
+                                // 🚫 Si el campo está vacío, no mostrar nada
+                                if (!documentoVisible) {
+                                    $('#error_message').hide();
+                                    return;
+                                }
+
+                                // ✅ Solo mostrar si el documento visible coincide y está permitido
+                                if (
+                                    mostrarContador &&
+                                    ultimoDocumentoConError429 === documentoActual &&
+                                    documentoVisible === documentoActual
+                                ) {
+                                    $('#error_message').text(
+                                        `Ya registró esta acción recientemente. Espere ${tiempoRestante} segundos`
+                                    );
+                                }
+
+                                if (tiempoRestante <= 0) {
+                                    clearInterval(intervalo);
+                                    delete temporizadores[documentoActual];
+
+                                    if (ultimoDocumentoConError429 === documentoActual) {
+                                        $('#status').text('Pendiente').css('color', '#000');
+                                        $('#error_message').hide();
+                                        ultimoDocumentoConError429 = null;
+                                    }
+                                }
+                            }, 1000);
+
+                            temporizadores[documentoActual] = {
+                                intervalo: intervalo,
+                                restante: tiempoRestante,
+                            };
+
+                            return; // No ejecutar el resto
+                        }
+
+                        mostrarContador = false;
+
                         let message = 'Error de conexión. Intente nuevamente.';
 
                         if (xhr.responseJSON && xhr.responseJSON.error) {
@@ -170,26 +255,10 @@
                             message = 'Documento inválido. Verifique el número ingresado.';
                         } else if (xhr.status === 404) {
                             message = 'Documento no registrado en el sistema.';
-                            // EN CASO DE DUPLICAR ACCIONES
-                        } else if (xhr.status === 429) {
-                            // MOSTRAMOS EL MENSAJE DE ESPERA
-                            $('#error_message').text(xhr.responseJSON.error).show();
-                            $('#status').text('Espere 1 minuto').css('color', '#FF9800');
-                            $('#document_number').prop('disabled', true); // Bloquea temporalmente la entrada
-
-                            // Desbloquear después de 60 segundos
-                            setTimeout(function() {
-                                $('#status').text('Pendiente').css('color', '#000');
-                                $('#document_number').prop('disabled', false).focus();
-                                $('#error_message').hide();
-                            }, 60000);
-
-                            return;
                         } else if (xhr.status === 500) {
                             message = 'Error interno del servidor. Contacte al administrador.';
                         }
 
-                        // Mostrar el mensaje y estado sólo para errores distintos a 429
                         $('#error_message').text(message).show();
                         $('#status').text('Fallido').css('color', '#C62828');
                         $('#name').text('-');
@@ -197,20 +266,26 @@
                         $('#register-time').text('-');
 
                         $('#error_message').css('animation', 'none');
-                        setTimeout(function() {
+                        setTimeout(() => {
                             $('#error_message').css('animation', 'shake 0.5s ease');
                         }, 10);
+
+                        // Después de un breve tiempo, volver a permitir que el contador se muestre
+                        // (por ejemplo, si el usuario intenta registrar de nuevo)
+                        setTimeout(() => {
+                            mostrarContador = true;
+                        }, 1500);
                     }
                 });
             }
 
             // Validar que solo se ingresen números
-            $('#document_number').on('input', function() {
+            $('#document_number').on('input', function () {
                 this.value = this.value.replace(/\D/g, '');
             });
 
             // Enviar el formulario al presionar Enter
-            $('#document_number').on('keypress', function(e) {
+            $('#document_number').on('keypress', function (e) {
                 if (e.which === 13) {
                     e.preventDefault();
                     let documentNumber = $(this).val().trim();

@@ -104,7 +104,7 @@ class EntranceExitController extends Controller
 
         if ($recent) {
             return response()->json([
-                'error' => 'Ya registró esta acción recientemente. Espere 1 minuto.'
+                'error' => 'Ya registró esta acción recientemente. Espere 30 segundos.'
             ], 429);
         }
 
