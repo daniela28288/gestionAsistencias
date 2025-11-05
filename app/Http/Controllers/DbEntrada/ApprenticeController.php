@@ -8,7 +8,6 @@ use App\Models\DbProgramacion\Apprentice;
 use App\Models\DbProgramacion\Person;
 use App\Models\DbProgramacion\User;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;

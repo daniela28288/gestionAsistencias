@@ -4,15 +4,20 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ $title ?? 'Sistema SENA' }}</title>
     <link rel="stylesheet" href="{{ asset('css/components/buttons.css') }}" />
-    <link rel="stylesheet" href="{{ asset('css/pages/entrance/apprentice_entrance.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/pages/entrance/apprentice_entrance.css')}}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
 </head>
 
 <body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <img src="{{ asset('logoSena.png') }}" alt="Logo Sena" class="logo-header" />
+            <h1 class="texto-header">Centro Agroempresarial y Acuícola</h1>
+        </div>
+    </header>
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -20,37 +25,32 @@
     <!-- Contenido Principal -->
     <main class="main-content">
 
-        <div class="columna head">
+        <div class="content-card">
             <div class="card-title">
-                <h1>Control de Acceso</h1>
+                <h1>REGISTRO DE ENTRADA Y SALIDA</h1>
                 <p>Centro de Formación Agroempresarial y Acuícola</p>
             </div>
+
             <div class="time-display">
                 <div id="full_hour"></div>
                 <div class="date-display" id="full_date"></div>
             </div>
-        </div>
 
-        <div class="columna">
-            <div class="content-card">
-                <div class="input-section">
-                    <div class="input-container">
-                        <label for="document_number" class="input-label">INGRESE SU NÚMERO DE DOCUMENTO</label>
-                        <input type="text" id="document_number" class="input-field" placeholder="Ej: 123456789"
-                            autofocus>
-                        <i class="fas fa-id-card input-icon"></i>
-                    </div>
+            <div class="input-section">
+                <div class="input-container">
+                    <label for="document_number" class="input-label">INGRESE SU NÚMERO DE DOCUMENTO</label>
+                    <input type="text" id="document_number" class="input-field" placeholder="Ej: 123456789" autofocus>
+                    <i class="fas fa-id-card input-icon"></i>
                 </div>
+            </div>
 
-                <div class="action-section">
-                    <span class="action-label">ACCIÓN REGISTRADA</span>
-                    <div class="action-badge" id="action">ESPERANDO REGISTRO</div>
-                </div>
+            <div class="action-section">
+                <span class="action-label">ACCIÓN REGISTRADA</span>
+                <div class="action-badge" id="action">ESPERANDO REGISTRO</div>
             </div>
 
             <div class="user-info-card">
                 <div class="title">
-                    <img src="{{asset('../icons/iconuser.png')}}" alt="">
                     <h3>Información del usuario</h3>
                 </div>
                 <div class="info-item">
@@ -76,6 +76,14 @@
     </main>
 
     <script>
+
+        // VARIABLES GLOBALES PARA EL CONTADOR 
+        let temporizador = null;
+        let tiempoRestante = 0;
+        let temporizadores = {};
+        let ultimoDocumentoConError429 = null;
+        let mostrarContador = true;
+
         function updateDateTime() {
             // CREA UN OBJECTO "DATE" CON LA FECHA Y HORA ACTUALES DEL SISTEMA
             const now = new Date();
@@ -85,7 +93,6 @@
             const hour = now.getHours().toString().padStart(2, '0');
             const minutes = now.getMinutes().toString().padStart(2, '0');
             const seconds = now.getSeconds().toString().padStart(2, '0');
-
 
             document.getElementById('full_hour').textContent = `${hour}:${minutes}:${seconds}`;
 
@@ -106,7 +113,7 @@
 
         // FUNCIONALIDAD CON jQUERY (INTERACCION CON EL USUARIO)
         // ESPERA A QUE TODO EL DOCUMENTO ESTÉ CARGADO ANTES DE EJECUTAR EL CÓDIGO
-        $(document).ready(function() {
+        $(document).ready(function () {
 
             // Inicializar el badge de acción
             $('#action').text('ESPERANDO REGISTRO').removeClass('entrada salida');
@@ -126,19 +133,19 @@
                         _token: csrfToken
                     },
                     // PERO ANTES DE ENVIAR CAMBIA EL ESTADO (#status) Y EL COLOR
-                    beforeSend: function() {
+                    beforeSend: function () {
                         $('#status').text('Verificando...').css('color', '#FF9800');
                     },
-                    success: function(response) {
+                    success: function (response) {
                         // SI EL SERVIDOR RESPONDE CON UN CAMPO ERROR, SIGNIFICA QUE HUBO UN PROBLEMA
                         if (response.error) {
                             $('#error_message').text(response.error).show();
                             $('#document_number').val('').focus();
-                            $('#status').text('Error').css('color', '#C62828');
+                            $('#status').text('Fallido').css('color', '#C62828');
 
                             // Animación de error
                             $('#error_message').css('animation', 'none');
-                            setTimeout(function() {
+                            setTimeout(function () {
                                 $('#error_message').css('animation', 'shake 0.5s ease');
                             }, 10);
                         } else {
@@ -159,52 +166,127 @@
 
                             // Animación de confirmación
                             $action.css('animation', 'none');
-                            setTimeout(function() {
+                            setTimeout(function () {
                                 $action.css('animation', 'pulse 0.6s ease');
                             }, 10);
                         }
                     },
-                    error: function(xhr, status, error) {
+
+                    // CONTROL DE ERRORES
+                    error: function (xhr, status, error) {
+                        const documentoActual = $('#document_number').val(); // Documento actual
+
+                        // ERROR 429 - DEMASIADAS SOLICITUDES
+                        if (xhr.status === 429) {
+                            const waitTime = 30; // SEGUNDOS
+                            ultimoDocumentoConError429 = documentoActual; // Guardamos el documento bloqueado
+                            mostrarContador = true; // Permitimos que el contador se muestre
+
+                            // Si ya hay un contador activo, solo refrescamos el mensaje
+                            if (temporizadores[documentoActual]) {
+                                if (mostrarContador) {
+                                    $('#error_message')
+                                        .text(
+                                            `Ya registró esta acción recientemente. Espere ${temporizadores[documentoActual].restante} segundos`
+                                        )
+                                        .show();
+                                    $('#status').css('color', '#FF9800');
+                                }
+                                return;
+                            }
+
+                            let tiempoRestante = waitTime;
+
+                            $('#error_message')
+                                .show()
+                                .text(`Ya registró esta acción recientemente. Espere ${tiempoRestante} segundos`);
+                            $('#status').css('color', '#FF9800');
+
+                            // CREAR EL INTERVALO Y GUARDARLO EN EL OBJETO
+                            const intervalo = setInterval(() => {
+                                tiempoRestante--;
+                                temporizadores[documentoActual].restante = tiempoRestante;
+
+                                const documentoVisible = $('#document_number').val().trim();
+
+                                // Si el campo está vacío, no mostrar nada
+                                if (!documentoVisible) {
+                                    $('#error_message').hide();
+                                    return;
+                                }
+
+                                // Solo mostrar si el documento visible coincide y está permitido
+                                if (
+                                    mostrarContador &&
+                                    ultimoDocumentoConError429 === documentoActual &&
+                                    documentoVisible === documentoActual
+                                ) {
+                                    $('#error_message').text(
+                                        `Ya registró esta acción recientemente. Espere ${tiempoRestante} segundos`
+                                    );
+                                }
+
+                                if (tiempoRestante <= 0) {
+                                    clearInterval(intervalo);
+                                    delete temporizadores[documentoActual];
+
+                                    if (ultimoDocumentoConError429 === documentoActual) {
+                                        $('#status').text('Pendiente').css('color', '#000');
+                                        $('#error_message').hide();
+                                        ultimoDocumentoConError429 = null;
+                                    }
+                                }
+                            }, 1000);
+
+                            temporizadores[documentoActual] = {
+                                intervalo: intervalo,
+                                restante: tiempoRestante,
+                            };
+
+                            return; // No ejecutar el resto
+                        }
+
+                        mostrarContador = false;
+
                         let message = 'Error de conexión. Intente nuevamente.';
 
-                        // Si Laravel devolvió un JSON con mensaje de error, lo usamos directamente
                         if (xhr.responseJSON && xhr.responseJSON.error) {
                             message = xhr.responseJSON.error;
-                        }
-                        // SI FUE UN ERROR DE VALIDACION EJ:(documento inválido)
-                        else if (xhr.status === 422) {
+                        } else if (xhr.status === 422) {
                             message = 'Documento inválido. Verifique el número ingresado.';
-                        }
-                        // SI EL DOCUMENTO NO EXISTE
-                        else if (xhr.status === 404) {
+                        } else if (xhr.status === 404) {
                             message = 'Documento no registrado en el sistema.';
-                        }
-                        // ERROR INTERNO EN EL SERVIDOR
-                        else if (xhr.status === 500) {
+                        } else if (xhr.status === 500) {
                             message = 'Error interno del servidor. Contacte al administrador.';
                         }
 
-                        // Mostrar el mensaje en la interfaz
                         $('#error_message').text(message).show();
                         $('#status').text('Fallido').css('color', '#C62828');
+                        $('#name').text('-');
+                        $('#position').text('-');
+                        $('#register-time').text('-');
 
-                        // Animación opcional (para llamar la atención visualmente)
                         $('#error_message').css('animation', 'none');
-                        setTimeout(function() {
+                        setTimeout(() => {
                             $('#error_message').css('animation', 'shake 0.5s ease');
                         }, 10);
-                    }
 
+                        // Después de un breve tiempo, volver a permitir que el contador se muestre
+                        // (por ejemplo, si el usuario intenta registrar de nuevo)
+                        setTimeout(() => {
+                            mostrarContador = true;
+                        }, 1500);
+                    }
                 });
             }
 
             // Validar que solo se ingresen números
-            $('#document_number').on('input', function() {
+            $('#document_number').on('input', function () {
                 this.value = this.value.replace(/\D/g, '');
             });
 
             // Enviar el formulario al presionar Enter
-            $('#document_number').on('keypress', function(e) {
+            $('#document_number').on('keypress', function (e) {
                 if (e.which === 13) {
                     e.preventDefault();
                     let documentNumber = $(this).val().trim();
@@ -215,7 +297,13 @@
             });
         });
     </script>
-    <script src="{{ asset('js/entrada.js') }}"></script>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+        <img src="{{ asset('logoSena.png') }}" alt="Logo Sena" class="logo-footer" />
+        <p>&copy; {{ date('Y') }} Centro Agroempresarial y Acuícola. Todos los derechos reservados.</p>
+    </footer>
 </body>
 
 </html>
