@@ -50,10 +50,11 @@
 
             <div class="user-info-card">
                 <div class="title">
+                    <img src="{{asset('../icons/iconuser.png')}}" alt="">
                     <h3>Información del usuario</h3>
                 </div>
                 <div class="info-item">
-                    <div class="info-label">Nombre</div>
+                    <div class="info-label">Nombre Completo</div>
                     <div class="info-value" id="name">-</div>
                 </div>
                 <div class="info-item">
