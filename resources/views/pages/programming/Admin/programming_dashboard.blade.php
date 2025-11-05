@@ -32,9 +32,8 @@
             <!-- Alerta de éxito (operación completada correctamente) -->
             @if (session('success'))
                 <div class="alert-success">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                         <polyline points="22 4 12 14.01 9 11.01"></polyline>
                     </svg>
@@ -45,9 +44,8 @@
             <!-- Alerta de error (operación fallida) -->
             @if (session('error'))
                 <div class="alert-danger">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="10"></circle>
                         <line x1="15" y1="9" x2="9" y2="15"></line>
                         <line x1="9" y1="9" x2="15" y2="15"></line>
@@ -59,9 +57,8 @@
             <!-- Alerta de errores de validación de formulario -->
             @if ($errors->any())
                 <div class="alert-danger">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="10"></circle>
                         <line x1="12" y1="8" x2="12" y2="12"></line>
                         <line x1="12" y1="16" x2="12.01" y2="16"></line>
@@ -105,10 +102,10 @@
                                 <td>{{ $program->program_version }}</td>
 
                                 <!--
-                                    Nivel del programa con badge de color
-                                    - id_level 1 = Técnico (verde)
-                                    - id_level 2 = Tecnólogo (azul)
-                                -->
+                                        Nivel del programa con badge de color
+                                        - id_level 1 = Técnico (verde)
+                                        - id_level 2 = Tecnólogo (azul)
+                                    -->
                                 <td>
                                     <span
                                         class="badge {{ $program->id_level == 1 ? 'badge-technical' : 'badge-technologist' }}">
@@ -122,9 +119,9 @@
                             <tr>
                                 <td colspan="5">
                                     <div class="empty-state">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-                                            stroke-linecap="round" stroke-linejoin="round">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24"
+                                            fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round">
                                             <circle cx="12" cy="12" r="10"></circle>
                                             <line x1="12" y1="8" x2="12" y2="12"></line>
                                             <line x1="12" y1="16" x2="12.01" y2="16">
@@ -155,8 +152,7 @@
                         FORMULARIO DE REGISTRO
                         Envía datos al controlador para crear un nuevo programa
                     -->
-                    <form method="POST" action="{{ route('programing.programan_store_add') }}"
-                        class="program-form">
+                    <form method="POST" action="{{ route('programing.programan_store_add') }}" class="program-form">
                         @csrf
 
                         <!-- CAMPO 1: Nombre del Programa - Campo de texto requerido -->
@@ -253,7 +249,7 @@
          * Escucha clics en toda la ventana
          * Si el clic es en el overlay (fondo oscuro), cierra el modal
         */
-        window.onclick = function(event) {
+        window.onclick = function (event) {
             const modal = document.getElementById('programModal');
             if (event.target === modal) {
                 closeModal();
@@ -264,14 +260,14 @@
          * Cierra el modal con la tecla Escape
          * Mejora la experiencia del usuario
          */
-        document.addEventListener('keydown', function(event) {
+        document.addEventListener('keydown', function (event) {
             if (event.key === 'Escape') {
                 closeModal();
             }
         });
 
         // Auto-focus en el primer campo al abrir el modal NO FUNCIONA!!!!!!!!!
-        document.getElementById('programModal').addEventListener('shown', function() {
+        document.getElementById('programModal').addEventListener('shown', function () {
             document.getElementById('name').focus();
         });
     </script>

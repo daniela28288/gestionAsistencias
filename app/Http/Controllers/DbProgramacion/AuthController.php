@@ -20,7 +20,7 @@ class AuthController extends Controller
         // Validar campos obligatorios (sin 'module')
         $request->validate([
             'user_name' => 'required|string',
-            'password'  => 'required|string',
+            'password' => 'required|string',
         ]);
 
         // Solo se usan las credenciales para la autenticación
@@ -29,11 +29,11 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
 
-            // Obtener el rol del usuario
-            // Suponiendo que el usuario puede tener varios roles, tomamos el primero
+            // OBTENER EL ROL DEL USUARIO
+            // SUPONIENDO QUE EL USUARIO TIENE VARIOS ROLES, TOMAMOS EL PRIMERO
             $role = $user->roles->pluck('name')->first();
 
-            // Redirigir según el rol detectado
+            // REDIRIGIR SEGUN EL ROL SELECCIONADO
             switch ($role) {
                 case 'Aprendiz':
                     return redirect()->route('apprentice.show', ['id' => $user->id]);
@@ -53,7 +53,7 @@ class AuthController extends Controller
             }
         }
 
-        // Credenciales inválidas
+        // VALIDACION EN CASO DE QUE LAS CREDENCIALES SEAN INCORRECTAS
         return redirect()
             ->route('login')
             ->withErrors(['login_error' => 'Las credenciales proporcionadas son incorrectas.'])
@@ -74,7 +74,7 @@ class AuthController extends Controller
     }
 
 
-    //metodo de inicio de la pantalla de programacion
+    // GESTION DE PROGRAMAS DE FORMACION
     public function programan_index()
     {
         $programs = Program::with(['instructor.person'])->get();
