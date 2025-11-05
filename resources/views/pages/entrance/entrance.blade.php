@@ -11,13 +11,6 @@
 </head>
 
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="header-container">
-            <img src="{{ asset('logoSena.png') }}" alt="Logo Sena" class="logo-header" />
-            <h1 class="texto-header">Centro Agroempresarial y Acuícola</h1>
-        </div>
-    </header>
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -25,28 +18,32 @@
     <!-- Contenido Principal -->
     <main class="main-content">
 
-        <div class="content-card">
+        <div class="columna head">
             <div class="card-title">
-                <h1>REGISTRO DE ENTRADA Y SALIDA</h1>
+                <h1>Control de Acceso</h1>
                 <p>Centro de Formación Agroempresarial y Acuícola</p>
             </div>
-
             <div class="time-display">
                 <div id="full_hour"></div>
                 <div class="date-display" id="full_date"></div>
             </div>
+        </div>
 
-            <div class="input-section">
-                <div class="input-container">
-                    <label for="document_number" class="input-label">INGRESE SU NÚMERO DE DOCUMENTO</label>
-                    <input type="text" id="document_number" class="input-field" placeholder="Ej: 123456789" autofocus>
-                    <i class="fas fa-id-card input-icon"></i>
+        <div class="columna">
+            <div class="content-card">
+                <div class="input-section">
+                    <div class="input-container">
+                        <label for="document_number" class="input-label">INGRESE SU NÚMERO DE DOCUMENTO</label>
+                        <input type="text" id="document_number" class="input-field" placeholder="Ej: 123456789"
+                            autofocus>
+                        <i class="fas fa-id-card input-icon"></i>
+                    </div>
                 </div>
-            </div>
 
-            <div class="action-section">
-                <span class="action-label">ACCIÓN REGISTRADA</span>
-                <div class="action-badge" id="action">ESPERANDO REGISTRO</div>
+                <div class="action-section">
+                    <span class="action-label">ACCIÓN REGISTRADA</span>
+                    <div class="action-badge" id="action">ESPERANDO REGISTRO</div>
+                </div>
             </div>
 
             <div class="user-info-card">
@@ -75,6 +72,7 @@
             <div id="error_message"></div>
         </div>
     </main>
+
 
     <script>
 
@@ -298,13 +296,6 @@
             });
         });
     </script>
-
-
-    <!-- Footer -->
-    <footer class="footer">
-        <img src="{{ asset('logoSena.png') }}" alt="Logo Sena" class="logo-footer" />
-        <p>&copy; {{ date('Y') }} Centro Agroempresarial y Acuícola. Todos los derechos reservados.</p>
-    </footer>
 </body>
 
 </html>
