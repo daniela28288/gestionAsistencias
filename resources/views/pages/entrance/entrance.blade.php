@@ -20,7 +20,10 @@
 
         <div class="columna head">
             <div class="card-title">
-                <h1>Control de Acceso</h1>
+                <div class="title-volver">
+                    <img src="{{ asset('../icons/') }}" alt="">
+                    <h1>Control de Acceso</h1>
+                </div>
                 <p>Centro de Formación Agroempresarial y Acuícola</p>
             </div>
             <div class="time-display">
@@ -75,7 +78,6 @@
 
 
     <script>
-
         // VARIABLES GLOBALES PARA EL CONTADOR 
         let temporizador = null;
         let tiempoRestante = 0;
@@ -112,7 +114,7 @@
 
         // FUNCIONALIDAD CON jQUERY (INTERACCION CON EL USUARIO)
         // ESPERA A QUE TODO EL DOCUMENTO ESTÉ CARGADO ANTES DE EJECUTAR EL CÓDIGO
-        $(document).ready(function () {
+        $(document).ready(function() {
 
             // Inicializar el badge de acción
             $('#action').text('ESPERANDO REGISTRO').removeClass('entrada salida');
@@ -132,10 +134,10 @@
                         _token: csrfToken
                     },
                     // PERO ANTES DE ENVIAR CAMBIA EL ESTADO (#status) Y EL COLOR
-                    beforeSend: function () {
+                    beforeSend: function() {
                         $('#status').text('Verificando...').css('color', '#FF9800');
                     },
-                    success: function (response) {
+                    success: function(response) {
                         // SI EL SERVIDOR RESPONDE CON UN CAMPO ERROR, SIGNIFICA QUE HUBO UN PROBLEMA
                         if (response.error) {
                             $('#error_message').text(response.error).show();
@@ -144,7 +146,7 @@
 
                             // Animación de error
                             $('#error_message').css('animation', 'none');
-                            setTimeout(function () {
+                            setTimeout(function() {
                                 $('#error_message').css('animation', 'shake 0.5s ease');
                             }, 10);
                         } else {
@@ -165,14 +167,14 @@
 
                             // Animación de confirmación
                             $action.css('animation', 'none');
-                            setTimeout(function () {
+                            setTimeout(function() {
                                 $action.css('animation', 'pulse 0.6s ease');
                             }, 10);
                         }
                     },
 
                     // CONTROL DE ERRORES
-                    error: function (xhr, status, error) {
+                    error: function(xhr, status, error) {
                         const documentoActual = $('#document_number').val(); // Documento actual
 
                         // ERROR 429 - DEMASIADAS SOLICITUDES
@@ -280,12 +282,12 @@
             }
 
             // Validar que solo se ingresen números
-            $('#document_number').on('input', function () {
+            $('#document_number').on('input', function() {
                 this.value = this.value.replace(/\D/g, '');
             });
 
             // Enviar el formulario al presionar Enter
-            $('#document_number').on('keypress', function (e) {
+            $('#document_number').on('keypress', function(e) {
                 if (e.which === 13) {
                     e.preventDefault();
                     let documentNumber = $(this).val().trim();
