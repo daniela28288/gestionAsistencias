@@ -99,7 +99,7 @@ class EntranceExitController extends Controller
         // VERIFICAMOS SI YA HAY UN REGISTRO CON LA MISMA ACCION EN EL ULTIMO MINUTO
         $recent = EntranceExit::where('id_person', $person->id)
             ->where('action', $action)
-            ->where('date_time', '>=', now()->subMinute())
+            ->where('date_time', '>=', now()->subSecond(30))
             ->exists();
 
         if ($recent) {

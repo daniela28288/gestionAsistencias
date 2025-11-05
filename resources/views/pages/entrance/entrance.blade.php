@@ -91,7 +91,6 @@
             const minutes = now.getMinutes().toString().padStart(2, '0');
             const seconds = now.getSeconds().toString().padStart(2, '0');
 
-
             document.getElementById('full_hour').textContent = `${hour}:${minutes}:${seconds}`;
 
             // options DEFINE EL FORMATO DE FECHA
@@ -200,7 +199,6 @@
                                 .text(`Ya registró esta acción recientemente. Espere ${tiempoRestante} segundos`);
                             $('#status').css('color', '#FF9800');
 
-                            // Crear intervalo
                             // CREAR EL INTERVALO Y GUARDARLO EN EL OBJETO
                             const intervalo = setInterval(() => {
                                 tiempoRestante--;
@@ -208,13 +206,13 @@
 
                                 const documentoVisible = $('#document_number').val().trim();
 
-                                // 🚫 Si el campo está vacío, no mostrar nada
+                                // Si el campo está vacío, no mostrar nada
                                 if (!documentoVisible) {
                                     $('#error_message').hide();
                                     return;
                                 }
 
-                                // ✅ Solo mostrar si el documento visible coincide y está permitido
+                                // Solo mostrar si el documento visible coincide y está permitido
                                 if (
                                     mostrarContador &&
                                     ultimoDocumentoConError429 === documentoActual &&
@@ -296,6 +294,7 @@
             });
         });
     </script>
+
 
     <!-- Footer -->
     <footer class="footer">
