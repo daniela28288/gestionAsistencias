@@ -51,6 +51,7 @@
 
             <div class="user-info-card">
                 <div class="title">
+                    <img src="{{asset('../icons/iconuser.png')}}" alt="">
                     <h3>Información del usuario</h3>
                 </div>
                 <div class="info-item">
