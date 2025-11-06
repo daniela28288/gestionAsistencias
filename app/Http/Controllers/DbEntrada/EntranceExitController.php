@@ -5,6 +5,8 @@ namespace App\Http\Controllers\DbEntrada;
 use App\Http\Controllers\Controller;
 use App\Models\DbProgramacion\EntranceExit;
 use App\Models\DbProgramacion\Person;
+use App\Models\DbProgramacion\Position;
+use App\Models\DbProgramacion\VisitorEntry;
 use Carbon\Carbon;
 
 use Illuminate\Http\Request;
@@ -25,7 +27,8 @@ class EntranceExitController extends Controller
         // VALIDACION DE DOCUMENTO EJ:(LONGITUD)
         try {
             $data = $request->validate([
-                'document_number' => 'required|string|max:12|min:7'
+                'document_number' => 'required|string|max:12|min:7',
+                'id_reason' => 'nullable|exists:visit_reasons,id' // SOLO PARA VISITANTES
             ]);
         } catch (ValidationException $e) {
             // DELVUELVE UN JSON LIMPIO CON EL ERROR
@@ -37,15 +40,95 @@ class EntranceExitController extends Controller
         // BUSCAMOS A LA PERSONA EN LA BASE DE DATOS POR EL NUMERO DE DOCUMENTO
         $person = Person::where('document_number', $data['document_number'])->first();
 
-        // VALIDACION EN CASO DE QUE NO EXISTA
+        // SI NO EXISTE -> REGISTRAR VISITA COMO VISITANTE
         if (!$person) {
+            // POSICION "Visitante"
+            $visitorPosition = Position::where('name', 'Visitante')->first();
+
+            if (empty($data['id_reason'])) {
+                return response()->json([
+                    'error' => 'Debe seleccionar un motivo de visita.'
+                ], 422);
+            }
+
+            // SALIDA AUTOMÁTICA DE VISITAS ANTIGUAS SIN SALIDA
+            $closingHour = Carbon::createFromTime(18, 0, 0); // 6:00 PM
+
+            // Cerrar automáticamente entradas sin salida de días anteriores
+            VisitorEntry::where('document_number', $data['document_number'])
+                ->whereNull('exit_time')
+                ->whereDate('entry_time', '<', now()->toDateString())
+                ->update([
+                    'exit_time' => $closingHour->copy()->subDay(), // salida automática del día anterior
+                    'status' => 'cerrada_automatica'
+                ]);
+
+            // Verificar si el visitante tiene una entrada abierta hoy
+            $existingEntry = VisitorEntry::where('document_number', $data['document_number'])
+                ->whereDate('entry_time', now()->toDateString())
+                ->whereNull('exit_time')
+                ->first();
+
+            if ($existingEntry) {
+                // Si ya es hora de cierre, marcar salida automática
+                if (now()->greaterThan($closingHour)) {
+                    $existingEntry->update([
+                        'exit_time' => $closingHour,
+                        'status' => 'cerrada_automatica'
+                    ]);
+
+                    return response()->json([
+                        'action' => 'salida_automatica',
+                        'message' => 'Salida marcada automáticamente por fin de jornada.',
+                        'position' => $visitorPosition->name,
+                        'document_number' => $existingEntry->document_number
+                    ]);
+                }
+
+                // Si el visitante tiene una entrada activa, marcar salida manual
+                $existingEntry->update([
+                    'exit_time' => now(),
+                    'status' => 'completa'
+                ]);
+
+                return response()->json([
+                    'action' => 'salida',
+                    'message' => 'Salida registrada exitosamente.',
+                    'position' => $visitorPosition->name,
+                    'document_number' => $existingEntry->document_number
+                ]);
+            }
+
+            // VERIFICAR SI YA SE REGISTRO RECIENTEMENTE CON EL MISMO DOCUMENTO
+            $recentVisitor = VisitorEntry::where('document_number', $data['document_number'])
+                ->where('entry_time', '>=', now()->subSeconds(30))
+                ->exists();
+
+            if ($recentVisitor) {
+                return response()->json([
+                    'error' => 'Ya se registró una visita reciente. Espere unos segundos.'
+                ], 429);
+            }
+
+            // REGISTRAR VISITANTE
+            $visitor = VisitorEntry::create([
+                'document_number' => $data['document_number'],
+                'id_reason' => $data['id_reason'],
+                'id_position' => $visitorPosition->id,
+                'entry_time' => now(),
+                'status' => 'abierta'
+            ]);
+
             return response()->json([
-                'position' => "N/A",
-                'error' => 'Documento no registrado en el sistema.'
-            ], 404);
+                'action' => 'entrada',
+                'message' => 'Entrada registrada exitosamente.',
+                'position' => $visitorPosition->name,
+                'reason' => $visitor->reason->reason,
+                'document_number' => $visitor->document_number
+            ], 201);
         }
 
-        // OBTENEMOS LA POSICION DE LA PERSONA (si no existe, poner "No definida")
+        // SI EXISTE -> FLUJO NORMAL (PERSONA REGISTRADA)
         $position = $person->position->name ?? 'No definida';
 
         // VALIDAMOS QUE LA PERSONA AUN ESTE ACTIVA EN EL CENTRO DE FORMACION
