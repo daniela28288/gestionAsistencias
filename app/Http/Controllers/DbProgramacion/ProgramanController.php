@@ -45,8 +45,8 @@ class ProgramanController extends Controller
         // Validación de datos
         $request->validate([
             'id_level' => 'required|exists:db_programacion.program_level,id',
-            'program_code' => 'required|string|unique:programs,program_code|min:6|max:15',
-            'program_version' => 'required|string|min:1|max:5',
+            'program_code' => 'required|string|unique:programs,program_code|min:6|max:15|regex:/^[0-9]+$/', // "regex" PERMITE QUE SOLO SEAN NUMEROS 
+            'program_version' => 'required|string|min:1|max:5|regex:/^[0-9]+$/',
             'name' => 'required|string|min:6|max:255',
             'instructor_id' => 'required|exists:db_programacion.instructors,id',
         ]);

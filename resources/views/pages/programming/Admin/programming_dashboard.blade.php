@@ -102,10 +102,10 @@
                                 <td>{{ $program->program_version }}</td>
 
                                 <!--
-                                        Nivel del programa con badge de color
-                                        - id_level 1 = Técnico (verde)
-                                        - id_level 2 = Tecnólogo (azul)
-                                    -->
+                                            Nivel del programa con badge de color
+                                            - id_level 1 = Técnico (verde)
+                                            - id_level 2 = Tecnólogo (azul)
+                                        -->
                                 <td>
                                     <span
                                         class="badge {{ $program->id_level == 1 ? 'badge-technical' : 'badge-technologist' }}">
@@ -165,15 +165,13 @@
                         <!-- CAMPO 2: Código del Programa - Identificador único del programa (ej: PROG-001) -->
                         <div class="form-group">
                             <label for="program_code">Código del Programa</label>
-                            <input type="text" name="program_code" id="program_code" required
-                                placeholder="Ej: PROG-001">
+                            <input type="text" name="program_code" id="program_code" required placeholder="Ej: 001209">
                         </div>
 
                         <!-- CAMPO 3: Versión del Programa - Número de versión (ej: 1.0, 2.0) -->
                         <div class="form-group">
                             <label for="program_version">Versión del Programa</label>
-                            <input type="text" name="program_version" id="program_version" required
-                                placeholder="Ej: 1.0">
+                            <input type="text" name="program_version" id="program_version" required placeholder="Ej: 1">
                         </div>
 
                         <!-- CAMPO 4: Nivel del Programa
