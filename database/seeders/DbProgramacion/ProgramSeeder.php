@@ -13,94 +13,34 @@ class ProgramSeeder extends Seeder
      */
     public function run(): void
     {
-        // Programas de nivel 2 (Tecnólogo) - Diversificados
-        $diversePrograms = [
-            // 1. Tecnología
-            [
-                "id_level" => 2,
-                "program_code" => "T0011",
-                "program_version" => "1",
-                "name" => "Gestión Logística y Cadena de Suministro",
-                "instructor_id" => 2
-            ],
-            // 2. Gastronomía
-            [
-                "id_level" => 2,
-                "program_code" => "G0001",
-                "program_version" => "1",
-                "name" => "Gastronomía Internacional y Técnicas Moleculares",
-                "instructor_id" => 2
-            ],
-            // 3. Multimedia
-            [
-                "id_level" => 2,
-                "program_code" => "M0001",
-                "program_version" => "1",
-                "name" => "Producción Audiovisual y Efectos Digitales",
-                "instructor_id" => 2
-            ],
-            // 4. Administración
-            [
-                "id_level" => 2,
-                "program_code" => "A0001",
-                "program_version" => "1",
-                "name" => "Gestión de Empresas Creativas",
-                "instructor_id" => 2
-            ],
-            // 5. Salud
-            [
-                "id_level" => 2,
-                "program_code" => "S0001",
-                "program_version" => "1",
-                "name" => "Biotecnología Alimentaria",
-                "instructor_id" => 1
-            ],
-            // 6. Diseño
-            [
-                "id_level" => 2,
-                "program_code" => "D0001",
-                "program_version" => "1",
-                "name" => "Diseño de Experiencia de Usuario (UX/UI)",
-                "instructor_id" => 1
-            ],
-            // 7. Comercio
-            [
-                "id_level" => 2,
-                "program_code" => "C0001",
-                "program_version" => "1",
-                "name" => "Comercio Electrónico y Marketing Digital",
-                "instructor_id" => 3
-            ],
-            // 8. Artes
-            [
-                "id_level" => 2,
-                "program_code" => "R0001",
-                "program_version" => "1",
-                "name" => "Animación 3D y Arte Digital",
-                "instructor_id" => 2
-            ],
-            // 9. Turismo
-            [
-                "id_level" => 2,
-                "program_code" => "U0001",
-                "program_version" => "1",
-                "name" => "Gestión de Turismo Sostenible",
-                "instructor_id" => 3
-            ],
-            // 10. Manufactura
-            [
-                "id_level" => 2,
-                "program_code" => "F0001",
-                "program_version" => "1",
-                "name" => "Diseño de Moda Tecnológica (Wearables)",
-                "instructor_id" => 3
-            ]
+        // PROGRAMAS DE NIVEL 2 (Tecnólogo) - Diversificados
+        $programs = [
+            ["000112", "Gestión Logística y Cadena de Suministro", 2],
+            ["000113", "Gastronomía Internacional y Técnicas Moleculares", 2],
+            ["000114", "Producción Audiovisual y Efectos Digitales", 2],
+            ["000115", "Gestión de Empresas Creativas", 2],
+            ["000116", "Biotecnología Alimentaria", 1],
+            ["000117", "Diseño de Experiencia de Usuario (UX/UI)", 1],
+            ["000118", "Comercio Electrónico y Marketing Digital", 3],
+            ["000119", "Animación 3D y Arte Digital", 2],
+            ["000110", "Gestión de Turismo Sostenible", 3],
+            ["0001111", "Diseño de Moda Tecnológica (Wearables)", 3],
         ];
 
-        // Insertar todos los programas
-        foreach ($diversePrograms as $program) {
-            Program::create($program);
-        }
+        $data = array_map(function ($item) {
+            return [
+                'id_level' => 2, // TODOS SON NIVEL 2 EN ESTA OCACION
+                'program_code' => $item[0],
+                'program_version' => '1', // TODOS TIENE AL VERSION 1 TAMBIEN EN ESTA OCACION
+                'name' => $item[1],
+                'instructor_id' => $item[2],
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+        }, $programs);
+
+        // INSERTA TODOS LOS PROGRAMAS DE UNA SOLA VEZ, EN LUGAR DE HACER REGISTRO POR REGISTRO
+        Program::insert($data);
 
 
 
