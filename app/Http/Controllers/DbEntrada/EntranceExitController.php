@@ -7,6 +7,7 @@ use App\Models\DbProgramacion\EntranceExit;
 use App\Models\DbProgramacion\Person;
 use App\Models\DbProgramacion\Position;
 use App\Models\DbProgramacion\VisitorEntry;
+use App\Models\DbProgramacion\VisitReason;
 use Carbon\Carbon;
 
 use Illuminate\Http\Request;
@@ -18,7 +19,8 @@ class EntranceExitController extends Controller
 {
     public function create()
     {
-        return view('pages.entrance.entrance');
+        $visitReasons = VisitReason::all();
+        return view('pages.entrance.entrance', compact('visitReasons'));
     }
 
     // METODO PARA GESTIONAR ENTRADA Y SALIDA EN TIEMPO REAL
@@ -46,6 +48,7 @@ class EntranceExitController extends Controller
             $visitorPosition = Position::where('name', 'Visitante')->first();
 
             if (empty($data['id_reason'])) {
+
                 return response()->json([
                     'error' => 'Debe seleccionar un motivo de visita.'
                 ], 422);
@@ -207,4 +210,5 @@ class EntranceExitController extends Controller
             'name' => $person->name
         ]);
     }
+
 }
