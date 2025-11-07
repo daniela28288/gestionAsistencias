@@ -36,6 +36,8 @@
                     <div id="full_hour"></div>
                     <div class="date-display" id="full_date"></div>
                 </div>
+
+                <div id="error_message"></div>
             </div>
 
             <div class="columna">

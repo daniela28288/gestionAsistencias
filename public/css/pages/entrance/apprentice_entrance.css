@@ -327,6 +327,23 @@ body {
     background-color: rgb(189, 82, 189)
 }
 
+
+.info-item .icon-item {
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.orange{ background-color: rgb(240, 176, 57) }
+
+.green{ background-color: rgb(55, 165, 55) }
+
+.blue{ background-color: rgb(42, 130, 212) }
+
+.purple{ background-color: rgb(189, 82, 189) }
+
 .info-label {
     font-weight: 500;
     color: var(--gris-medio);
