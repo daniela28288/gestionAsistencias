@@ -94,11 +94,7 @@
                 </div>
 
                 <button type="submit" class="submit-btn">Ingresar</button>
-
-                <hr>
-
-                <p class="font-small">¿No tienes una cuenta? <a href="" class="color-green">Registrate aquí</a>
-                </p>
+                
             </form>
         </div>
     </div>
