@@ -4,12 +4,10 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ $title ?? 'Sistema SENA' }}</title>
     <link rel="stylesheet" href="{{ asset('css/components/buttons.css') }}" />
-    <link rel="stylesheet" href="{{ asset('css/pages/entrance/apprentice_entrance.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/pages/entrance/apprentice_entrance.css')}}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
 </head>
 
 <body>
@@ -127,6 +125,7 @@
         </div>
     </main>
 
+
     <script>
         function updateDateTime() {
             // CREA UN OBJECTO "DATE" CON LA FECHA Y HORA ACTUALES DEL SISTEMA
@@ -149,8 +148,6 @@
                 day: 'numeric'
             };
 
-
-
             // CONVIERTE LA FECHA  A FORMATO LOCAL EN ESPAÑOL(ESPAÑA) Y LA MUESTRA EN "#full_date"
             document.getElementById('full_date').textContent = now.toLocaleDateString('es-ES', options);
         }
@@ -163,7 +160,7 @@
         $(document).ready(function() {
 
             // Inicializar el badge de acción
-            $('#action').text('Esperando registro...').removeClass('entrada salida');
+            $('#action').text('ESPERANDO REGISTRO').removeClass('entrada salida');
 
             // ESTA FUNCION SE ENCARGA DE ENVIAR EL NÚMERO DE DOCUMENTO AL SERVIDOR PARA REGISTRAR LA ENTRADA/SALIDA
             function sendDocumentNumber(documentNumber) {
@@ -198,14 +195,9 @@
                         } else {
                             const actionText = response.action.toUpperCase();
                             const $action = $('#action');
-                            const $actionContainer = $action.closest('.action'); // selecciona el div padre .action
 
                             // Actualizar la interfaz con los datos recibidos
                             $action.text(actionText)
-                                .removeClass('entrada salida')
-                                .addClass(response.action.toLowerCase());
-
-                            $actionContainer
                                 .removeClass('entrada salida')
                                 .addClass(response.action.toLowerCase());
 
@@ -257,24 +249,23 @@
                 });
             }
 
-            // Validar que solo se ingresen números
-            $('#document_number').on('input', function() {
-                this.value = this.value.replace(/\D/g, '');
+            // Validar solo números
+            documentInput.addEventListener('input', () => {
+                documentInput.value = documentInput.value.replace(/\D/g, '');
             });
 
-            // Enviar el formulario al presionar Enter
-            $('#document_number').on('keypress', function(e) {
-                if (e.which === 13) {
+            // Enviar al presionar Enter
+            documentInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
                     e.preventDefault();
-                    let documentNumber = $(this).val().trim();
-                    if (documentNumber) {
-                        sendDocumentNumber(documentNumber);
-                    }
+                    const docNum = documentInput.value.trim();
+                    if (docNum) sendDocumentNumber(docNum);
                 }
             });
         });
+
     </script>
-    <!-- <script src="{{ asset('js/entrada.js') }}"></script> -->
+    <script src="{{ asset('js/entrada.js') }}"></script>
 </body>
 
 </html>
