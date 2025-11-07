@@ -19,105 +19,111 @@
 
     <!-- Contenido Principal -->
     <main class="main-content">
+        <a href="{{asset('../views/components/layout_login.blade.php')}}" class="flecha" title="Regresar al login">
+            <img src="{{asset('../icons/flecharriba.png')}}" alt="">
+        </a>
 
-        <div class="columna head">
-            <div class="card-title">
-                <img src="{{asset('../img/logoSena.png')}}" alt="" class="logo">
-                <div class="info">
-                    <h1>Control de Acceso</h1>
-                    <p>Centro de Formación Agroempresarial y Acuícola</p>
-                </div>
-            </div>
-            <div class="time-display">
-                <div id="full_hour"></div>
-                <div class="date-display" id="full_date"></div>
-            </div>
-        </div>
-
-        <div class="columna">
-            <div class="content-card">
-                <div class="input-section">
-                    <div class="input-container">
-                        <label for="document_number" class="input-label">INGRESE SU NÚMERO DE DOCUMENTO</label>
-                        <input type="text" id="document_number" class="input-field" placeholder="Ej: 123456789"
-                            autofocus>
-                        <i class="fas fa-id-card input-icon"></i>
-                        <p class="hint">Presione la tecla Enter ⏎ o Intro para continuar</p>
+        <div class="tabla">
+            <div class="columna head">
+                <div class="card-title">
+                    <img src="{{asset('../img/logoSena.png')}}" alt="" class="logo">
+                    <div class="info">
+                        <h1>Control de Acceso</h1>
+                        <p>Centro de Formación Agroempresarial y Acuícola</p>
                     </div>
                 </div>
+                <div class="time-display">
+                    <div id="full_hour"></div>
+                    <div class="date-display" id="full_date"></div>
+                </div>
+            </div>
 
-                <div class="action-section">
-                    <div class="action">
-                        <div class="icon">
-                            <img src="../icons/cargando.gif" alt="">
+            <div class="columna">
+                <div class="content-card">
+                    <div class="input-section">
+                        <div class="input-container">
+                            <label for="document_number" class="input-label">INGRESE SU NÚMERO DE DOCUMENTO</label>
+                            <input type="text" id="document_number" class="input-field" placeholder="Ej: 123456789"
+                                autofocus>
+                            <i class="fas fa-id-card input-icon"></i>
+                            <p class="hint">Presione la tecla Enter ⏎ o Intro para continuar</p>
                         </div>
+                    </div>
 
-                        <div class="info-entrada">
-                            <span class="action-label">ACCIÓN REGISTRADA</span>
-                            <h3 class="action-badge" id="action"></h3>
-                        </div>
+                    <div class="action-section">
+                        <div class="action">
+                            <div class="icon">
+                                <img src="../icons/cargando.gif" alt="">
+                            </div>
 
-                        <div class="info-entrada">
-                            <div class="anuncio">
-                                <p></p>
+                            <div class="info-entrada">
+                                <span class="action-label">ACCIÓN REGISTRADA</span>
+                                <h3 class="action-badge" id="action"></h3>
+                            </div>
+
+                            <div class="info-entrada">
+                                <div class="anuncio">
+                                    <p></p>
+                                </div>
                             </div>
                         </div>
                     </div>
+
+                    <div id="error_message"></div>
                 </div>
 
-                <div id="error_message"></div>
+                <div class="user-info-card">
+                    <div class="title">
+                        <img src="{{asset('../icons/iconuser.png')}}" alt="">
+                        <h3>Información del usuario</h3>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="icon-item orange">
+                            <img src="{{ asset('../icons/name.png') }}" alt="">
+                        </div>
+
+                        <div class="text-item">
+                            <div class="info-label">Nombre Completo</div>
+                            <div class="info-value" id="name">-</div>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="icon-item green">
+                            <img src="{{ asset('../icons/rol.png') }}" alt="">
+                        </div>
+
+                        <div class="text-item">
+                            <div class="info-label">Cargo</div>
+                            <div class="info-value" id="position">-</div>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="icon-item blue">
+                            <img src="{{ asset('../icons/reloj.png') }}" alt="">
+                        </div>
+
+                        <div class="text-item">
+                            <div class="info-label">Hora de registro</div>
+                            <div class="info-value" id="register-time">-</div>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="icon-item purple">
+                            <img src="{{ asset('../icons/estado.png') }}" alt="">
+                        </div>
+
+                        <div class="text-item">
+                            <div class="info-label">Estado</div>
+                            <div class="info-value" id="status">Pendiente</div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div class="user-info-card">
-                <div class="title">
-                    <img src="{{asset('../icons/iconuser.png')}}" alt="">
-                    <h3>Información del usuario</h3>
-                </div>
-
-                <div class="info-item">
-                    <div class="icon-item orange">
-                        <img src="{{ asset('../icons/name.png') }}" alt="">
-                    </div>
-
-                    <div class="text-item">
-                        <div class="info-label">Nombre Completo</div>
-                        <div class="info-value" id="name">-</div>
-                    </div>
-                </div>
-
-                <div class="info-item">
-                    <div class="icon-item green">
-                        <img src="{{ asset('../icons/rol.png') }}" alt="">
-                    </div>
-
-                    <div class="text-item">
-                        <div class="info-label">Cargo</div>
-                        <div class="info-value" id="position">-</div>
-                    </div>
-                </div>
-
-                <div class="info-item">
-                    <div class="icon-item blue">
-                        <img src="{{ asset('../icons/reloj.png') }}" alt="">
-                    </div>
-
-                    <div class="text-item">
-                        <div class="info-label">Hora de registro</div>
-                        <div class="info-value" id="register-time">-</div>
-                    </div>
-                </div>
-
-                <div class="info-item">
-                    <div class="icon-item purple">
-                        <img src="{{ asset('../icons/estado.png') }}" alt="">
-                    </div>
-
-                    <div class="text-item">
-                        <div class="info-label">Estado</div>
-                        <div class="info-value" id="status">Pendiente</div>
-                    </div>
-                </div>
-            </div>
         </div>
     </main>
 

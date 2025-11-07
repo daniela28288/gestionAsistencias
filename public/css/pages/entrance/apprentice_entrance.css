@@ -24,14 +24,49 @@ body {
     color: var(--gris-oscuro);
     min-height: 100vh;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     max-width: 100%;
     background: linear-gradient(rgb(243, 243, 245), rgb(231, 231, 235));
 }
 
+.flecha {
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    cursor: pointer;
+}
+
+.flecha img {
+    transform: rotate(-90deg);
+    padding: 10px;
+    border-radius: 10px;
+    background-color: white;
+    width: 50px;
+}
+
 .main-content {
+    display: flex;
+    width: 1500px;
+    gap: 10px;
+    opacity: 0;
+    animation: fadeInSlide 0.8s ease-out forwards;
+    animation-delay: 0.2s;
+}
+
+@keyframes fadeInSlide {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.tabla {
     display: flex;
     width: 1500px;
     gap: 10px;
@@ -49,7 +84,7 @@ body {
     height: 160px;
 }
 
-.logo{
+.logo {
     padding: 10px;
     background-color: var(--verde-sena);
     border-radius: 10px;
@@ -111,7 +146,6 @@ body {
     height: 600px;
 }
 
-
 .input-section {
     margin: 2rem 0;
 }
@@ -165,11 +199,11 @@ body {
 }
 
 .hint {
-  font-size: 15px;
-  font-family: Arial, Helvetica, sans-serif;
-  color: #888;
-  margin-top: 10px;
-  text-align: right;
+    font-size: 18px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #888;
+    margin-top: 10px;
+    text-align: right;
 }
 
 .action-section {
@@ -197,7 +231,7 @@ body {
     gap: 10px;
 }
 
-.action .icon{
+.action .icon {
     background-color: white;
     padding: 5px;
     display: flex;
@@ -206,12 +240,12 @@ body {
     border-radius: 10px;
 }
 
-.action h3{
+.action h3 {
     font-weight: 400;
     font-size: 20px;
 }
 
-.info-entrada{
+.info-entrada {
     display: flex;
     flex-direction: column;
 }
@@ -278,13 +312,21 @@ body {
     align-items: center;
 }
 
-.orange{ background-color: rgb(240, 176, 57) }
+.orange {
+    background-color: rgb(240, 176, 57)
+}
 
-.green{ background-color: rgb(55, 165, 55) }
+.green {
+    background-color: rgb(55, 165, 55)
+}
 
-.blue{ background-color: rgb(42, 130, 212) }
+.blue {
+    background-color: rgb(42, 130, 212)
+}
 
-.purple{ background-color: rgb(189, 82, 189) }
+.purple {
+    background-color: rgb(189, 82, 189)
+}
 
 .info-label {
     font-weight: 500;
