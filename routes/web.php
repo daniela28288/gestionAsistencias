@@ -25,11 +25,14 @@ Route::post('logout', [EntranceAuthController::class, 'logout'])->name('logout')
 //Entrada ------------------------------------------------------------------------------
 
 //Esta rutas no requieren permisos estas son de la gestion de entrada de documentos
+
 Route::get('entrance/entrada', [EntranceAuthController::class, 'entrada_asistencia'])->name('gestion_entrada');
 Route::post('/entrance/store', [EntranceExitController::class, 'store'])->name('entrance.store');
 
+
 //Modulo Entrada
-// Route::get('/entrance', [EntranceExitController::class,  'create'])->middleware('can:entrance.create')->name('entrance.create');
+// Route::get('/entrance', [EntranceExitController::class, 'create'])->name('entrance.create');
+
 
 
 //Modulo Entrada - Administrador
@@ -46,7 +49,7 @@ Route::post('/entrance/upload/excel/people', [EntranceAdminController::class, 's
 
 //Modulo Entrada - Asistencias
 Route::get('/entrance/assistance/index', [AssistanceController::class, 'assistanceIndex'])
-->middleware('can:entrance.assistance.index')->name('entrance.assistance.index');
+    ->middleware('can:entrance.assistance.index')->name('entrance.assistance.index');
 
 // Route::get('/entrance/assistance_show_history/{$id}', [AssistanceController::class, 'showPeoples_history'])
 // ->middleware('can:entrance.assistance.show_history')
@@ -86,7 +89,7 @@ Route::get('entrance/apprentice/{id}', [ApprenticeController::class, 'show'])->n
 Route::get('entrance/admin/assistance', [AssistanceController::class, 'assistanceIndex'])->middleware('can:entrance.assistance.index')->name('entrance.assistance.index');
 //ruta asistencias pór persona
 Route::get('entrance/admin/assistance/{id}', [AssistanceController::class, 'showPeoples'])
-->middleware('can:entrance.assistance.show')->name('entrance.assistance.show');
+    ->middleware('can:entrance.assistance.show')->name('entrance.assistance.show');
 //ruta todas las asistencias
 Route::get('/entrance/assistance/all', [AssistanceController::class, 'allAssistances'])
     ->middleware('can:entrance.assistance.all')
@@ -215,7 +218,7 @@ Route::get('programming/admin/programmig_programming_index', [ProgramanControlle
 Route::post('programming/admin/programmig_programming_store', [ProgramanController::class, 'register_programmig']) //register_programming
     ->middleware('can:programing.register_programming_instructor_store')->name('programming.register_programming_instructor_store');
 
-    //ruta para programar competencia disponible
+//ruta para programar competencia disponible
 Route::get('programming/admin/programming_instructor_update/{id}', [ProgramanController::class, 'programming_index_edit'])
     ->middleware('can:programaciones_index')
     ->name('programmig.reprogramming_index');
