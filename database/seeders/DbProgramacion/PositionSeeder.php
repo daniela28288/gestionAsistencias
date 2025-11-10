@@ -24,24 +24,3 @@ class PositionSeeder extends Seeder
         Position::insert($positions);
     }
 }
-
-
-//     Position::create([
-//         'name' => 'Coordinador'
-//     ]);
-//     Position::create([
-//         'name' => 'Administrativo'
-//     ]);
-
-//     Position::create([
-//         'name' => 'Aprendiz'
-//     ]);
-
-//     Position::create([
-//         'name' => 'Instructor'
-//     ]);
-
-//     Position::create([
-//         'name' => 'Visitante'
-//     ]);
-// }

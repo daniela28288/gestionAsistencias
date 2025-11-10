@@ -17,4 +17,10 @@ class Position extends Model
     {
         return $this->hasMany(Person::class);
     }
+
+    // UNA POSICION PUEDE TENER MUCHAS ENTRADAS DE VISITANTES
+    public function visitorEntries()
+    {
+        return $this->hasMany(VisitorEntry::class);
+    }
 }

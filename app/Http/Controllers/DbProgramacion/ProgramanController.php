@@ -39,17 +39,15 @@ class ProgramanController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // METODO PARA REGISTRAR UN NUEVO PROGRAMA
     public function register_programan(Request $request)
     {
         // Validación de datos
         $request->validate([
             'id_level' => 'required|exists:db_programacion.program_level,id',
-            'program_code' => 'required|string|max:255',
-            'program_version' => 'required|string|max:255',
-            'name' => 'required|string|max:255',
+            'program_code' => 'required|string|unique:programs,program_code|min:6|max:15|regex:/^[0-9]+$/', // "regex" PERMITE QUE SOLO SEAN NUMEROS 
+            'program_version' => 'required|string|min:1|max:5|regex:/^[0-9]+$/',
+            'name' => 'required|string|min:6|max:255',
             'instructor_id' => 'required|exists:db_programacion.instructors,id',
         ]);
 
@@ -61,16 +59,6 @@ class ProgramanController extends Controller
             'name' => $request->name,
             'instructor_id' => $request->instructor_id,
         ]);
-
-        // Opción 2 (comentada): guardar usando new y save()
-        /*
-    $program = new dbProgramacionPrograman();
-    $program->id_level = $request->id_level;
-    $program->program_code = $request->program_code;
-    $program->program_version = $request->program_version;
-    $program->name = $request->name;
-    $program->save();
-    */
 
         return redirect()->back()->with('success', 'Programa registrado exitosamente.');
     }
@@ -99,16 +87,20 @@ class ProgramanController extends Controller
 
         // Obtener competencias asignadas a instructores
         $assignedCompetencies = Competencies::whereHas('instructors')
-            ->with(['cohorts' => function ($query) {
-                $query->with('program');
-            }])
+            ->with([
+                'cohorts' => function ($query) {
+                    $query->with('program');
+                }
+            ])
             ->get();
 
         // Competencias no asignadas a ningún instructor
         $unassignedCompetencies = Competencies::whereDoesntHave('instructors')
-            ->with(['cohorts' => function ($query) {
-                $query->with('program');
-            }])
+            ->with([
+                'cohorts' => function ($query) {
+                    $query->with('program');
+                }
+            ])
             ->get();
 
         return view(
@@ -274,15 +266,15 @@ class ProgramanController extends Controller
                 }
 
                 $resultado[] = [
-                    'person_id'       => $apprentice->person->id,
-                    'name'            => $apprentice->person->name,
+                    'person_id' => $apprentice->person->id,
+                    'name' => $apprentice->person->name,
                     'document_number' => $apprentice->person->document_number,
-                    'email'           => $apprentice->person->email,
-                    'apprentice_id'   => $apprentice->id,
-                    'cohort_id'       => $cohort->id,
+                    'email' => $apprentice->person->email,
+                    'apprentice_id' => $apprentice->id,
+                    'cohort_id' => $cohort->id,
                     'start_date' => $cohort->start_date,
-                    'end_date'   => $cohort->end_date,
-                    'cohort_name'     => $cohort->number_cohort,
+                    'end_date' => $cohort->end_date,
+                    'cohort_name' => $cohort->number_cohort,
                     'nombre_programa' => $cohort->program->name ?? 'Sin programa',
                 ];
             }
@@ -545,12 +537,12 @@ class ProgramanController extends Controller
         }
 
         return view('pages.programming.Admin.programming_instructor.instructor_add_programming', [
-            'cohorts'      => Cohort::with(['program', 'competences'])
+            'cohorts' => Cohort::with(['program', 'competences'])
                 ->where('end_date', '>', \Carbon\Carbon::today())
                 ->get(),
-            'ambientes'    => Classroom::with('towns', 'Block')->get(),
+            'ambientes' => Classroom::with('towns', 'Block')->get(),
             'instructores' => $instructores, // 👈 Agregar instructores con horas calculadas
-            'modo'         => 'nuevo'
+            'modo' => 'nuevo'
         ]);
     }
 
