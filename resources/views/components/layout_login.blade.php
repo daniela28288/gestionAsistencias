@@ -94,9 +94,6 @@
                 </div>
 
                 <button type="submit" class="submit-btn">Ingresar</button>
-
-
-                </p>
             </form>
         </div>
     </div>

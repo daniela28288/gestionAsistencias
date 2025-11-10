@@ -25,11 +25,14 @@ Route::post('logout', [EntranceAuthController::class, 'logout'])->name('logout')
 //Entrada ------------------------------------------------------------------------------
 
 //Esta rutas no requieren permisos estas son de la gestion de entrada de documentos
+
 Route::get('entrance/entrada', [EntranceAuthController::class, 'entrada_asistencia'])->name('gestion_entrada');
 Route::post('/entrance/store', [EntranceExitController::class, 'store'])->name('entrance.store');
 
+
 //Modulo Entrada
-// Route::get('/entrance', [EntranceExitController::class,  'create'])->middleware('can:entrance.create')->name('entrance.create');
+// Route::get('/entrance', [EntranceExitController::class, 'create'])->name('entrance.create');
+
 
 
 //Modulo Entrada - Administrador
