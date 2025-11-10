@@ -251,13 +251,13 @@ body {
 }
 
 
-.action.entrada {
+.entrada {
     background: linear-gradient(135deg, #4CAF50, #2E7D32);
     color: white;
 }
 
-.action.salida {
-    background: linear-gradient(135deg, #FF9800, #EF6C00);
+.salida {
+    background: linear-gradient(135deg, #4f67b6, #205191);
     color: white;
 }
 

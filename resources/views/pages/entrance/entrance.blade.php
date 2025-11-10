@@ -56,14 +56,14 @@
 
                             <div class="info-entrada">
                                 <span class="action-label">ACCIÓN REGISTRADA</span>
-                                <h3 class="action-badge" id="action"></h3>
+                                <h3 class="action-badge" id="action">Esperando documento...</h3>
                             </div>
-
+                            <!-- 
                             <div class="info-entrada">
                                 <div class="anuncio">
                                     <p></p>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
 
@@ -129,10 +129,12 @@
     <script>
         document.addEventListener("DOMContentLoaded", () => {
 
-
             // VARIABLES GLOBALES
             const temporizadores = {}; // { documento: { restante, intervalo } }
             let documentoActualMostrado = null;
+
+            // ELEMENTO IMG
+            const iconImg = document.querySelector('.action .icon img');
 
             // ACTUALIZAR FECHA Y HORA
             function updateDateTime() {
@@ -161,17 +163,18 @@
             const nameField = document.getElementById('name');
             const positionField = document.getElementById('position');
             const timeField = document.getElementById('register-time');
+            const infoEntrada = document.querySelector('.action');
 
             // ESTADO INICIAL
-            actionBadge.textContent = 'ESPERANDO REGISTRO';
-            actionBadge.classList.remove('entrada', 'salida');
+            infoEntrada.classList.remove('entrada', 'salida');
+            iconImg.src = '../icons/cargando.gif';
+            statusText.textContent = 'Esperando documento...';
 
             // ENVIAR DOCUMENTO AL SERVIDOR
             async function sendDocumentNumber(documentNumber) {
                 const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+                documentoActualMostrado = documentNumber;
 
-                documentoActualMostrado = documentNumber; // GUARDAMOS EL DOCUMENTO ACTUAL
-                // SI EL USUARIO TIENE UN CONTADOR ACTIVO
                 if (temporizadores[documentNumber] && temporizadores[documentNumber].restante > 0) {
                     const tiempo = temporizadores[documentNumber].restante;
                     showError(`Ya registró esta acción recientemente. Espere ${tiempo} segundos`, '#FF9800');
@@ -188,7 +191,9 @@
                             'Content-Type': 'application/json',
                             'X-CSRF-TOKEN': csrfToken
                         },
-                        body: JSON.stringify({ document_number: documentNumber })
+                        body: JSON.stringify({
+                            document_number: documentNumber
+                        })
                     });
 
                     if (!response.ok) {
@@ -209,9 +214,22 @@
                     // ÉXITO
                     const actionText = data.action.toUpperCase();
                     actionBadge.textContent = actionText;
-                    actionBadge.classList.remove('entrada', 'salida');
-                    actionBadge.classList.add(data.action.toLowerCase());
 
+                    // Cambiar color del contenedor según acción
+                    infoEntrada.classList.remove('entrada', 'salida');
+                    infoEntrada.classList.add(data.action.toLowerCase());
+
+                    // Cambiar imagen según acción
+                    if (data.action.toLowerCase() === 'entrada') {
+                        iconImg.src = '../icons/entrada.gif';
+                    } else if (data.action.toLowerCase() === 'salida') {
+                        iconImg.src = '../icons/salida.gif';
+                    }
+
+                    // Animación de pulso en el texto
+                    pulse(actionBadge);
+
+                    // Actualizar datos
                     nameField.textContent = data.name;
                     positionField.textContent = data.position;
                     timeField.textContent = document.getElementById('full_hour').textContent;
@@ -219,9 +237,16 @@
                     statusText.textContent = 'Exitoso';
                     statusText.style.color = '#2E7D32';
                     errorMsg.style.display = 'none';
-
                     resetForm();
-                    pulse(actionBadge);
+
+                    // Después de 3 segundos, volver a estado inicial
+                    setTimeout(() => {
+                        infoEntrada.classList.remove('entrada', 'salida');
+                        iconImg.src = '../icons/cargando.gif';
+                        actionBadge.textContent = '';
+                        statusText.textContent = 'Esperando documento...';
+                        statusText.style.color = '#000';
+                    }, 3000);
 
                 } catch (error) {
                     showError('Error de conexión. Intente nuevamente.', '#C62828');
@@ -234,11 +259,10 @@
             // MANEJO DE ERRORES HTTP
             function handleHttpError(status, documentoActual) {
                 let message = '';
-
                 switch (status) {
                     case 429:
                         startRateLimitCounter(documentoActual);
-                        return; // no mostrar otros errores
+                        return;
                     case 422:
                         message = 'Documento inválido. Verifique el número ingresado.';
                         break;
@@ -251,26 +275,21 @@
                     default:
                         message = 'Error de conexión. Intente nuevamente.';
                 }
-
-                // Otros errores reemplazan cualquier contador en pantalla
                 showError(message, '#C62828');
                 resetDisplayFields();
                 shake(errorMsg);
                 resetForm();
             }
 
-
             // CONTADOR DE BLOQUEO POR USUARIO (429)
             function startRateLimitCounter(documentoActual) {
-                const waitTime = 30; // segundos
-
-                // SI YA EXISTE UN CONTADOR, NO CREAR OTRO
+                const waitTime = 30;
                 if (temporizadores[documentoActual]) return;
-
                 let tiempoRestante = waitTime;
-                temporizadores[documentoActual] = { restante: tiempoRestante };
+                temporizadores[documentoActual] = {
+                    restante: tiempoRestante
+                };
 
-                // SOLO MOSTRAR SI EL INPUT COINCIDE CON EL DOCUMENTO BLOQUEADO
                 if (docInput.value.trim() === documentoActual) {
                     showError(`Ya registró esta acción recientemente. Espere ${tiempoRestante} segundos`, '#FF9800');
                 }
@@ -279,7 +298,6 @@
                     tiempoRestante--;
                     temporizadores[documentoActual].restante = tiempoRestante;
 
-                    // Mostrar solo si el usuario actual está viendo su propio contador
                     if (documentoActualMostrado === documentoActual &&
                         docInput.value.trim() === documentoActual &&
                         tiempoRestante > 0) {
@@ -290,10 +308,9 @@
                         clearInterval(intervalo);
                         delete temporizadores[documentoActual];
 
-                        // Solo limpiar si el usuario está viendo su propio documento
                         if (docInput.value.trim() === documentoActual) {
                             errorMsg.style.display = 'none';
-                            statusText.textContent = 'Pendiente';
+                            statusText.textContent = 'Esperando documento';
                             statusText.style.color = '#000';
                         }
                     }
@@ -341,14 +358,9 @@
                 const val = e.target.value.trim();
                 documentoActualMostrado = val;
 
-                // SI EL VALOR ACTUAL TIENE UN CONTADOR ACTIVO -> MOSTRARLO
                 if (temporizadores[val] && temporizadores[val].restante > 0) {
-                    showError(
-                        `Ya registró esta acción recientemente. Espere ${temporizadores[val].restante} segundos`,
-                        '#FF9800'
-                    );
+                    showError(`Ya registró esta acción recientemente. Espere ${temporizadores[val].restante} segundos`, '#FF9800');
                 } else if (errorMsg.textContent.includes('Espere') && !temporizadores[val]) {
-                    // SI NO HAY CONTADOR ACTIVO, PERO HABIA MENSAJE DE ESPERA -> OCULTARLO
                     errorMsg.style.display = 'none';
                 }
             });
@@ -363,8 +375,8 @@
                 }
             });
         });
-
     </script>
+
 </body>
 
 </html>
