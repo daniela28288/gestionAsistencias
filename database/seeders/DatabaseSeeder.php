@@ -26,6 +26,7 @@ use Database\Seeders\DbProgramacion\CohortSeeder;
 use Database\Seeders\DbProgramacion\Dayseeder as DbProgramacionDayseeder;
 use Database\Seeders\DbProgramacion\DaysTrainingSeeder;
 
+use Database\Seeders\DbProgramacion\VisitReasonSeeder;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
@@ -42,6 +43,7 @@ class DatabaseSeeder extends Seeder
         DB::connection('db_programacion')->beginTransaction();
 
         $this->call([
+            VisitReasonSeeder::class,
             PositionSeeder::class,
             RoleSeeder::class,
             TownSeeder::class,

@@ -13,7 +13,6 @@ return new class extends Migration {
         Schema::create('visit_reasons', function (Blueprint $table) {
             $table->id();
             $table->string('reason');
-            $table->timestamps();
         });
     }
 
