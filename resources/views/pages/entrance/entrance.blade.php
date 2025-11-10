@@ -127,145 +127,244 @@
 
 
     <script>
-        function updateDateTime() {
-            // CREA UN OBJECTO "DATE" CON LA FECHA Y HORA ACTUALES DEL SISTEMA
-            const now = new Date();
-
-            // OBTENEMOS LA HORA, LOS MINUTOS Y LOS SEGUNDOS
-            // "toString().padStart(2, '0')" GARANTIZA QUE TENGA DOS DIGITOS EJ:(08 EN VEZ DE 8)
-            const hour = now.getHours().toString().padStart(2, '0');
-            const minutes = now.getMinutes().toString().padStart(2, '0');
-            const seconds = now.getSeconds().toString().padStart(2, '0');
+        document.addEventListener("DOMContentLoaded", () => {
 
 
-            document.getElementById('full_hour').textContent = `${hour}:${minutes}:${seconds}`;
+            // VARIABLES GLOBALES
+            const temporizadores = {}; // { documento: { restante, intervalo } }
+            let documentoActualMostrado = null;
 
-            // options DEFINE EL FORMATO DE FECHA
-            const options = {
-                weekday: 'long', // "LONG" ES EL FORMATO COMPLETO (LUNES, MARTES, ETC..)
-                year: 'numeric',
-                month: 'long', // (MARZO, ABRIL, ETC...)
-                day: 'numeric'
-            };
+            // ACTUALIZAR FECHA Y HORA
+            function updateDateTime() {
+                const now = new Date();
+                const hour = now.getHours().toString().padStart(2, '0');
+                const minutes = now.getMinutes().toString().padStart(2, '0');
+                const seconds = now.getSeconds().toString().padStart(2, '0');
+                document.getElementById('full_hour').textContent = `${hour}:${minutes}:${seconds}`;
 
-            // CONVIERTE LA FECHA  A FORMATO LOCAL EN ESPAÑOL(ESPAÑA) Y LA MUESTRA EN "#full_date"
-            document.getElementById('full_date').textContent = now.toLocaleDateString('es-ES', options);
-        }
-        // LLAMA A updateDateTime() CADA SEGUNDO PARA ACTUALIZAR LA FECHA Y LA HORA
-        setInterval(updateDateTime, 1000);
-        updateDateTime();
+                const options = {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                };
+                document.getElementById('full_date').textContent = now.toLocaleDateString('es-ES', options);
+            }
+            setInterval(updateDateTime, 1000);
+            updateDateTime();
 
-        // FUNCIONALIDAD CON jQUERY (INTERACCION CON EL USUARIO)
-        // ESPERA A QUE TODO EL DOCUMENTO ESTÉ CARGADO ANTES DE EJECUTAR EL CÓDIGO
-        $(document).ready(function() {
+            // ELEMENTOS DEL DOM
+            const actionBadge = document.getElementById('action');
+            const statusText = document.getElementById('status');
+            const errorMsg = document.getElementById('error_message');
+            const docInput = document.getElementById('document_number');
+            const nameField = document.getElementById('name');
+            const positionField = document.getElementById('position');
+            const timeField = document.getElementById('register-time');
 
-            // Inicializar el badge de acción
-            $('#action').text('ESPERANDO REGISTRO').removeClass('entrada salida');
+            // ESTADO INICIAL
+            actionBadge.textContent = 'ESPERANDO REGISTRO';
+            actionBadge.classList.remove('entrada', 'salida');
 
-            // ESTA FUNCION SE ENCARGA DE ENVIAR EL NÚMERO DE DOCUMENTO AL SERVIDOR PARA REGISTRAR LA ENTRADA/SALIDA
-            function sendDocumentNumber(documentNumber) {
-                // OBTIENE EL TOKEN CSRF DESDE UNA ETIQUETA META DEL HTML
-                // ESTE TOKEN ES NECESARIO PARA PROTEGER CONTRA ATAQUES CSRF EN FORMULARIOS AJAX
-                let csrfToken = $('meta[name="csrf-token"]').attr('content');
+            // ENVIAR DOCUMENTO AL SERVIDOR
+            async function sendDocumentNumber(documentNumber) {
+                const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
-                // HACE UNA PETICION POST A LA RUTA DE LARAVEL
-                $.ajax({
-                    url: "{{ route('entrance.store') }}",
-                    type: 'POST',
-                    data: {
-                        document_number: documentNumber,
-                        _token: csrfToken
-                    },
-                    // PERO ANTES DE ENVIAR CAMBIA EL ESTADO (#status) Y EL COLOR
-                    beforeSend: function() {
-                        $('#status').text('Verificando...').css('color', '#FF9800');
-                    },
-                    success: function(response) {
-                        // SI EL SERVIDOR RESPONDE CON UN CAMPO ERROR, SIGNIFICA QUE HUBO UN PROBLEMA
-                        if (response.error) {
-                            $('#error_message').text(response.error).show();
-                            $('#document_number').val('').focus();
-                            $('#status').text('Error').css('color', '#C62828');
+                documentoActualMostrado = documentNumber; // GUARDAMOS EL DOCUMENTO ACTUAL
+                // SI EL USUARIO TIENE UN CONTADOR ACTIVO
+                if (temporizadores[documentNumber] && temporizadores[documentNumber].restante > 0) {
+                    const tiempo = temporizadores[documentNumber].restante;
+                    showError(`Ya registró esta acción recientemente. Espere ${tiempo} segundos`, '#FF9800');
+                    return;
+                }
 
-                            // Animación de error
-                            $('#error_message').css('animation', 'none');
-                            setTimeout(function() {
-                                $('#error_message').css('animation', 'shake 0.5s ease');
-                            }, 10);
-                        } else {
-                            const actionText = response.action.toUpperCase();
-                            const $action = $('#action');
+                statusText.textContent = 'Verificando...';
+                statusText.style.color = '#FF9800';
 
-                            // Actualizar la interfaz con los datos recibidos
-                            $action.text(actionText)
-                                .removeClass('entrada salida')
-                                .addClass(response.action.toLowerCase());
+                try {
+                    const response = await fetch("{{ route('entrance.store') }}", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': csrfToken
+                        },
+                        body: JSON.stringify({ document_number: documentNumber })
+                    });
 
-                            $('#position').text(response.position);
-                            $('#name').text(response.name);
-                            $('#register-time').text($('#full_hour').text());
-                            $('#status').text('Exitoso').css('color', '#2E7D32');
-                            $('#error_message').hide();
-                            $('#document_number').val('').focus();
-
-                            // Animación de confirmación
-                            $action.css('animation', 'none');
-                            setTimeout(function() {
-                                $action.css('animation', 'pulse 0.6s ease');
-                            }, 10);
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        let message = 'Error de conexión. Intente nuevamente.';
-
-                        // Si Laravel devolvió un JSON con mensaje de error, lo usamos directamente
-                        if (xhr.responseJSON && xhr.responseJSON.error) {
-                            message = xhr.responseJSON.error;
-                        }
-                        // SI FUE UN ERROR DE VALIDACION EJ:(documento inválido)
-                        else if (xhr.status === 422) {
-                            message = 'Documento inválido. Verifique el número ingresado.';
-                        }
-                        // SI EL DOCUMENTO NO EXISTE
-                        else if (xhr.status === 404) {
-                            message = 'Documento no registrado en el sistema.';
-                        }
-                        // ERROR INTERNO EN EL SERVIDOR
-                        else if (xhr.status === 500) {
-                            message = 'Error interno del servidor. Contacte al administrador.';
-                        }
-
-                        // Mostrar el mensaje en la interfaz
-                        $('#error_message').text(message).show();
-                        $('#status').text('Fallido').css('color', '#C62828');
-
-                        // Animación opcional (para llamar la atención visualmente)
-                        $('#error_message').css('animation', 'none');
-                        setTimeout(function() {
-                            $('#error_message').css('animation', 'shake 0.5s ease');
-                        }, 10);
+                    if (!response.ok) {
+                        handleHttpError(response.status, documentNumber);
+                        return;
                     }
 
-                });
+                    const data = await response.json();
+
+                    if (data.error) {
+                        showError(data.error, '#C62828');
+                        resetDisplayFields();
+                        shake(errorMsg);
+                        resetForm();
+                        return;
+                    }
+
+                    // ÉXITO
+                    const actionText = data.action.toUpperCase();
+                    actionBadge.textContent = actionText;
+                    actionBadge.classList.remove('entrada', 'salida');
+                    actionBadge.classList.add(data.action.toLowerCase());
+
+                    nameField.textContent = data.name;
+                    positionField.textContent = data.position;
+                    timeField.textContent = document.getElementById('full_hour').textContent;
+
+                    statusText.textContent = 'Exitoso';
+                    statusText.style.color = '#2E7D32';
+                    errorMsg.style.display = 'none';
+
+                    resetForm();
+                    pulse(actionBadge);
+
+                } catch (error) {
+                    showError('Error de conexión. Intente nuevamente.', '#C62828');
+                    resetDisplayFields();
+                    shake(errorMsg);
+                    resetForm();
+                }
             }
 
-            // Validar solo números
-            documentInput.addEventListener('input', () => {
-                documentInput.value = documentInput.value.replace(/\D/g, '');
+            // MANEJO DE ERRORES HTTP
+            function handleHttpError(status, documentoActual) {
+                let message = '';
+
+                switch (status) {
+                    case 429:
+                        startRateLimitCounter(documentoActual);
+                        return; // no mostrar otros errores
+                    case 422:
+                        message = 'Documento inválido. Verifique el número ingresado.';
+                        break;
+                    case 404:
+                        message = 'Documento no registrado en el sistema.';
+                        break;
+                    case 500:
+                        message = 'Error interno del servidor. Contacte al administrador.';
+                        break;
+                    default:
+                        message = 'Error de conexión. Intente nuevamente.';
+                }
+
+                // Otros errores reemplazan cualquier contador en pantalla
+                showError(message, '#C62828');
+                resetDisplayFields();
+                shake(errorMsg);
+                resetForm();
+            }
+
+
+            // CONTADOR DE BLOQUEO POR USUARIO (429)
+            function startRateLimitCounter(documentoActual) {
+                const waitTime = 30; // segundos
+
+                // SI YA EXISTE UN CONTADOR, NO CREAR OTRO
+                if (temporizadores[documentoActual]) return;
+
+                let tiempoRestante = waitTime;
+                temporizadores[documentoActual] = { restante: tiempoRestante };
+
+                // SOLO MOSTRAR SI EL INPUT COINCIDE CON EL DOCUMENTO BLOQUEADO
+                if (docInput.value.trim() === documentoActual) {
+                    showError(`Ya registró esta acción recientemente. Espere ${tiempoRestante} segundos`, '#FF9800');
+                }
+
+                const intervalo = setInterval(() => {
+                    tiempoRestante--;
+                    temporizadores[documentoActual].restante = tiempoRestante;
+
+                    // Mostrar solo si el usuario actual está viendo su propio contador
+                    if (documentoActualMostrado === documentoActual &&
+                        docInput.value.trim() === documentoActual &&
+                        tiempoRestante > 0) {
+                        showError(`Ya registró esta acción recientemente. Espere ${tiempoRestante} segundos`, '#FF9800');
+                    }
+
+                    if (tiempoRestante <= 0) {
+                        clearInterval(intervalo);
+                        delete temporizadores[documentoActual];
+
+                        // Solo limpiar si el usuario está viendo su propio documento
+                        if (docInput.value.trim() === documentoActual) {
+                            errorMsg.style.display = 'none';
+                            statusText.textContent = 'Pendiente';
+                            statusText.style.color = '#000';
+                        }
+                    }
+                }, 1000);
+
+                temporizadores[documentoActual].intervalo = intervalo;
+            }
+
+            // FUNCIONES AUXILIARES
+            function showError(msg, color) {
+                errorMsg.textContent = msg;
+                errorMsg.style.display = 'block';
+                statusText.textContent = 'Fallido';
+                statusText.style.color = color;
+            }
+
+            function resetDisplayFields() {
+                nameField.textContent = '-';
+                positionField.textContent = '-';
+                timeField.textContent = '-';
+            }
+
+            function resetForm() {
+                docInput.value = '';
+                docInput.focus();
+            }
+
+            function shake(el) {
+                el.style.animation = 'none';
+                setTimeout(() => {
+                    el.style.animation = 'shake 0.5s ease';
+                }, 10);
+            }
+
+            function pulse(el) {
+                el.style.animation = 'none';
+                setTimeout(() => {
+                    el.style.animation = 'pulse 0.6s ease';
+                }, 10);
+            }
+
+            // EVENTOS DE INPUT
+            docInput.addEventListener('input', (e) => {
+                e.target.value = e.target.value.replace(/\D/g, '');
+                const val = e.target.value.trim();
+                documentoActualMostrado = val;
+
+                // SI EL VALOR ACTUAL TIENE UN CONTADOR ACTIVO -> MOSTRARLO
+                if (temporizadores[val] && temporizadores[val].restante > 0) {
+                    showError(
+                        `Ya registró esta acción recientemente. Espere ${temporizadores[val].restante} segundos`,
+                        '#FF9800'
+                    );
+                } else if (errorMsg.textContent.includes('Espere') && !temporizadores[val]) {
+                    // SI NO HAY CONTADOR ACTIVO, PERO HABIA MENSAJE DE ESPERA -> OCULTARLO
+                    errorMsg.style.display = 'none';
+                }
             });
 
-            // Enviar al presionar Enter
-            documentInput.addEventListener('keypress', (e) => {
+            docInput.addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') {
                     e.preventDefault();
-                    const docNum = documentInput.value.trim();
-                    if (docNum) sendDocumentNumber(docNum);
+                    const documentNumber = docInput.value.trim();
+                    if (documentNumber) {
+                        sendDocumentNumber(documentNumber);
+                    }
                 }
             });
         });
 
     </script>
-    <script src="{{ asset('js/entrada.js') }}"></script>
 </body>
 
 </html>
