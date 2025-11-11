@@ -5,6 +5,7 @@ namespace Database\Seeders\DbProgramacion;
 use App\Models\DbProgramacion\ApprenticeStatus;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class ApprenticeStatusSeeder extends Seeder
 {
@@ -13,18 +14,12 @@ class ApprenticeStatusSeeder extends Seeder
      */
     public function run(): void
     {
-        ApprenticeStatus::create([
-            "name" => "En Formación"
-        ]);
-        ApprenticeStatus::create([
-            "name" => "Cancelado"
-        ]);
-        ApprenticeStatus::create([
-            "name" => "Retiro Voluntario"
-        ]);
 
-        ApprenticeStatus::create([
-            "name" => "Aplazado"
+        DB::table('apprentices_status')->insert([
+            ['name' => 'En Formación'],
+            ['name' => 'Cancelado'],
+            ['name' => 'Retiro Voluntario'],
+            ['name' => 'Aplazado'],
         ]);
     }
 }

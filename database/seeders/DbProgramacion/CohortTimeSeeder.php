@@ -5,6 +5,7 @@ namespace Database\Seeders\DbProgramacion;
 use App\Models\DbProgramacion\CohorTime;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class CohortTimeSeeder extends Seeder
 {
@@ -13,16 +14,10 @@ class CohortTimeSeeder extends Seeder
      */
     public function run(): void
     {
-        //
-        CohorTime::create([
 
-            "name"=>"Diurna"
-        ]);
-
-        //
-        CohorTime::create([
-
-            "name" => "Nocturna"
+        DB::table('cohort_times')->insert([
+            ['name' => 'Diurna'],
+            ['name' => 'Nocturna']
         ]);
     }
 }

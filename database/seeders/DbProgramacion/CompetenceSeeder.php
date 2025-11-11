@@ -5,6 +5,7 @@ namespace Database\Seeders\DbProgramacion;
 use App\Models\DbProgramacion\Competencies;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class CompetenceSeeder extends Seeder
 {
@@ -13,7 +14,8 @@ class CompetenceSeeder extends Seeder
      */
     public function run(): void
     {
-        $competencies = [
+
+        DB::table('competencies')->insert([
             // Ingeniería de Sistemas (speciality_id = 1)
             ['speciality_id' => 1, 'name' => 'Programación Estructurada', 'duration_hours' => 80],
             ['speciality_id' => 1, 'name' => 'Bases de Datos Relacionales', 'duration_hours' => 60],
@@ -57,14 +59,6 @@ class CompetenceSeeder extends Seeder
             // Marketing Digital (speciality_id = 10)
             ['speciality_id' => 10, 'name' => 'SEO y SEM', 'duration_hours' => 60],
             ['speciality_id' => 10, 'name' => 'Redes Sociales para Empresas', 'duration_hours' => 50]
-        ];
-
-        foreach ($competencies as $competence) {
-            Competencies::create([
-                'speciality_id' => $competence['speciality_id'],
-                'name' => $competence['name'],
-                'duration_hours' => $competence['duration_hours']
-            ]);
-        }
+        ]);
     }
 }

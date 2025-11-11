@@ -3,173 +3,110 @@
 namespace Database\Seeders\DbProgramacion;
 
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class RoleSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        // 🔁 Forzar conexión al modelo en tiempo de ejecución
+        // Forzar conexión a la base de datos específica
         app(Role::class)->setConnection('db_programacion');
         app(Permission::class)->setConnection('db_programacion');
 
-        // Crear roles de gestion de asistencia y programacion para los diferentes usuarios en este caso por ahora solo esta Administrador programacion ADMIN PRINCIPAL
-        // $role1 = Role::create(['name' => 'Administrador_asistencia']);
-        //rolo administrador programacion ahora tambien sera de asitencias
-        $role10 = Role::create(['name' => 'Coordinador']);
+        // Definir roles
+        $roles = [
+            'Coordinador',
+            'Admin-Entrada',
+            'Apoyo-Coordinacion-Juicios-Evaluativos',
+            'Admin-Programacion',
+            'Sofia-Programacion',
+            'Seguimiento-Programacion',
+            'Inspector-Programacion',
+            'Aprendiz',
+            'Instructor',
+        ];
 
-        $role2 = Role::create(['name' => 'Admin-Entrada']);
-        // $role3 = Role::create(['name' => 'Acceso-Entrada']);
-        $role4 = Role::create(['name' => 'Apoyo-Coordinacion-Juicios-Evaluativos']);
-        $role5 = Role::create(['name' => 'Admin-Programacion']);
-        $role6 = Role::create(['name' => 'Sofia-Programacion']);
-        $role7 = Role::create(['name' => 'Seguimiento-Programacion']);
-        $role8 = Role::create(['name' => 'Inspector-Programacion']);
-        $role9 = Role::create(['name' => 'Aprendiz']);
-        $role12 = Role::create(['name' => 'Instructor']);
+        // Crear los roles
+        $rolesCollection = collect($roles)->mapWithKeys(fn($r) => [$r => Role::firstOrCreate(['name' => $r])]);
 
-        // Permisos del módulo de la entrada
-        // Permission::create(['name' => 'entrance.create'])->syncRoles([$role3]);
-        // Permission::create(['name' => 'entrance.store'])->syncRoles([$role3]);
+        // Alias rápido
+        $r = $rolesCollection;
 
-        // Permisos del módulo de administración de la entrada
-        Permission::create(['name' => 'entrance.admin'])->syncRoles([$role10, $role2]);
-        Permission::create(['name' => 'entrance.people.index'])->syncRoles([$role10, $role2]);
-        Permission::create(['name' => 'entrance.people.create'])->syncRoles([$role10, $role2]);
-        Permission::create(['name' => 'entrance.people.store'])->syncRoles([$role10, $role2]);
-        Permission::create(['name' => 'entrance.people.update'])->syncRoles([$role10, $role2]);
-        Permission::create(['name' => 'entrance.people.delete'])->syncRoles([$role10, $role2]);
-        Permission::create(['name' => 'entrance.people.show'])->syncRoles([$role10, $role2]);
-        Permission::create(['name' => 'entrance.excel.upload'])->syncRoles([$role10, $role2]);
-        Permission::create(['name' => 'entrance.people.edit'])->syncRoles([$role10, $role2]);
+       
+        // Definir permisos agrupados por módulo
+        $permissions = [
 
-        // Permisos para inasistencias
-        Permission::create(['name' => 'entrance.absence.index'])->syncRoles([$role10, $role2]);
-        Permission::create(['name' => 'entrance.absence.show'])->syncRoles([$role10, $role2]);
+            // Módulo de Entrada
+            'entrance' => [
+                'entrance.admin' => ['Coordinador', 'Admin-Entrada'],
+                'entrance.people.index' => ['Coordinador', 'Admin-Entrada'],
+                'entrance.people.create' => ['Coordinador', 'Admin-Entrada'],
+                'entrance.people.store' => ['Coordinador', 'Admin-Entrada'],
+                'entrance.people.update' => ['Coordinador', 'Admin-Entrada'],
+                'entrance.people.delete' => ['Coordinador', 'Admin-Entrada'],
+                'entrance.people.show' => ['Coordinador', 'Admin-Entrada'],
+                'entrance.excel.upload' => ['Coordinador', 'Admin-Entrada'],
+                'entrance.people.edit' => ['Coordinador', 'Admin-Entrada'],
+                'entrance.absence.index' => ['Coordinador', 'Admin-Entrada'],
+                'entrance.absence.show' => ['Coordinador', 'Admin-Entrada'],
+                'entrance.assistance.index' => ['Coordinador', 'Admin-Entrada'],
+                'entrance.assistance.show' => ['Coordinador', 'Admin-Entrada', 'Aprendiz'],
+                'entrance.assistance.show_history' => ['Coordinador', 'Admin-Entrada', 'Aprendiz'],
+                'entrance.assistance.all' => ['Coordinador', 'Admin-Entrada'],
+                'entrance.assistance.export' => ['Coordinador', 'Admin-Entrada'],
+            ],
 
-        // Permisos para asistencia tanto para el cordinador y los aprendices
-        Permission::create(['name' => 'entrance.assistance.index'])->syncRoles([$role10, $role2]);
-        Permission::create(['name' => 'entrance.assistance.show'])->syncRoles([$role10, $role2,$role9]);
-        Permission::create(['name' => 'entrance.assistance.show_history'])->syncRoles([$role10, $role2,$role9]);
-        Permission::create(['name' => 'entrance.assistance.all'])->syncRoles([$role10, $role2]);
+            // Módulo de Programación
+            'programming' => [
+                'programming.admin' => ['Coordinador', 'Admin-Programacion'],
+                'programing.programan_store_add' => ['Coordinador', 'Admin-Entrada'],
+                'programmig.programming_cohort_index' => ['Coordinador', 'Admin-Programacion'],
+                'programmig.programming_cohort_Register' => ['Coordinador', 'Admin-Programacion'],
+                'programmig.programming_cohort_delete' => ['Coordinador', 'Admin-Programacion'],
+                'apprentice.show' => ['Aprendiz'],
+                'programmig.programming_update_index' => ['Coordinador', 'Admin-Programacion'],
+                'programmig.programming_update_store' => ['Coordinador', 'Admin-Programacion'],
+                'programing.add_apprentices_cohorts' => ['Coordinador', 'Admin-Entrada'],
+                'programing.add_apprentices_store' => ['Coordinador', 'Admin-Entrada'],
+                'programing.apprentices_list' => ['Coordinador', 'Admin-Entrada'],
+                'programing.apprentices_cohorts_list' => ['Coordinador', 'Admin-Entrada'],
+                'programing.competencies_store' => ['Coordinador', 'Admin-Entrada'],
+                'programing.competencies_update' => ['Coordinador', 'Admin-Entrada'],
+                'programing.competencies_programming_index' => ['Coordinador', 'Admin-Entrada'],
+                'programing.competencies_programming_store' => ['Coordinador', 'Admin-Entrada'],
+                'programing.competencies_programan_index' => ['Coordinador', 'Admin-Entrada'],
+                'programing.instructor_programan_index' => ['Coordinador', 'Admin-Entrada'],
+                'programing.register_programming_instructor_index' => ['Coordinador', 'Admin-Entrada'],
+                'programing.register_programming_instructor_store' => ['Coordinador', 'Admin-Entrada'],
+                'programing.programming_update_index' => ['Coordinador', 'Admin-Entrada'],
+                'programing.programming_update' => ['Coordinador', 'Admin-Entrada'],
+                'programing.programming_index_states' => ['Coordinador', 'Admin-Entrada'],
+                'programing.instructors_competences_profile' => ['Coordinador', 'Admin-Entrada'],
+                'programing.instructors_competencies_profile_store' => ['Coordinador', 'Admin-Entrada'],
+                'programing.classrooms_programming_classrooms_index' => ['Coordinador', 'Admin-Entrada'],
+                'programmig.programming_update_store_programing' => ['Coordinador', 'Admin-Entrada'],
+                'programing.classrooms_programming_classrooms_store' => ['Coordinador', 'Admin-Entrada'],
+                'programing.unrecorded_days_index' => ['Coordinador', 'Admin-Entrada'],
+                'programing.unrecorded_days_store' => ['Coordinador', 'Admin-Entrada'],
+                'programing.classroom_store' => ['Coordinador', 'Admin-Entrada'],
+                'programing.unrecorded_days_delete' => ['Coordinador', 'Admin-Entrada'],
+                'programing.ambiente_delete' => ['Coordinador', 'Admin-Entrada'],
+                'programing.ambiente_update' => ['Coordinador', 'Admin-Entrada'],
+                'programaciones_index' => ['Coordinador', 'Admin-Entrada'],
+                'programaciones_store' => ['Coordinador', 'Admin-Entrada'],
+                'programing.competencies_index_administrar' => ['Coordinador', 'Admin-Entrada'],
+                'programing.programming.competencies_copy' => ['Coordinador', 'Admin-Entrada'],
+            ],
+        ];
 
-        // Permiso para exportar en Excel
-        Permission::create(['name' => 'entrance.assistance.export'])->syncRoles([$role10, $role2]);
-
-
-        //---------------------- Permisos del módulo de Programación -------------------------------
-
-        //esto es para la vista de programas
-        Permission::create(['name' => 'programming.admin'])->syncRoles([$role10, $role5]);
-
-         //agregar permiso de agregar programa con roles de 2 usuarios
-        Permission::create(['name' => 'programing.programan_store_add'])->assignRole($role10, $role2);
-
-        //permiso del modulo de programacion de fichas
-        Permission::create(['name' => 'programmig.programming_cohort_index'])->syncRoles([$role10, $role5]);
-        Permission::create(['name' => 'programmig.programming_cohort_Register'])->syncRoles([$role10, $role5]);
-        //permiso para eliminar ficha solo cuando esta haya finalizado
-        Permission::create(['name' => 'programmig.programming_cohort_delete'])->syncRoles([$role10, $role5]);
-
-        // Permiso para entrada de los aprendices
-        Permission::create(['name' => 'apprentice.show'])->assignRole($role9);
-
-        //permisos para la vista y de reprogramacion
-        Permission::create(['name' => 'programmig.programming_update_index'])->syncRoles([$role10, $role5]);
-        Permission::create(['name' => 'programmig.programming_update_store'])->syncRoles([$role10, $role5]);
-
-        //agregar permiso para eliminar y editar fichas
-
-
-
-
-
-
-
-        Permission::create(['name' => 'programing.add_apprentices_cohorts'])->assignRole($role10, $role2);
-        Permission::create(['name' => 'programing.add_apprentices_store'])->assignRole($role10, $role2);
-        //permiso para ver aprendices en su ficha y programa correspondiente
-        Permission::create(['name' => 'programing.apprentices_list'])->assignRole($role10, $role2);
-        Permission::create(['name' => 'programing.apprentices_cohorts_list'])->assignRole($role10, $role2);
-
-
-        //permiso para gestionar competencias
-
-        // Permission::create(['name' => 'programing.competencies_index'])->assignRole($role10, $role2);
-
-        Permission::create(['name' => 'programing.competencies_store'])->assignRole($role10, $role2);
-        Permission::create(['name' => 'programing.competencies_update'])->assignRole($role10, $role2);
-
-        //permisos para agregar competencias a un programa
-
-         Permission::create(['name' => 'programing.competencies_programming_index'])->assignRole($role10, $role2);
-
-        Permission::create(['name' => 'programing.competencies_programming_store'])->assignRole($role10, $role2);
-
-        //permiso para ver las competencias con sus respectivos programas
-        Permission::create(['name' => 'programing.competencies_programan_index'])->assignRole($role10, $role2);
-
-
-        //permiso para lagestion instrcutor en el apartado de programacion instrcutor
-
-        Permission::create(['name' => 'programing.instructor_programan_index'])->assignRole($role10, $role2);
-
-        //permiso para permitir ver la vista de programacion de instrcutor
-        Permission::create(['name' => 'programing.register_programming_instructor_index'])->assignRole($role10, $role2);
-
-        //permiso para registrar programacion de instructor
-        Permission::create(['name' => 'programing.register_programming_instructor_store'])->assignRole($role10, $role2);
-
-        //permiso para actualizar programacion a ok despues que se registre en sofia plus
-        // 1 prmero permiso para la vista de actualizar programacion
-        Permission::create(['name' => 'programing.programming_update_index'])->assignRole($role10, $role2);
-        //2 permiso para actulizar la programacion a estado ok
-        Permission::create(['name' => 'programing.programming_update'])->assignRole($role10, $role2);
-
-        //permiso para el listado de programaciones y sus estados
-        Permission::create(['name' => 'programing.programming_index_states'])->assignRole($role10, $role2);
-
-        //permiso para la vista de asignar competencia al perfil de instructores
-        Permission::create(['name' => 'programing.instructors_competences_profile'])->assignRole($role10, $role2);
-
-        //permiso para el registro de competencia en los perfiles de instructores
-        Permission::create(['name' => 'programing.instructors_competencies_profile_store'])->assignRole($role10, $role2);
-
-        //permisos de la gestion de ambientes
-        //permiso para la visualizacion de ambientes
-        Permission::create(['name' => 'programing.classrooms_programming_classrooms_index'])->assignRole($role10, $role2);
-
-        Permission::create(['name' => 'programmig.programming_update_store_programing'])->assignRole($role10, $role2);
-        //permiso para el agregado de ambientes
-
-        Permission::create(['name' => 'programing.classrooms_programming_classrooms_store'])->assignRole($role10, $role2);
-
-        //agregar permisos Para gestion de formulario
-        Permission::create(['name' => 'programing.unrecorded_days_index'])->assignRole($role10, $role2);
-        Permission::create(['name' => 'programing.unrecorded_days_store'])->assignRole($role10, $role2);
-
-        //Permiso para registro de ambientes
-        Permission::create(['name' => 'programing.classroom_store'])->assignRole($role10, $role2);
-        //permiso para eliminar dia calendario
-        Permission::create(['name' => 'programing.unrecorded_days_delete'])->assignRole($role10, $role2);
-
-        //permiso para eliminar ambiene
-        Permission::create(['name' => 'programing.ambiente_delete'])->assignRole($role10, $role2);
-        Permission::create(['name' => 'programing.ambiente_update'])->assignRole($role10, $role2);
-
-        //vista pra reprogramar y registrar
-        Permission::create(['name' => 'programaciones_index'])->assignRole($role10, $role2);
-        Permission::create(['name' => 'programaciones_store'])->assignRole($role10, $role2);
-
-        //permiso para gestionar ficha
-        Permission::create(['name' => 'programing.competencies_index_administrar'])->assignRole($role10, $role2);
-
-        Permission::create(['name' => 'programing.programming.competencies_copy'])->assignRole($role10, $role2);
-
-
+        
+        // Crear permisos dinámicamente y asignarlos
+        foreach ($permissions as $group => $items) {
+            foreach ($items as $permissionName => $roleNames) {
+                $permission = Permission::firstOrCreate(['name' => $permissionName]);
+                $permission->syncRoles($r->only($roleNames)->values());
+            }
+        }
     }
 }

@@ -5,6 +5,7 @@ namespace Database\Seeders\DbProgramacion;
 use App\Models\DbProgramacion\Program_Level;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class ProgramanLevelSeeder extends Seeder
 {
@@ -13,14 +14,10 @@ class ProgramanLevelSeeder extends Seeder
      */
     public function run(): void
     {
-        //
-        Program_Level::create([
-           "name"=> "Técnico",
-        
+        DB::table('program_level')->insert([
+            ['name' => 'Técnico'],
+            ['name' => 'Tecnólogo'],
         ]);
-        Program_Level::create([
-            "name" => "	Tecnólogo",
-        ]);
-        
+
     }
 }

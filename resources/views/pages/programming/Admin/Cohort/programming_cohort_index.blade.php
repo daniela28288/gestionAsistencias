@@ -88,8 +88,13 @@
                         <!-- Búsqueda por número de ficha -->
                         <div class="filter-group">
                             <label for="search">Número de ficha:</label>
-                            <input type="text" id="search" name="search" class="search-input"
-                                placeholder="Buscar por número de ficha" value="{{ request('search') }}">
+                            <input type="number" id="search" name="search" class="search-input"
+                                placeholder="Buscar por número de ficha"
+                                value="{{ request('search') }}"
+                                step="1" min="0"
+                                onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                autocomplete="off"
+                                >
                         </div>
 
                         <!-- Botones de acción para buscar o restablecer -->
@@ -138,9 +143,9 @@
                             <!-- Itera sobre todas las fichas (cohorts) -->
                             @forelse($cohorts as $cohort)
                                 @php
-                                    $isActive = $cohort->end_date > now();
-                                    $statusClass = $isActive ? 'status-active' : 'status-inactive';
-                                    $statusText = $isActive ? 'Activa' : 'Inactiva';
+    $isActive = $cohort->end_date > now();
+    $statusClass = $isActive ? 'status-active' : 'status-inactive';
+    $statusText = $isActive ? 'Activa' : 'Inactiva';
                                 @endphp
 
                                 <!-- Fila de la tabla con datos de cada ficha -->

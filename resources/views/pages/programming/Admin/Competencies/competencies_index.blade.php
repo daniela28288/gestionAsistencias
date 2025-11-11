@@ -742,7 +742,7 @@
                 <div class="form-group">
                     <label for="speciality_id">Especialidad *</label>
                     <select name="speciality_id" id="speciality_id" required>
-                        <option value="">Seleccione especialidad</option>
+                        <option value="" disabled selected>Seleccione especialidad</option>
                         @foreach ($especialidad as $espe)
                             <option value="{{ $espe->id }}" {{ old('speciality_id') == $espe->id ? 'selected' : '' }}>
                                 {{ $espe->name }}

@@ -27,10 +27,10 @@ class CohortController extends Controller
         $ficha_busqueda = $request->input('search');
 
         $instructors = Instructor::with('person')->get();
-        $programs    = Program::all();
-        $towns       = Town::all();
-        $classroom   = Classroom::all();
-        $cohortimes  = CohorTime::all();
+        $programs = Program::all();
+        $towns = Town::all();
+        $classroom = Classroom::all();
+        $cohortimes = CohorTime::all();
 
         // Consulta base con las relaciones necesarias
         $cohorts = Cohort::with(['program', 'cohortime', 'town'])
@@ -69,7 +69,7 @@ class CohortController extends Controller
         ], [
             'number_cohort.unique' => 'El número de ficha ya existe en el sistema.',
             'end_date.after_or_equal' => 'La fecha de fin debe ser posterior o igual a la fecha de inicio.',
-            'enrolled_quantity.min' => 'Debe haber al menos 1 matriculado.'
+            'enrolled_quantity.min' => 'Debe haber al menos una persona matriculada.'
         ]);
 
         if ($validator->fails()) {
@@ -162,7 +162,7 @@ class CohortController extends Controller
         $now = Carbon::now();
         foreach ($programaciones as $prog) {
             $startDate = Carbon::parse($prog->start_date);
-            $endDate   = Carbon::parse($prog->end_date);
+            $endDate = Carbon::parse($prog->end_date);
 
             if ($now->lt($startDate)) {
                 $newStatus = 'pendiente';
@@ -227,7 +227,7 @@ class CohortController extends Controller
             'programaciones',
             'otherCohortsData'
         ));
-    }   
+    }
 
 
 
@@ -239,9 +239,9 @@ class CohortController extends Controller
     public function competenciesAdd_store(Request $request)
     {
         $request->validate([
-            'cohort_id'      => 'required|exists:db_programacion.cohorts,id',
-            'speciality_id'  => 'required|exists:db_programacion.specialities,id',
-            'name'           => 'required|string|max:255',
+            'cohort_id' => 'required|exists:db_programacion.cohorts,id',
+            'speciality_id' => 'required|exists:db_programacion.specialities,id',
+            'name' => 'required|string|max:255',
             'duration_hours' => 'required|integer|min:1',
         ]);
 
@@ -252,8 +252,8 @@ class CohortController extends Controller
 
             // Crear la competencia nueva
             $competenciaNueva = Competencies::create([
-                'speciality_id'  => $request->speciality_id,
-                'name'           => $request->name,
+                'speciality_id' => $request->speciality_id,
+                'name' => $request->name,
                 'duration_hours' => $request->duration_hours,
             ]);
 
@@ -274,7 +274,7 @@ class CohortController extends Controller
 
 
 
-     // 3. Copiar competencias desde OTRA ficha (manual)
+    // 3. Copiar competencias desde OTRA ficha (manual)
     public function copyCompetenciesFromCohort(Request $request)
     {
         $request->validate([
@@ -315,13 +315,15 @@ class CohortController extends Controller
 
                 DB::connection('db_programacion')->commit();
 
-                return redirect()->back()->with('success',
+                return redirect()->back()->with(
+                    'success',
                     '✅ Se copiaron ' . count($newCompetenceIds) . ' competencias desde la ficha ' .
                     $fichaOrigen->number_cohort
                 );
             } else {
                 DB::connection('db_programacion')->rollBack();
-                return redirect()->back()->with('info',
+                return redirect()->back()->with(
+                    'info',
                     'ℹ️ Todas las competencias de la ficha origen ya están asignadas a esta ficha'
                 );
             }

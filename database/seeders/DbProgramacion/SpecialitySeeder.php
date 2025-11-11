@@ -14,35 +14,18 @@ class SpecialitySeeder extends Seeder
      */
     public function run(): void
     {
-        Speciality::create([
-            "name" => "Ingeniería de Sistemas"
-        ]);
-        Speciality::create([
-            "name" => "Administración de Empresas"
-        ]);
-        Speciality::create([
-            "name" => 'Contaduría Pública'
-        ]);
-        Speciality::create([
-            "name" => 'Psicología'
-        ]);
-        Speciality::create([
-            "name" => 'Diseño Gráfico'
-        ]);
-        Speciality::create([
-            "name" => 'Medicina'
-        ]);
-        Speciality::create([
-            "name" => 'Arquitectura'
-        ]);
-        Speciality::create([
-            "name" => 'Derecho'
-        ]);
-        Speciality::create([
-            "name" => 'Ingeniería Electrónica'
-        ]);
-        Speciality::create([
-            "name" => 'Marketing Digital'
+
+        DB::table('specialities')->insert([
+            ["name" => "Ingeniería de Sistemas"],
+            ["name" => "Administración de Empresas"],
+            ["name" => "Contaduría Pública"],
+            ["name" => "Psicología"],
+            ["name" => "Diseño Gráfico"],
+            ["name" => "Medicina"],
+            ["name" => "Arquitectura"],
+            ["name" => "Derecho"],
+            ["name" => "Ingeniería Electrónica"],
+            ["name" => "Marketing Digital"],
         ]);
 
     }
