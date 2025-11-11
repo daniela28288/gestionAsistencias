@@ -168,7 +168,6 @@
             // ESTADO INICIAL
             infoEntrada.classList.remove('entrada', 'salida');
             iconImg.src = '../icons/cargando.gif';
-            statusText.textContent = 'Esperando documento...';
 
             // ENVIAR DOCUMENTO AL SERVIDOR
             async function sendDocumentNumber(documentNumber) {
@@ -244,8 +243,6 @@
                         infoEntrada.classList.remove('entrada', 'salida');
                         iconImg.src = '../icons/cargando.gif';
                         actionBadge.textContent = '';
-                        statusText.textContent = 'Esperando documento...';
-                        statusText.style.color = '#000';
                     }, 3000);
 
                 } catch (error) {
@@ -310,8 +307,6 @@
 
                         if (docInput.value.trim() === documentoActual) {
                             errorMsg.style.display = 'none';
-                            statusText.textContent = 'Esperando documento';
-                            statusText.style.color = '#000';
                         }
                     }
                 }, 1000);
