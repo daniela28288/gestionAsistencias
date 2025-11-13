@@ -183,6 +183,7 @@
                 statusText.textContent = 'Verificando...';
                 statusText.style.color = '#FF9800';
 
+                
                 try {
                     const response = await fetch("{{ route('entrance.store') }}", {
                         method: 'POST',
