@@ -17,7 +17,7 @@
 
     <!-- Contenido Principal -->
     <main class="main-content">
-        <a href="{{asset('../views/components/layout_login.blade.php')}}" class="flecha" title="Regresar al login">
+        <a href="{{asset('http://127.0.0.1:8000')}}" class="flecha" title="Regresar al login">
             <img src="{{asset('../icons/flecharriba.png')}}" alt="">
         </a>
 
@@ -183,7 +183,7 @@
                 statusText.textContent = 'Verificando...';
                 statusText.style.color = '#FF9800';
 
-                
+
                 try {
                     const response = await fetch("{{ route('entrance.store') }}", {
                         method: 'POST',
