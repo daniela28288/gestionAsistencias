@@ -17,11 +17,14 @@
                 <h1 class="green">asistencias</h1>
 
                 <p>Uso exclusivo institucional</p>
+            </div>
 
+            <div class="button-wrapper">
                 <a href="{{ route('gestion_entrada') }}" class="btn-banner">
                     <img src="../img/entradaButton.png" alt="">
-                    <p>Gestion de entrada</p>
+                    <p>Gestión de entrada</p>
                 </a>
+                <div class="sparkle-container"></div>
             </div>
         </div>
 
@@ -95,6 +98,8 @@
 
                 <button type="submit" class="submit-btn">Ingresar</button>
             </form>
+
+            
         </div>
     </div>
 </body>
