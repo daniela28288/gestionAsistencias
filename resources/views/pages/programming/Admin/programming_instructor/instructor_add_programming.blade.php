@@ -8,6 +8,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <!-- CSS de Select2 -->
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+        
+        <!-- JS de jQuery y Select2 -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 
 
         <style>
@@ -220,7 +227,7 @@
                 {{-- FICHA --}}
                 <label for="ficha">Seleccione ficha y programa</label>
                 <select id="ficha" name="ficha_id" required>
-                    <option value="">Seleccione</option>
+                    <option value="" disabled selected>Seleccione</option>
                     @foreach ($cohorts as $ficha)
                         <option value="{{ $ficha->id }}">{{ $ficha->number_cohort }} - {{ $ficha->program->name }}
                         </option>
@@ -354,7 +361,9 @@
         </div>
 
       <script>
-document.addEventListener('DOMContentLoaded', function() {
+
+
+      document.addEventListener('DOMContentLoaded', function() {
     // ----- ELEMENTOS -----
     const horaInicioInput     = document.getElementById('hora_inicio');
     const horaFinInput        = document.getElementById('hora_fin');
@@ -375,48 +384,54 @@ document.addEventListener('DOMContentLoaded', function() {
     const effectiveDaysInfo   = document.getElementById('effective-days-info');
     const instructorHoursInfo = document.getElementById('instructorHoursInfo');
     const instructorHoursText = document.getElementById('instructorHoursText');
+    $('#ficha').select2({
+        placeholder : 'Seleccione ficha y programa',
+        allowClear : true,
+        width: '100%',
+        dropdownParent : $('#programmingForm')
+    });
 
     // ----- DATOS DESDE PHP -----
     const fechasExcluidas = @json(
-        \App\Models\DbProgramacion\Days_training::pluck('date')
-            ->map(fn($f) => \Carbon\Carbon::parse($f)->format('Y-m-d'))
-            ->toArray()
-    );
+    \App\Models\DbProgramacion\Days_training::pluck('date')
+        ->map(fn($f) => \Carbon\Carbon::parse($f)->format('Y-m-d'))
+        ->toArray()
+);
 
     // Cohort -> Competencias (id, name, hours)
     const cohortCompetencies = @json(
-        $cohorts->mapWithKeys(fn($c) => [
-            $c->id => $c->competences->map(fn($comp) => [
-                'id' => $comp->id,
-                'name' => $comp->name,
-                'hours' => $comp->duration_hours
-            ])
+    $cohorts->mapWithKeys(fn($c) => [
+        $c->id => $c->competences->map(fn($comp) => [
+            'id' => $comp->id,
+            'name' => $comp->name,
+            'hours' => $comp->duration_hours
         ])
-    );
+    ])
+);
 
     // Competencia -> Instructores (id, name, doc)
     const competenciaInstructores = @json(
-        \App\Models\DbProgramacion\Competencies::with('instructors.person')
-            ->get()
-            ->mapWithKeys(fn($c) => [
-                $c->id => $c->instructors->map(fn($i) => [
-                    'id'   => $i->id,
-                    'name' => $i->person->name,
-                    'doc'  => $i->person->document_number
-                ])
+    \App\Models\DbProgramacion\Competencies::with('instructors.person')
+        ->get()
+        ->mapWithKeys(fn($c) => [
+            $c->id => $c->instructors->map(fn($i) => [
+                'id' => $i->id,
+                'name' => $i->person->name,
+                'doc' => $i->person->document_number
             ])
-    );
+        ])
+);
 
     // Datos de horas de instructores (precalculados en el controlador)
     const instructorHoursData = @json(
-        $instructores->mapWithKeys(fn($i) => [
-            $i->id => [
-                'assigned_hours' => $i->assigned_hours,
-                'horas_programadas' => $i->horas_programadas,
-                'horas_restantes' => $i->horas_restantes
-            ]
-        ])
-    );
+    $instructores->mapWithKeys(fn($i) => [
+        $i->id => [
+            'assigned_hours' => $i->assigned_hours,
+            'horas_programadas' => $i->horas_programadas,
+            'horas_restantes' => $i->horas_restantes
+        ]
+    ])
+);
 
     // ----- ESTADO -----
     let competenciaHoras = 0;              // horas requeridas por la competencia seleccionada

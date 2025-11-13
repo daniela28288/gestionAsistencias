@@ -758,18 +758,17 @@
                            placeholder="Ingrese el nombre de la competencia">
                 </div>
 
-                {{-- <div class="form-group">
-                    <label for="code">Código de la competencia</label>
-                    <input type="text" id="code" name="code"
-                           value="{{ old('code') }}"
-                           placeholder="Código de la competencia (opcional)">
-                </div> --}}
-
                 <div class="form-group">
                     <label for="duration_hours">Duración (horas) *</label>
-                    <input type="number" id="duration_hours" name="duration_hours" required min="1"
-                           value="{{ old('duration_hours') }}"
-                           placeholder="Horas de duración">
+                    <input
+                        type="number" id="duration_hours"
+                        name="duration_hours"
+                        required
+                        min="1"
+                        step="1"
+                        value="{{ old('duration_hours') }}"
+                        placeholder="Horas de duración"
+                    >
                 </div>
 
                 <div class="form-actions">

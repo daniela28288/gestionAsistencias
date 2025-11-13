@@ -3,6 +3,13 @@
     <x-slot:title>Gestión de Programas</x-slot:title>
     <link rel="stylesheet" href="{{ asset('css/pages/programming_dashboard.css') }}">
     <link rel="stylesheet" href="{{ asset('css/pages/competencies_program_index.css') }}">
+    <!-- CSS de Select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+    <!-- JS de jQuery y Select2 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 
     <div class="content">
         <div class="container">
@@ -102,10 +109,10 @@
                                 <td>{{ $program->program_version }}</td>
 
                                 <!--
-                                            Nivel del programa con badge de color
-                                            - id_level 1 = Técnico (verde)
-                                            - id_level 2 = Tecnólogo (azul)
-                                        -->
+                                                                                Nivel del programa con badge de color
+                                                                                - id_level 1 = Técnico (verde)
+                                                                                - id_level 2 = Tecnólogo (azul)
+                                                                            -->
                                 <td>
                                     <span
                                         class="badge {{ $program->id_level == 1 ? 'badge-technical' : 'badge-technologist' }}">
@@ -222,51 +229,41 @@
         ========================================
     -->
     <script>
-        /**
-         * Abre el modal de registro de programa
-         * - Muestra el modal con display: flex
-         * - Previene scroll del body mientras el modal está abierto
-        */
+        document.addEventListener('DOMContentLoaded', function () {
+            // Inicializa Select2 solo en el select de instructores
+            $('#instructor_id').select2({
+                placeholder: 'Seleccione o busque un instructor',
+                allowClear: true,
+                width: '100%',
+                dropdownParent: $('#programModal') // asegura que se muestre bien dentro del modal
+            });
+        });
+
+        // Reabrir correctamente Select2 cuando el modal se abre
         function openModal() {
             document.getElementById('programModal').style.display = 'flex';
             document.body.style.overflow = 'hidden';
+            $('#instructor_id').select2({
+                placeholder: 'Seleccione o busque un instructor',
+                allowClear: true,
+                width: '100%',
+                dropdownParent: $('#programModal')
+            });
         }
 
-        /**
-         * Cierra el modal de registro
-         * - Oculta el modal
-         * - Restaura el scroll del body
-        */
         function closeModal() {
             document.getElementById('programModal').style.display = 'none';
             document.body.style.overflow = 'auto';
         }
 
-        /**
-         * Cierra el modal al hacer clic fuera de él
-         * Escucha clics en toda la ventana
-         * Si el clic es en el overlay (fondo oscuro), cierra el modal
-        */
         window.onclick = function (event) {
             const modal = document.getElementById('programModal');
-            if (event.target === modal) {
-                closeModal();
-            }
+            if (event.target === modal) closeModal();
         }
 
-        /**
-         * Cierra el modal con la tecla Escape
-         * Mejora la experiencia del usuario
-         */
         document.addEventListener('keydown', function (event) {
-            if (event.key === 'Escape') {
-                closeModal();
-            }
-        });
-
-        // Auto-focus en el primer campo al abrir el modal NO FUNCIONA!!!!!!!!!
-        document.getElementById('programModal').addEventListener('shown', function () {
-            document.getElementById('name').focus();
+            if (event.key === 'Escape') closeModal();
         });
     </script>
+
 </x-layout>

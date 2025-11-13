@@ -1,7 +1,23 @@
+
+document.addEventListener('DOMContentLoaded', function () {
+    $('#municipio').select2({
+        placeholder: "Seleccione o busque un programa",
+        allowClear: true,
+        width: '100%',
+        dropdownParent: $('#modal')
+    });
+});
+
 // Abre el modal y bloquea el scroll del body
 function openModal() {
     document.getElementById('modal').style.display = 'flex';
     document.body.style.overflow = 'hidden';
+    $('#municipio').select2({
+        placeholder: "Seleccione o busque un programa",
+        allowClear: true,
+        width: '100%',
+        dropdownParent: $('#modal')
+    });
 }
 
 // Cierra el modal y restablece el scroll del body

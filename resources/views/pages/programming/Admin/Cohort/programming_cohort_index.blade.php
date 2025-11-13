@@ -4,6 +4,13 @@
     <link rel="stylesheet" href="{{ asset('css/pages/programming_dashboard.css') }}">
     <link rel="stylesheet" href="{{ asset('css/pages/programming_cohort.css') }}">
 
+    <!-- CSS de Select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    
+    <!-- JS de jQuery y Select2 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 
     <div class="main-layout">
         <div class="content">
@@ -88,13 +95,18 @@
                         <!-- Búsqueda por número de ficha -->
                         <div class="filter-group">
                             <label for="search">Número de ficha:</label>
-                            <input type="number" id="search" name="search" class="search-input"
+                            <input
+                                type="number"
+                                id="search"
+                                name="search"
+                                class="search-input"
                                 placeholder="Buscar por número de ficha"
                                 value="{{ request('search') }}"
-                                step="1" min="0"
+                                step="1"
+                                min="0"
                                 onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                                 autocomplete="off"
-                                >
+                            >
                         </div>
 
                         <!-- Botones de acción para buscar o restablecer -->
@@ -259,7 +271,7 @@
                                  <!-- Campo: municipio -->
                                 <div class="form-group">
                                     <label>Municipio</label>
-                                    <select name="id_town" required>
+                                    <select name="id_town" id="municipio" required>
                                         <option value="">Seleccione municipio</option>
                                         @foreach ($towns as $tn)
                                             <option value="{{ $tn->id }}"
