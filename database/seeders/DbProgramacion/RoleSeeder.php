@@ -25,6 +25,8 @@ class RoleSeeder extends Seeder
             'Inspector-Programacion',
             'Aprendiz',
             'Instructor',
+            'Digitador',
+            'Verificador',
         ];
 
         // Crear los roles
@@ -33,7 +35,7 @@ class RoleSeeder extends Seeder
         // Alias rápido
         $r = $rolesCollection;
 
-       
+
         // Definir permisos agrupados por módulo
         $permissions = [
 
@@ -100,7 +102,7 @@ class RoleSeeder extends Seeder
             ],
         ];
 
-        
+
         // Crear permisos dinámicamente y asignarlos
         foreach ($permissions as $group => $items) {
             foreach ($items as $permissionName => $roleNames) {
