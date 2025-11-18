@@ -26,7 +26,7 @@
                     <div class="campo">
                         <label for="ficha">Ficha y Programa</label>
                         <select id="ficha" name="ficha_id" required class="large-input">
-                            <option value="" >Seleccione</option>
+                            <option value="">Seleccione</option>
                             <option value=""></option>
                         </select>
                     </div>
@@ -47,11 +47,11 @@
                     </div>
                 </div>
 
-            <div class="row">
-                <div class="campo">
+                <div class="row">
+                    <div class="campo">
                         <label for="">Instructor</label>
                         <select id="" name="" required class="medium-input">
-                            <option value="" >Buscar instructor</option>
+                            <option value="">Buscar instructor</option>
                             <option value=""></option>
                         </select>
                     </div>
@@ -124,17 +124,45 @@
                 <div class="contenedor-gris">
                     <div class="labels">
                         <label for="">Días de la semana</label>
-                        <label for="">Seleccione con un click</label>
+                        <label for="" id="contador"></label>
                     </div>
 
                     <div class="week">
-                        <button class="dia">Lunes</button>
-                        <button class="dia">Martes</button>
-                        <button class="dia">Miercoles</button>
-                        <button class="dia">Jueves</button>
-                        <button class="dia">Viernes</button>
-                        <button class="dia">Sábado</button>
-                        <button class="dia">Domingo</button>
+                        <button class="dia">
+                            <input type="checkbox" name="" class="check" style="display: none;">
+                            Lunes
+
+                        </button>
+                        <button class="dia">
+                            <input type="checkbox" name="" class="check" style="display: none;">
+                            Martes
+
+                        </button>
+                        <button class="dia">
+                            <input type="checkbox" name="" class="check" style="display: none;">
+                            Miercoles
+
+                        </button>
+                        <button class="dia">
+                            <input type="checkbox" name="" class="check" style="display: none;">
+                            Jueves
+
+                        </button>
+                        <button class="dia">
+                            <input type="checkbox" name="" class="check" style="display: none;">
+                            Viernes
+
+                        </button>
+                        <button class="dia">
+                            <input type="checkbox" name="" class="check" style="display: none;">
+                            Sábado
+
+                        </button>
+                        <button class="dia">
+                            <input type="checkbox" name="" class="check" style="display: none;">
+                            Domingo
+
+                        </button>
                     </div>
                 </div>
 
@@ -151,14 +179,12 @@
                             <label for="ficha">Horario</label>
 
                             <div class="rango-horas">
-                            <input type="time">
-                            <p>a</p>
-                            <input type="time">
+                                <input type="time">
+                                <p>a</p>
+                                <input type="time">
                             </div>
                         </div>
-                    </div>
 
-                    <div class="contenedor-gris filas">
                         <div class="campo">
                             <label for="ficha">Horas diarias</label>
                             <input type="text">
@@ -169,13 +195,29 @@
                             <input type="text">
                         </div>
 
+                    </div>
+
+                    <div class="contenedor-gris filas centrado">
+
+                        <button class="result">
+                            <p>Actualizar</p>
+                        </button>
+
+                        <button class="result">
+                            <p>Eliminar</p>
+                        </button>
+
+                        <button class="result">
+                            <p>Asignar ficha</p>
+                        </button>
+
                         <button class="result">
                             <p>Guardar programación</p>
                         </button>
                     </div>
                 </div>
             </div>
-            
+
 
 
             <!-- Abre el modal para registrar un nuevo programa -->
@@ -192,48 +234,48 @@
 
             <!-- Alerta de éxito (operación completada correctamente) -->
             @if (session('success'))
-            <div class="alert-success">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                </svg>
-                {{ session('success') }}
-            </div>
+                <div class="alert-success">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                    {{ session('success') }}
+                </div>
             @endif
 
             <!-- Alerta de error (operación fallida) -->
             @if (session('error'))
-            <div class="alert-danger">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="15" y1="9" x2="9" y2="15"></line>
-                    <line x1="9" y1="9" x2="15" y2="15"></line>
-                </svg>
-                {{ session('error') }}
-            </div>
+                <div class="alert-danger">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="15" y1="9" x2="9" y2="15"></line>
+                        <line x1="9" y1="9" x2="15" y2="15"></line>
+                    </svg>
+                    {{ session('error') }}
+                </div>
             @endif
 
             <!-- Alerta de errores de validación de formulario -->
             @if ($errors->any())
-            <div class="alert-danger">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="12" y1="8" x2="12" y2="12"></line>
-                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                </svg>
-                <div>
-                    <strong>Por favor, corrige los siguientes errores:</strong>
-                    <ul>
-                        <!-- Lista todos los errores de validación -->
-                        @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
+                <div class="alert-danger">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                    </svg>
+                    <div>
+                        <strong>Por favor, corrige los siguientes errores:</strong>
+                        <ul>
+                            <!-- Lista todos los errores de validación -->
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
                 </div>
-            </div>
             @endif
 
             <!-- Tabla de programas - Muestra todos los programas de formación con su información -->
@@ -257,41 +299,41 @@
                             Si no hay programas, muestra el bloque empty
                         -->
                         @forelse($programs as $program)
-                        <tr>
-                            <td><strong>{{ $program->program_code }}</strong></td>
-                            <td>{{ $program->name }}</td>
-                            <td>{{ $program->program_version }}</td>
+                            <tr>
+                                <td><strong>{{ $program->program_code }}</strong></td>
+                                <td>{{ $program->name }}</td>
+                                <td>{{ $program->program_version }}</td>
 
-                            <!--
-                                                                                Nivel del programa con badge de color
-                                                                                - id_level 1 = Técnico (verde)
-                                                                                - id_level 2 = Tecnólogo (azul)
-                                                                            -->
-                            <td>
-                                <span
-                                    class="badge {{ $program->id_level == 1 ? 'badge-technical' : 'badge-technologist' }}">
-                                    {{ $program->id_level == 1 ? 'Técnico' : 'Tecnólogo' }}
-                                </span>
-                            </td>
-                            <td>{{ $program->instructor->person->name }}</td>
-                        </tr>
+                                <!--
+                                                                                                                                Nivel del programa con badge de color
+                                                                                                                                - id_level 1 = Técnico (verde)
+                                                                                                                                - id_level 2 = Tecnólogo (azul)
+                                                                                                                            -->
+                                <td>
+                                    <span
+                                        class="badge {{ $program->id_level == 1 ? 'badge-technical' : 'badge-technologist' }}">
+                                        {{ $program->id_level == 1 ? 'Técnico' : 'Tecnólogo' }}
+                                    </span>
+                                </td>
+                                <td>{{ $program->instructor->person->name }}</td>
+                            </tr>
                         @empty
-                        <!-- Estado vacío cuando no hay programas registrados -->
-                        <tr>
-                            <td colspan="5">
-                                <div class="empty-state">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                                        stroke-linejoin="round">
-                                        <circle cx="12" cy="12" r="10"></circle>
-                                        <line x1="12" y1="8" x2="12" y2="12"></line>
-                                        <line x1="12" y1="16" x2="12.01" y2="16">
-                                        </line>
-                                    </svg>
-                                    <p>No hay programas registrados</p>
-                                </div>
-                            </td>
-                        </tr>
+                            <!-- Estado vacío cuando no hay programas registrados -->
+                            <tr>
+                                <td colspan="5">
+                                    <div class="empty-state">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24"
+                                            fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round">
+                                            <circle cx="12" cy="12" r="10"></circle>
+                                            <line x1="12" y1="8" x2="12" y2="12"></line>
+                                            <line x1="12" y1="16" x2="12.01" y2="16">
+                                            </line>
+                                        </svg>
+                                        <p>No hay programas registrados</p>
+                                    </div>
+                                </td>
+                            </tr>
                         @endforelse
                     </tbody>
                 </table>
@@ -343,7 +385,7 @@
                             <select name="id_level" id="id_level" required>
                                 <option value="">Seleccione el nivel</option>
                                 @foreach ($programan_level as $level)
-                                <option value="{{ $level->id }}">{{ $level->name }}</option>
+                                    <option value="{{ $level->id }}">{{ $level->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -357,7 +399,7 @@
                             <select name="instructor_id" id="instructor_id" required>
                                 <option value="">Seleccione el instructor</option>
                                 @foreach ($instructors as $instru)
-                                <option value="{{ $instru->id }}">{{ $instru->person->name }}</option>
+                                    <option value="{{ $instru->id }}">{{ $instru->person->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -374,8 +416,8 @@
                     </form>
                 </div>
             </div>
-            </div>
         </div>
+    </div>
     </div>
     <!--
         ========================================
@@ -383,7 +425,64 @@
         ========================================
     -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+
+        const botones = document.querySelectorAll('.dia');
+        const label = document.getElementById('contador');
+        let cantDay = 0;
+
+        if (cantDay == 0) {
+            label.textContent = 'Ningun dia seleccionado';
+        }
+
+
+        botones.forEach(boton => {
+            boton.addEventListener('click', function (e) {
+
+                // Si se clickea el checkbox directamente, ignoramos
+                if (e.target.tagName === 'INPUT') return;
+
+                const checkbox = boton.querySelector('.check'); // solo el check de este botón
+                checkbox.checked = !checkbox.checked; // alterna
+
+                // Cambiar color y mostrar nombre del día
+                if (checkbox.checked) {
+                    const dia = boton.textContent;
+                    boton.style.backgroundColor = '#236b15c4';
+                    boton.style.color = '#ffff';
+                    cantDay++;
+
+                    if (cantDay > 1) {
+                        label.textContent = cantDay + ' dias seleccionados';
+                    } else {
+                        label.textContent = cantDay + ' dia seleccionado';
+                    }
+
+                    if (cantDay == 0) {
+                        label.textContent = 'Ningun dia seleccionado';
+                    }
+
+
+                } else {
+                    boton.style.backgroundColor = '';
+                    boton.style.color = 'gray';
+                    cantDay--;
+
+                    if (cantDay > 1) {
+                        label.textContent = cantDay + ' dias seleccionados';
+                    } else {
+                        label.textContent = cantDay + ' dia seleccionado';
+                    }
+
+                    if (cantDay == 0) {
+                        label.textContent = 'Ningun dia seleccionado';
+                    }
+
+                }
+
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
             // Inicializa Select2 solo en el select de instructores
             $('#instructor_id').select2({
                 placeholder: 'Seleccione o busque un instructor',
@@ -410,12 +509,12 @@
             document.body.style.overflow = 'auto';
         }
 
-        window.onclick = function(event) {
+        window.onclick = function (event) {
             const modal = document.getElementById('programModal');
             if (event.target === modal) closeModal();
         }
 
-        document.addEventListener('keydown', function(event) {
+        document.addEventListener('keydown', function (event) {
             if (event.key === 'Escape') closeModal();
         });
     </script>
