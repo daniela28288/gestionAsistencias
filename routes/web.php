@@ -132,7 +132,7 @@ Route::get('programming/admin', [ProgrammingAuthController::class, 'dashboard'])
 Route::post('programming/admin', [ProgramanController::class, 'register_programan'])
     ->middleware('can:programing.programan_store_add')->name('programing.programan_store_add');
 
-Route::get('programming/admin/competencies_programan_index', [ProgrammingAuthController::class, 'programan_i ndex'])
+Route::get('programming/admin/competencies_programan_index', [ProgrammingAuthController::class, 'programan_index'])
     ->middleware('can:programing.competencies_programan_index')->name('programing.competencies_program_index');
 
 
