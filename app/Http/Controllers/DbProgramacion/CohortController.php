@@ -31,7 +31,6 @@ class CohortController extends Controller
         $towns = Town::all();
         $classroom = Classroom::all();
         $cohortimes = CohorTime::all();
-
         // Consulta base con las relaciones necesarias
         $cohorts = Cohort::with(['program', 'cohortime', 'town'])
             ->when($ficha_busqueda, function ($query, $ficha_busqueda) {

@@ -3,13 +3,16 @@
 namespace App\Http\Controllers\DbProgramacion;
 
 use App\Http\Controllers\Controller;
+use App\Models\DbProgramacion\Block;
 use App\Models\DbProgramacion\Classroom;
 use App\Models\DbProgramacion\Cohort;
+use App\Models\DbProgramacion\CohorTime;
 use App\Models\DbProgramacion\Instructor;
 use App\Models\DbProgramacion\Person;
 use App\Models\DbProgramacion\Program;
 use App\Models\DbProgramacion\Program_Level;
 use App\Models\DbProgramacion\Programming;
+use App\Models\DbProgramacion\Town;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -80,7 +83,21 @@ class AuthController extends Controller
     {
         $programs = Program::with(['instructor.person'])->get();
         $programan_level = Program_Level::all();
+        // Traer instructores con la relación 'person'
         $instructors = Instructor::with('person')->get();
+
+        // JORNADAS
+        $cohortimes = CohorTime::all();
+
+        // NIVEL DEL PROGRAMA
+        $level_program = Program_Level::all();
+
+        // MUNICIPIOS
+        $towns = Town::all();
+
+        // AMBIENTES
+        $ambientes = Classroom::with(['towns', 'Block'])->get();
+
 
         $cohorts = Cohort::with(['program', 'competences'])
             ->where('end_date', '>', \Carbon\Carbon::today())
@@ -90,7 +107,11 @@ class AuthController extends Controller
             'programs',
             'instructors',
             'programan_level',
-            'cohorts'  // Agregado aquí
+            'cohorts',
+            'cohortimes',
+            'level_program',
+            'towns',
+            'ambientes'
         ));
     }
 

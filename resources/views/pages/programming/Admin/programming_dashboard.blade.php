@@ -15,17 +15,19 @@
     <div class="content">
         <div class="container">
 
-            <div class="container">
-                <div class="titulo">
-                    <img src="{{ asset('icons/icon-title-book.png') }}" alt="">
-                    <h3>Datos del programa</h3>
+            <div class="container recuadro">
+                <div class="container-titulos">
+                    <div class="titulo">
+                        <img src="{{ asset('icons/icon-title-book.png') }}" alt="">
+                        <h3>Datos del programa</h3>
+                    </div>
                 </div>
 
                 <div class="row">
 
                     <div class="campo">
                         <label for="ficha">Ficha y Programa</label>
-                        <select id="ficha" name="id_program" required class="large-input">
+                        <select id="ficha" name="id_program" required class="large-input select2-custom">
                             <option value="" disabled selected>Seleccione</option>
                             @foreach ($cohorts as $ficha)
                                 <option value="{{ $ficha->id }}">
@@ -54,32 +56,47 @@
                 <div class="row">
                     <div class="campo">
                         <label for="">Instructor</label>
-                        <select id="" name="" required class="medium-input">
-                            <option value="">Buscar instructor</option>
-                            <option value=""></option>
+                        <select id="instructores" name="instructor_id" required class="medium-input">
+                            <option value="" disabled selected>Seleccione un instructor</option>
+                            @foreach ($instructors as $instructor)
+                                <option value="{{ $instructor->id }}"> {{ $instructor->person->name }}</option>
+                            @endforeach
                         </select>
                     </div>
 
                     <div class="campo">
                         <label for="">Nivel</label>
-                        <select name="" id="" class="select-nivel">
-                            <option value="">Tecnologo</option>
-                            <option value="">Tecnico</option>
+                        <select name="level_id" class="select-nivel" required>
+                            <option value="" disabled selected>Nivel del programa</option>
+                            @foreach ($level_program as $level)
+                                <option value="{{ $level->id }}">
+                                    {{ $level->name }}
+                                </option>
+                            @endforeach
                         </select>
                     </div>
 
                     <div class="campo">
                         <label for="ficha">Municipio</label>
-                        <select name="" id="" class="municipio">
-                            <option value="">Seleccione el municipio</option>
-                            <option value=""></option>
+                        <select id="towns" name="municipio_id" class="municipio" required>
+                            <option value="" disabled selected>Seleccione un municipio</option>
+                            @foreach ($towns as $town)
+                                <option value="{{ $town->id }}">
+                                    {{ $town->name }}
+                                </option>
+                            @endforeach
                         </select>
                     </div>
 
                     <div class="campo">
-                        <label for="ficha">Jornada</label>
-                        <select name="" id="" class="jornada">
-                            <option value="">Diurna</option>
+                        <label>Jornada</label>
+                        <select name="jornada_id" class="jornada" required>
+                            <option value="" disabled selected>Seleccione jornada</option>
+                            @foreach ($cohortimes as $tms)
+                                <option value="{{ $tms->id }}" @if (old('id_time') == $tms->id) selected @endif>
+                                    {{ $tms->name }}
+                                </option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
@@ -111,17 +128,12 @@
 
             <br>
 
-            <div class="container">
+            <div class="container recuadro">
 
                 <div class="container-titulos">
                     <div class="titulo">
                         <img src="{{ asset('icons/hora.png') }}" alt="">
                         <h3>Horario</h3>
-                    </div>
-
-                    <div class="titulo">
-                        <img src="{{ asset('icons/hora.png') }}" alt="">
-                        <h3>Fechas</h3>
                     </div>
                 </div>
 
@@ -174,8 +186,13 @@
                     <div class="contenedor-gris filas">
                         <div class="campo">
                             <label for="ficha">Ambiente</label>
-                            <select name="" id="" class="ambiente">
-                                <option value="">Buscar ambiente</option>
+                            <select id="classRoom" name="ambiente_id" class="ambiente" required>
+                                <option value="" disabled selected>Seleccione un Ambiente</option>
+                                @foreach ($ambientes as $ambiente)
+                                    <option value="{{ $ambiente->id }}">
+                                        {{ $ambiente->Block->name}} - {{ $ambiente->name }} - {{ $ambiente->towns->name }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
 
@@ -309,10 +326,10 @@
                                 <td>{{ $program->program_version }}</td>
 
                                 <!--
-                                                                                                                                                                                                                                                                                    Nivel del programa con badge de color
-                                                                                                                                                                                                                                                                                    - id_level 1 = Técnico (verde)
-                                                                                                                                                                                                                                                                                    - id_level 2 = Tecnólogo (azul)
-                                                                                                                                                                                                                                                                                -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    Nivel del programa con badge de color
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    - id_level 1 = Técnico (verde)
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    - id_level 2 = Tecnólogo (azul)
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                -->
                                 <td>
                                     <span
                                         class="badge {{ $program->id_level == 1 ? 'badge-technical' : 'badge-technologist' }}">
@@ -343,83 +360,6 @@
                 </table>
             </div>
 
-            <!-- MODAL DE REGISTRO DE PROGRAMA
-                Ventana emergente para crear un nuevo programa
-                Inicialmente oculto, se muestra con openModal()
-            -->
-            <div id="programModal" class="modal-overlay">
-                <div class="modal-content">
-
-                    <!-- Botón para cerrar el modal (X) -->
-                    <button class="close-btn" onclick="closeModal()">&times;</button>
-                    <h2>Registrar Nuevo Programa</h2>
-
-
-                    <!--
-                        FORMULARIO DE REGISTRO
-                        Envía datos al controlador para crear un nuevo programa
-                    -->
-                    <form method="POST" action="{{ route('programing.programan_store_add') }}" class="program-form">
-                        @csrf
-
-                        <!-- CAMPO 1: Nombre del Programa - Campo de texto requerido -->
-                        <div class="form-group">
-                            <label for="name">Nombre del Programa</label>
-                            <input type="text" name="name" id="name" required
-                                placeholder="Ingrese el nombre del programa">
-                        </div>
-
-                        <!-- CAMPO 2: Código del Programa - Identificador único del programa (ej: PROG-001) -->
-                        <div class="form-group">
-                            <label for="program_code">Código del Programa</label>
-                            <input type="text" name="program_code" id="program_code" required placeholder="Ej: 001209">
-                        </div>
-
-                        <!-- CAMPO 3: Versión del Programa - Número de versión (ej: 1.0, 2.0) -->
-                        <div class="form-group">
-                            <label for="program_version">Versión del Programa</label>
-                            <input type="text" name="program_version" id="program_version" required placeholder="Ej: 1">
-                        </div>
-
-                        <!-- CAMPO 4: Nivel del Programa
-                            Select con opciones de nivel (Técnico/Tecnólogo)
-                            Datos dinámicos desde $programan_level -->
-                        <div class="form-group">
-                            <label for="id_level">Nivel del Programa</label>
-                            <select name="id_level" id="id_level" required>
-                                <option value="">Seleccione el nivel</option>
-                                @foreach ($programan_level as $level)
-                                    <option value="{{ $level->id }}">{{ $level->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <!-- CAMPO 5: Instructor Responsable
-                            Select con lista de instructores disponibles
-                            Datos dinámicos desde $instructors
-                            Muestra el nombre mediante relación instructor->person->name -->
-                        <div class="form-group">
-                            <label for="instructor_id">Instructor Responsable</label>
-                            <select name="instructor_id" id="instructor_id" required>
-                                <option value="">Seleccione el instructor</option>
-                                @foreach ($instructors as $instru)
-                                    <option value="{{ $instru->id }}">{{ $instru->person->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <!--  BOTONES DE ACCIÓN DEL FORMULARIO
-                            - Cancelar: cierra el modal sin guardar
-                            - Registrar: envía el formulario
-                        -->
-                        <div class="form-actions">
-                            <button type="button" class="btn-submit" style="background-color: #6c757d;"
-                                onclick="closeModal()">Cancelar</button>
-                            <button type="submit" class="btn-submit">Registrar Programa</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
         </div>
     </div>
     </div>
@@ -489,7 +429,25 @@
         document.addEventListener('DOMContentLoaded', function () {
             // Inicializa Select2 solo en el select de ficha y programas
             $('#ficha').select2({
-                placeholder: 'Seleccione un programa',
+                placeholder: 'Seleccione o busque un programa',
+                allowClear: true,
+                width: 'resolve'
+            });
+
+            $('#instructores').select2({
+                placeholder: 'Seleccione o busque un instructor',
+                allowClear: true,
+                width: 'resolve'
+            });
+
+            $('#towns').select2({
+                placeholder: "Seleccione o busque un municipio",
+                allowClear: true,
+                with: 'resolve'
+            });
+
+            $('#classRoom').select2({
+                placeholder: 'Seleccione o busque un ambiente',
                 allowClear: true,
                 width: 'resolve'
             });

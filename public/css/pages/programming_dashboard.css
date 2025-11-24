@@ -40,6 +40,11 @@ body {
     background-color: #fff;
     border-radius: 12px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+
+}
+
+.recuadro {
+    border: 2px solid #5a758681;
 }
 
 .container-titulos {
@@ -119,15 +124,15 @@ input:focus {
 }
 
 .select-nivel {
-    width: 150px;
+    width: 190px;
 }
 
 .municipio {
-    width: 250px;
+    width: 300px;
 }
 
 .jornada {
-    width: 160px;
+    width: 200px;
 }
 
 select {
@@ -156,7 +161,7 @@ select {
 }
 
 .ambiente {
-    width: 200px;
+    width: 250px;
 }
 
 .week {
@@ -508,6 +513,7 @@ table tr:last-child td {
     opacity: 0.5;
 }
 
+/* FICHAS Y PROGRAMAS */
 
 /* Estilo para que Select2 luzca igual que los selects normales */
 #ficha+.select2-container--default .select2-selection--single {
@@ -523,16 +529,99 @@ table tr:last-child td {
     display: flex;
     align-items: center;
     transition: border-color 0.2s, box-shadow 0.2s;
+
 }
 
-/* Ajustar la flecha para que se parezca a la tuya */
 #ficha+.select2-container--default .select2-selection__arrow {
-    height: 100%;
-    right: 15px;
+    display: none !important;
+}
+
+.select2-container--default .select2-selection--single {
+    background: url('../../icons/flecha-select.png') no-repeat;
+    background-position: right 10px center;
+    background-size: 15px;
 }
 
 /* Quitar el borde azul que agrega Select2 al hacer focus, para que sea igual que los otros inputs */
 #ficha+.select2-container--default.select2-container--focus .select2-selection--single {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.1);
+}
+
+/* INSTRUCTORES */
+#instructores+.select2-container--default .select2-selection--single {
+    background-color: #F8FAFC;
+    border: 2px solid #E5EAF0;
+    border-radius: 8px;
+    height: 42px;
+    padding: 10px 15px;
+    font-size: 15px;
+    color: #a1a1a1;
+    cursor: pointer;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#instructores+.select2-container--default .select2-selection__arrow {
+    display: none !important;
+}
+
+#instructores+.select2-container--default.select2-container--focus .select2-selection--single {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.1);
+}
+
+/* MUNICIPIOS */
+#towns+.select2-container--default .select2-selection--single {
+    background-color: #F8FAFC;
+    border: 2px solid #E5EAF0;
+    border-radius: 8px;
+    height: 42px;
+    padding: 10px 15px;
+    font-size: 15px;
+    color: #a1a1a1;
+    cursor: pointer;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#towns+.select2-container--default .select2-selection__arrow {
+    display: none !important;
+}
+
+
+#towns+.select2-container--default.select2-container--focus .select2-selection--single {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.1);
+}
+
+/* AMBIENTES */
+
+#classRoom+.select2-container--default .select2-selection--single {
+    background-color: #F8FAFC;
+    border: 2px solid #E5EAF0;
+    border-radius: 8px;
+    height: 42px;
+    padding: 10px 15px;
+    font-size: 15px;
+    color: #a1a1a1;
+    cursor: pointer;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#classRoom+.select2-container--default .select2-selection__arrow {
+    display: none !important;
+}
+
+
+#classRoom+.select2-container--default.select2-container--focus .select2-selection--single {
     outline: none;
     box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.1);
 }
