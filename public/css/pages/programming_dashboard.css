@@ -182,7 +182,7 @@ select {
     padding: 15px 20px;
 }
 
-.dia:hover{
+.dia:hover {
     background-color: #2c8a19a1;
     color: white;
 }
@@ -198,7 +198,7 @@ input[type=time] {
     align-items: center;
 }
 
-.centrado{
+.centrado {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -507,6 +507,36 @@ table tr:last-child td {
     margin-bottom: 15px;
     opacity: 0.5;
 }
+
+
+/* Estilo para que Select2 luzca igual que los selects normales */
+#ficha+.select2-container--default .select2-selection--single {
+    background-color: #F8FAFC;
+    border: 2px solid #E5EAF0;
+    border-radius: 8px;
+    height: 42px;
+    padding: 10px 15px;
+    font-size: 15px;
+    color: #a1a1a1;
+    cursor: pointer;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* Ajustar la flecha para que se parezca a la tuya */
+#ficha+.select2-container--default .select2-selection__arrow {
+    height: 100%;
+    right: 15px;
+}
+
+/* Quitar el borde azul que agrega Select2 al hacer focus, para que sea igual que los otros inputs */
+#ficha+.select2-container--default.select2-container--focus .select2-selection--single {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.1);
+}
+
 
 /* Adaptabilidad (Responsive Design) */
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\DbProgramacion;
 
 use App\Http\Controllers\Controller;
 use App\Models\DbProgramacion\Classroom;
+use App\Models\DbProgramacion\Cohort;
 use App\Models\DbProgramacion\Instructor;
 use App\Models\DbProgramacion\Person;
 use App\Models\DbProgramacion\Program;
@@ -80,6 +81,17 @@ class AuthController extends Controller
         $programs = Program::with(['instructor.person'])->get();
         $programan_level = Program_Level::all();
         $instructors = Instructor::with('person')->get();
-        return view('pages.programming.Admin.programming_dashboard', compact('programs', 'instructors', 'programan_level'));
+
+        $cohorts = Cohort::with(['program', 'competences'])
+            ->where('end_date', '>', \Carbon\Carbon::today())
+            ->get();
+
+        return view('pages.programming.Admin.programming_dashboard', compact(
+            'programs',
+            'instructors',
+            'programan_level',
+            'cohorts'  // Agregado aquí
+        ));
     }
+
 }

@@ -25,9 +25,13 @@
 
                     <div class="campo">
                         <label for="ficha">Ficha y Programa</label>
-                        <select id="ficha" name="ficha_id" required class="large-input">
-                            <option value="">Seleccione</option>
-                            <option value=""></option>
+                        <select id="ficha" name="id_program" required class="large-input">
+                            <option value="" disabled selected>Seleccione</option>
+                            @foreach ($cohorts as $ficha)
+                                <option value="{{ $ficha->id }}">
+                                    {{ $ficha->number_cohort }} - {{ $ficha->program->name }}
+                                </option>
+                            @endforeach
                         </select>
                     </div>
 
@@ -305,10 +309,10 @@
                                 <td>{{ $program->program_version }}</td>
 
                                 <!--
-                                                                                                                                    Nivel del programa con badge de color
-                                                                                                                                    - id_level 1 = Técnico (verde)
-                                                                                                                                    - id_level 2 = Tecnólogo (azul)
-                                                                                                                                -->
+                                                                                                                                                                                                                                                                                    Nivel del programa con badge de color
+                                                                                                                                                                                                                                                                                    - id_level 1 = Técnico (verde)
+                                                                                                                                                                                                                                                                                    - id_level 2 = Tecnólogo (azul)
+                                                                                                                                                                                                                                                                                -->
                                 <td>
                                     <span
                                         class="badge {{ $program->id_level == 1 ? 'badge-technical' : 'badge-technologist' }}">
@@ -483,12 +487,11 @@
         });
 
         document.addEventListener('DOMContentLoaded', function () {
-            // Inicializa Select2 solo en el select de instructores
-            $('#instructor_id').select2({
-                placeholder: 'Seleccione o busque un instructor',
+            // Inicializa Select2 solo en el select de ficha y programas
+            $('#ficha').select2({
+                placeholder: 'Seleccione un programa',
                 allowClear: true,
-                width: '100%',
-                dropdownParent: $('#programModal') // asegura que se muestre bien dentro del modal
+                width: 'resolve'
             });
         });
 
