@@ -104,6 +104,10 @@ select {
     /* Tamaño de la flecha */
 }
 
+input{
+    color: #a1a1a1;
+}
+
 select:focus,
 input:focus {
     outline: none;
@@ -153,10 +157,15 @@ select {
     display: flex;
     align-items: center;
     gap: 10px;
+    width: auto;
 }
 
 .ambiente {
     width: 200px;
+}
+
+.programa{
+    width: 290px;
 }
 
 .week {
@@ -183,7 +192,7 @@ select {
 }
 
 .dia:hover{
-    background-color: #2c8a19a1;
+    background-color: #42b12ca1;
     color: white;
 }
 
@@ -198,7 +207,7 @@ input[type=time] {
     align-items: center;
 }
 
-.centrado{
+.botones{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -209,7 +218,7 @@ input[type=time] {
     background-color: #A0BAD3;
     padding: 13px 25px;
     border-radius: 10px;
-    width: auto;
+    width: 150px;
     margin-top: 15px;
     cursor: pointer;
 }
@@ -219,6 +228,10 @@ input[type=time] {
     font-weight: 600;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 15px;
+}
+
+.result:hover{
+    background-color: #7794af;
 }
 
 /* Botones */
