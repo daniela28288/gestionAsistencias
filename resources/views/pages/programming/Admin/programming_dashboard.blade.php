@@ -330,10 +330,10 @@
                                 <td>{{ $program->program_version }}</td>
 
                                 <!--
-                                                                                                                                Nivel del programa con badge de color
-                                                                                                                                - id_level 1 = Técnico (verde)
-                                                                                                                                - id_level 2 = Tecnólogo (azul)
-                                                                                                                            -->
+                                                                                                                                    Nivel del programa con badge de color
+                                                                                                                                    - id_level 1 = Técnico (verde)
+                                                                                                                                    - id_level 2 = Tecnólogo (azul)
+                                                                                                                                -->
                                 <td>
                                     <span
                                         class="badge {{ $program->id_level == 1 ? 'badge-technical' : 'badge-technologist' }}">
