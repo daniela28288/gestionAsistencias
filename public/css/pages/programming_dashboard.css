@@ -57,7 +57,8 @@ body {
     display: flex;
     justify-content: space-between;
     padding: 10px;
-    background: linear-gradient(to right, #527b96, #12354dc2);
+    /* background: linear-gradient(to right, #527b96, #12354dc2); */
+    background-color: #39a900;
     border-radius: 10px 10px 0px 0px;
     
 }
@@ -179,7 +180,7 @@ select {
 }
 
 .ambiente {
-    width: 200px;
+    width: 350px;
 }
 
 .programa {
@@ -242,13 +243,13 @@ input[type=time] {
     background-color: #12354d;
     padding: 13px 25px;
     border-radius: 10px;
-    width: 150px;
+    width: 120px;
     cursor: pointer;
 }
 
 .result p {
     color: white;
-    font-weight: 600;
+    font-weight: 400;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 15px;
 }
