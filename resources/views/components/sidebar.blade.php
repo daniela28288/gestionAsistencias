@@ -39,7 +39,7 @@
                     </div>
                     <div class="icon">
                         <img src="{{asset('icons/flecha-abajo.png')}}" alt="" class="icon-sidebar">
-                        <img src="../icons/flecharriba.png" alt="" class="hidden" style="display: none;">
+                        <!-- <img src="../icons/flecharriba.png" alt="" class="hidden" style="display: none;"> -->
                     </div>
                 </a>
                 <ul
