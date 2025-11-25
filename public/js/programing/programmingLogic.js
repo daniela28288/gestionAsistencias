@@ -21,10 +21,14 @@ $(document).ready(function () {
             const checkbox = boton.querySelector('.check');
             checkbox.checked = !checkbox.checked;
 
-            boton.style.backgroundColor = checkbox.checked ? '#236b15c4' : '';
-            boton.style.color = checkbox.checked ? '#fff' : 'gray';
+            if (checkbox.checked) {
+                boton.classList.add('selected');
+                cantDay++;
+            } else {
+                boton.classList.remove('selected');
+                cantDay--;
+            }
 
-            cantDay += checkbox.checked ? 1 : -1;
             label.textContent =
                 cantDay === 0
                     ? 'Ningún día seleccionado'
