@@ -16,19 +16,17 @@
     <div class="content">
         <div class="container">
 
-            <!-- ===========================
-                 DATOS DEL PROGRAMA
-            ============================ -->
             <div class="container recuadro">
-
                 <div class="container-titulos">
                     <div class="titulo">
-                        <img src="{{ asset('icons/icon-title-book.png') }}" alt="">
-                        <h3>Datos del programa</h3>
+                        <!-- <img src="{{ asset('icons/icon-title-book.png') }}" alt=""> -->
+                        <h3>🗂️ Datos del programa</h3>
                     </div>
                 </div>
 
-                <div class="row">
+                <form action="">
+                    <div class="contenedor-padding">
+                        <div class="row">
 
                     <!-- Ficha -->
                     <div class="campo">
@@ -111,7 +109,7 @@
 
                 </div>
 
-                <div class="row">
+                        <div class="row">
 
                     <div class="campo">
                         <label>Fecha inicio</label>
@@ -134,7 +132,8 @@
                         <input type="text" placeholder="Ingrese lugar">
                     </div>
 
-                </div>
+                        </div>
+                    </div>
             </div>
 
             <br>
@@ -146,26 +145,56 @@
 
                 <div class="container-titulos">
                     <div class="titulo">
-                        <img src="{{ asset('icons/hora.png') }}" alt="">
-                        <h3>Horario</h3>
+                        <!-- <img src="{{ asset('icons/hora.png') }}" alt=""> -->
+                        <h3>📅 Horario y fechas</h3>
                     </div>
                 </div>
 
-                <div class="contenedor-gris">
-                    <div class="labels">
-                        <label>Días de la semana</label>
-                        <label id="contador"></label>
-                    </div>
+                <div class="contenedor-padding">
+                    <div class="contenedor-gris">
+                        <div class="labels">
+                            <label for="">Días de la semana</label>
+                            <label for="" id="contador"></label>
+                        </div>
 
-                    <div class="week">
-                        @foreach (['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'] as $dia)
+                        <div class="week">
                             <button class="dia">
-                                <input type="checkbox" class="check" style="display:none;">
-                                {{ $dia }}
+                                <input type="checkbox" name="" class="check" style="display: none;">
+                                Lunes
+
                             </button>
-                        @endforeach
+                            <button class="dia" type="button">
+                                <input type="checkbox" name="" class="check" style="display: none;">
+                                Martes
+
+                            </button>
+                            <button class="dia" type="button">
+                                <input type="checkbox" name="" class="check" style="display: none;">
+                                Miercoles
+
+                            </button>
+                            <button class="dia" type="button">
+                                <input type="checkbox" name="" class="check" style="display: none;">
+                                Jueves
+
+                            </button>
+                            <button class="dia" type="button">
+                                <input type="checkbox" name="" class="check" style="display: none;">
+                                Viernes
+
+                            </button>
+                            <button class="dia" type="button">
+                                <input type="checkbox" name="" class="check" style="display: none;">
+                                Sábado
+
+                            </button>
+                            <button class="dia" type="button">
+                                <input type="checkbox" name="" class="check" style="display: none;">
+                                Domingo
+
+                            </button>
+                        </div>
                     </div>
-                </div>
 
                 <div class="contenedor-separado">
 
@@ -202,24 +231,29 @@
                             <input type="text" disabled>
                         </div>
 
-                    </div>
+                        </div>
 
-                    <div class="contenedor-gris filas centrado">
-                        <button class="result">
-                            <p>Actualizar</p>
-                        </button>
-                        <button class="result">
-                            <p>Eliminar</p>
-                        </button>
-                        <button class="result">
-                            <p>Asignar ficha</p>
-                        </button>
-                        <button class="result">
-                            <p>Guardar programación</p>
-                        </button>
+                        <div class="contenedor-gris filas botones">
+
+                            <button class="result">
+                                <p>Actualizar</p>
+                            </button>
+
+                            <button class="result">
+                                <p>Eliminar</p>
+                            </button>
+
+                            <button class="result">
+                                <p>Asignar ficha</p>
+                            </button>
+
+                            <button class="result">
+                                <p>Guardar</p>
+                            </button>
+                        </div>
                     </div>
                 </div>
-
+                </form>
             </div>
 
             <!-- ===========================
@@ -247,6 +281,33 @@
                     </ul>
                 </div>
             @endif
+
+            <br>
+            <div class="container">
+                <div class="row">
+                    <div class="campo">
+                        <label for="">Buscar programa</label>
+                        <select name="" id="" class="programa">
+                            <option value="">Seleccione o busque un programa</option>
+                        </select>
+                    </div>
+
+                    <div class="campo">
+                        <label for="">Filtrar por estado</label>
+                        <select name="" id="" class="programa">
+                            <option value="">Todos los estados</option>
+                        </select>
+                    </div>
+
+
+                    <div class="campo">
+                        <label for="">Filtrar por número de ficha</label>
+                        <select name="" id="" class="programa">
+                            <option value="">Número de ficha</option>
+                        </select>
+                    </div>
+                </div>
+
 
             <!-- ===========================
                  TABLA DE PROGRAMAS
@@ -285,9 +346,10 @@
                                     <p>No hay programas registrados</p>
                                 </td>
                             </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
         </div>
