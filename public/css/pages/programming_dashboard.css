@@ -52,6 +52,12 @@ body {
     border-top: none;
     border-radius: 0px 0px 10px 10px;
     height: 250px;
+    
+}
+
+.tabla{
+    overflow-y: auto;
+    height: 720px;
 }
 
 .horario{
@@ -67,9 +73,13 @@ body {
     justify-content: space-between;
     padding: 10px;
     /* background: linear-gradient(to right, #527b96, #12354dc2); */
-    background-color: #58ab2e;
+    background-color: #306291;
     border-radius: 10px 10px 0px 0px;
 
+}
+
+.green{
+    background-color: #58ab2e;
 }
 
 .titulo {
@@ -147,19 +157,16 @@ input:focus {
 }
 
 .medium-input {
-    width: 500px;
-}
-
-.select-nivel {
-    width: 190px;
-}
-
-.municipio {
     width: 300px;
 }
 
-.jornada {
-    width: 11vw;
+.medium-large-input{
+    width: 440px;
+}
+
+
+.short-input {
+    width: 230px;
 }
 
 .ficha{
@@ -220,7 +227,7 @@ select {
 }
 
 .dia {
-    --hover: rgb(25, 160, 25);
+    --hover: #306291;
     /* color del efecto al hacer hover */
 
     border-radius: 10px;
@@ -229,12 +236,13 @@ select {
     align-items: center;
     width: 100%;
     background-color: #ffffff;
-    border: 1px solid rgb(182, 181, 181);
+    border: 2px solid rgb(182, 181, 181);
     color: gray;
     cursor: pointer;
     font-size: 15px;
     padding: 15px 20px;
     transition: 0.25s;
+    font-weight: 600;
 }
 
 /* Estado HOVER */
@@ -274,11 +282,10 @@ input[type=time] {
 
 .result {
     display: flex;
-    justify-content: center;
     align-items: center;
-    gap: 5px;
+    gap: 10px;
     border: none;
-    background-color: #12354d;
+    background-color: #306291;
     padding: 5px 10px;
     border-radius: 10px;
     cursor: pointer;
@@ -293,7 +300,7 @@ input[type=time] {
 }
 
 .result img {
-    width: 20px;
+    width: 25px;
 }
 
 .result p {
@@ -304,8 +311,22 @@ input[type=time] {
 }
 
 .result:hover {
-    background-color: #7794af;
+    background-color: #828282c2;
 }
+
+/* .actualizar{
+    background-color: #828282c2;
+}
+.eliminar{
+    background-color: rgb(199, 197, 197);
+}
+.asignar{
+    background-color: rgb(104, 104, 108);
+}
+
+.guardar{
+    background-color: rgb(77, 79, 77);
+} */
 
 /* Botones */
 .btn-primary {
@@ -336,11 +357,10 @@ input[type=time] {
 
 /* Contenedor de tabla */
 .table-container {
-    max-height: 520px;
+    max-height: 720px !important;
     overflow-y: auto;
     border-radius: 10px;
     border: 1px solid #dee2e6;
-    /* margin-top: 20px; */
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
@@ -372,6 +392,10 @@ thead th {
 tbody td {
     padding: 12px 30px;
     border-bottom: 1px solid #e2e8f0;
+}
+
+tbody tr{
+    cursor: pointer;
 }
 
 /* Efecto hover para filas */
@@ -643,6 +667,7 @@ table tr:last-child td {
     display: flex;
     align-items: center;
     transition: border-color 0.2s, box-shadow 0.2s;
+    width: 100%;
 }
 
 #instructores+.select2-container--default .select2-selection__arrow {
@@ -786,7 +811,7 @@ table tr:last-child td {
     /* Ajustar tabla */
     .table-container {
         overflow-x: auto;
-        max-height: 400px;
+        max-height: 720px;
     }
 
     table {

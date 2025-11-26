@@ -42,21 +42,67 @@
                             </div>
 
                             <!-- Código programa -->
-                            <div class="campo">
+                            <div class="campo ">
                                 <label>Código Programa</label>
-                                <input type="text" placeholder="Ej: 234567">
+                                <input type="text" placeholder="Ej: 234567" class="short-input">
                             </div>
 
                             <!-- Matrícula -->
                             <div class="campo">
                                 <label>Matricula</label>
-                                <input type="text" placeholder="24" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                                <input type="text" placeholder="24" oninput="this.value=this.value.replace(/[^0-9]/g,'')" class="short-input">
                             </div>
 
                             <!-- Versión -->
                             <div class="campo">
                                 <label>Versión</label>
-                                <input type="text" placeholder="1" oninput="this.value = this.value.replace(/[^0-9]/g,'')">
+                                <input type="text" placeholder="1" oninput="this.value = this.value.replace(/[^0-9]/g,'')" class="short-input">
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <!-- Competencia -->
+                            <div class="campo">
+                                <label>Competencia</label>
+                                <select id="competencias" name="competencia_id" required class="large-input">
+                                    <option value="" disabled selected>Seleccione una competencia</option>
+                                    <option value=""></option>
+                                </select>
+                            </div>
+
+                            <!-- Nivel -->
+                            <div class="campo">
+                                <label>Nivel</label>
+                                <select name="level_id" class="select-nivel short-input" required>
+                                    <option value="" disabled selected>Nivel del programa</option>
+                                    @foreach ($level_program as $level)
+                                    <option value="{{ $level->id }}">{{ $level->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <!-- Municipio -->
+                            <div class="campo">
+                                <label>Municipio</label>
+                                <select id="towns" name="municipio_id" class="short-input" required>
+                                    <option value="" disabled selected>Seleccione un municipio</option>
+                                    @foreach ($towns as $town)
+                                    <option value="{{ $town->id }}">{{ $town->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <!-- Jornada -->
+                            <div class="campo">
+                                <label>Jornada</label>
+                                <select name="jornada_id" class="jornada short-input" required>
+                                    <option value="" disabled selected>Seleccione jornada</option>
+                                    @foreach ($cohortimes as $tms)
+                                    <option value="{{ $tms->id }}">{{ $tms->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
 
                         </div>
@@ -74,64 +120,6 @@
                                 </select>
                             </div>
 
-                            <!-- Nivel -->
-                            <div class="campo">
-                                <label>Nivel</label>
-                                <select name="level_id" class="select-nivel" required>
-                                    <option value="" disabled selected>Nivel del programa</option>
-                                    @foreach ($level_program as $level)
-                                    <option value="{{ $level->id }}">{{ $level->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <!-- Municipio -->
-                            <div class="campo">
-                                <label>Municipio</label>
-                                <select id="towns" name="municipio_id" class="municipio" required>
-                                    <option value="" disabled selected>Seleccione un municipio</option>
-                                    @foreach ($towns as $town)
-                                    <option value="{{ $town->id }}">{{ $town->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <!-- Jornada -->
-                            <div class="campo">
-                                <label>Jornada</label>
-                                <select name="jornada_id" class="jornada" required>
-                                    <option value="" disabled selected>Seleccione jornada</option>
-                                    @foreach ($cohortimes as $tms)
-                                    <option value="{{ $tms->id }}">{{ $tms->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                        </div>
-
-                        <div class="row">
-
-                            <div class="campo">
-                                <label>Fecha inicio</label>
-                                <input type="date">
-                            </div>
-
-                            <div class="campo">
-                                <label>Fecha fin</label>
-                                <input type="date">
-                            </div>
-
-                            <div class="campo">
-                                <label>Número de ficha</label>
-                                <input type="text" placeholder="Ingrese número de ficha"
-                                    oninput="this.value = this.value.replace(/[^0-9]/g, '')">
-                            </div>
-
-                            <div class="campo">
-                                <label>Lugar</label>
-                                <input type="text" placeholder="Ingrese lugar">
-                            </div>
-
                             <div class="campo">
                                 <label>Ambiente</label>
                                 <select id="classRoom" name="ambiente_id" class="ambiente" required>
@@ -142,6 +130,22 @@
                                     </option>
                                     @endforeach
                                 </select>
+                            </div>
+
+                            <div class="campo">
+                                <label>Número de ficha</label>
+                                <input type="text" placeholder="Ingrese número de ficha"
+                                    oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                            </div>
+
+                            <div class="campo">
+                                <label>Fecha inicio</label>
+                                <input type="date">
+                            </div>
+
+                            <div class="campo">
+                                <label>Fecha fin</label>
+                                <input type="date">
                             </div>
 
                         </div>
@@ -156,7 +160,7 @@
             <div class="filas">
                 <div class="recuadro horario">
 
-                    <div class="container-titulos">
+                    <div class="container-titulos green">
                         <div class="titulo">
                             <img src="{{ asset('icons/relojj.png') }}" alt="">
                             <h3>Horario y fechas</h3>
@@ -240,7 +244,7 @@
 
                 <div class="container recuadro acciones">
 
-                    <div class="container-titulos">
+                    <div class="container-titulos green">
                         <div class="titulo">
                             <img src="{{ asset('icons/rapid.png') }}" alt="">
                             <h3>Acciones rápidas</h3>
@@ -250,22 +254,22 @@
                     <div class="contenedor-padding bottom">
                         <div class="botones">
 
-                            <button class="result">
+                            <button class="result actualizar">
                                 <img src="{{ asset('icons/actualizar.png') }}" alt="">
-                                <p>Actualizar</p>
+                                <p>Actualizar selección</p>
                             </button>
 
-                            <button class="result">
+                            <button class="result eliminar">
                                 <img src="{{ asset('icons/eliminar.png') }}" alt="">
-                                <p>Eliminar</p>
+                                <p>Eliminar selección</p>
                             </button>
 
-                            <button class="result">
+                            <button class="result asignar">
                                 <img src="{{ asset('icons/asignar.png') }}" alt="">
                                 <p>Asignar ficha</p>
                             </button>
 
-                            <button class="result">
+                            <button class="result guardar">
                                 <img src="{{ asset('icons/guardar.png') }}" alt="">
                                 <p>Guardar programación</p>
                             </button>
@@ -301,7 +305,14 @@
             @endif
 
             <br>
-            <div class="container">
+            <div class="container-titulos">
+                <div class="titulo">
+                    <img src="{{ asset('icons/datosss.png') }}" alt="">
+                    <h3>Datos generales</h3>
+                </div>
+            </div>
+
+            <div class="contenedor-padding tabla">
                 <div class="row">
                     <div class="campo">
                         <label for="">Buscar programa</label>
@@ -325,6 +336,7 @@
                 </div>
 
 
+
                 <!-- ===========================
                  TABLA DE PROGRAMAS
             ============================ -->
@@ -332,10 +344,17 @@
                     <table>
                         <thead>
                             <tr>
-                                <th>Código del Programa</th>
+                                <th>Ficha</th>
+                                <th>Código</th>
                                 <th>Nombre del Programa</th>
                                 <th>Versión</th>
+                                <th>Jornada</th>
+                                <th>Municipio</th>
+                                <th>Fecha inicio</th>
+                                <th>Fecha fin</th>
+                                <th>Estado</th>
                                 <th>Nivel</th>
+                                <th>Matriculados</th>
                                 <th>Instructor Responsable</th>
                             </tr>
                         </thead>
@@ -343,9 +362,16 @@
                         <tbody>
                             @forelse($programs as $program)
                             <tr>
+                                <td></td>
                                 <td><strong>{{ $program->program_code }}</strong></td>
                                 <td>{{ $program->name }}</td>
                                 <td>{{ $program->program_version }}</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
 
                                 <td>
                                     <span

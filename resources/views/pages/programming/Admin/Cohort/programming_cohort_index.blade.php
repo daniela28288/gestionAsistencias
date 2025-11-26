@@ -6,7 +6,7 @@
 
     <!-- CSS de Select2 -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    
+
     <!-- JS de jQuery y Select2 -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
@@ -27,38 +27,38 @@
 
                 <!-- Mensaje de éxito cuando se realiza la acción correctamente -->
                 @if (session('success'))
-                    <div class="alert-success">
-                        <!-- Icono de verificación -->
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round">
-                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                        </svg>
-                        {{ session('success') }}
-                    </div>
+                <div class="alert-success">
+                    <!-- Icono de verificación -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                    {{ session('success') }}
+                </div>
                 @endif
 
                 <!-- Mensaje de error cuando hay validaciones fallidas -->
                 @if ($errors->any())
-                    <div class="alert-danger">
-                        <!-- Icono de advertencia -->
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <line x1="12" y1="8" x2="12" y2="12"></line>
-                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                        </svg>
-                        <div>
-                            <strong>Por favor, corrige los siguientes errores:</strong>
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
+                <div class="alert-danger">
+                    <!-- Icono de advertencia -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                    </svg>
+                    <div>
+                        <strong>Por favor, corrige los siguientes errores:</strong>
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
                     </div>
+                </div>
                 @endif
 
                 <!-- Botón para abrir el modal de registro de nueva ficha -->
@@ -105,8 +105,7 @@
                                 step="1"
                                 min="0"
                                 onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-                                autocomplete="off"
-                            >
+                                autocomplete="off">
                         </div>
 
                         <!-- Botones de acción para buscar o restablecer -->
@@ -154,67 +153,67 @@
                         <tbody>
                             <!-- Itera sobre todas las fichas (cohorts) -->
                             @forelse($cohorts as $cohort)
-                                @php
-    $isActive = $cohort->end_date > now();
-    $statusClass = $isActive ? 'status-active' : 'status-inactive';
-    $statusText = $isActive ? 'Activa' : 'Inactiva';
-                                @endphp
+                            @php
+                            $isActive = $cohort->end_date > now();
+                            $statusClass = $isActive ? 'status-active' : 'status-inactive';
+                            $statusText = $isActive ? 'Activa' : 'Inactiva';
+                            @endphp
 
-                                <!-- Fila de la tabla con datos de cada ficha -->
-                                <tr class="ficha-row" data-status="{{ $isActive ? 'active' : 'inactive' }}">
-                                    <td><strong>{{ $cohort->number_cohort }}</strong></td>
-                                    <td>{{ $cohort->program->name ?? 'N/A' }}</td>
-                                    <td>{{ $cohort->cohortime->name ?? 'N/A' }}</td>
-                                    <td>{{ $cohort->town->name ?? 'N/A' }}</td>
-                                    <td>{{ $cohort->start_date }}</td>
-                                    <td>{{ $cohort->end_date }}</td>
-                                    <td>
-                                        <span class="status-badge {{ $statusClass }}">
-                                            {{ $statusText }}
-                                        </span>
-                                    </td>
-                                    <td>{{ $cohort->enrolled_quantity }}</td>
-                                    <td>
+                            <!-- Fila de la tabla con datos de cada ficha -->
+                            <tr class="ficha-row" data-status="{{ $isActive ? 'active' : 'inactive' }}">
+                                <td><strong>{{ $cohort->number_cohort }}</strong></td>
+                                <td>{{ $cohort->program->name ?? 'N/A' }}</td>
+                                <td>{{ $cohort->cohortime->name ?? 'N/A' }}</td>
+                                <td>{{ $cohort->town->name ?? 'N/A' }}</td>
+                                <td>{{ $cohort->start_date }}</td>
+                                <td>{{ $cohort->end_date }}</td>
+                                <td>
+                                    <span class="status-badge {{ $statusClass }}">
+                                        {{ $statusText }}
+                                    </span>
+                                </td>
+                                <td>{{ $cohort->enrolled_quantity }}</td>
+                                <td>
 
-                                        <!-- Botón para administrar la ficha -->
-                                        <a href="{{ route('programing.competencies_index_administrar', $cohort->id) }}"
-                                            class="btn-admin">
-                                            <i class="fas fa-cog"></i> Administrar
-                                        </a>
+                                    <!-- Botón para administrar la ficha -->
+                                    <a href="{{ route('programing.competencies_index_administrar', $cohort->id) }}"
+                                        class="btn-admin">
+                                        <i class="fas fa-cog"></i> Administrar
+                                    </a>
 
-                                        <!-- Botón de eliminar solo visible si la ficha está inactiva -->
-                                        @if (!$isActive)
-                                            <form action="{{ route('programming.cohort.delete', $cohort->id) }}"
-                                                method="POST" class="d-inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn-delete"
-                                                    onclick="return confirm('¿Está seguro de que desea eliminar la ficha {{ $cohort->number_cohort }}? Esta acción no se puede deshacer.')">
-                                                    <i class="fas fa-trash"></i> Eliminar
-                                                </button>
-                                            </form>
-                                        @endif
-                                    </td>
-                                </tr>
+                                    <!-- Botón de eliminar solo visible si la ficha está inactiva -->
+                                    @if (!$isActive)
+                                    <form action="{{ route('programming.cohort.delete', $cohort->id) }}"
+                                        method="POST" class="d-inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn-delete"
+                                            onclick="return confirm('¿Está seguro de que desea eliminar la ficha {{ $cohort->number_cohort }}? Esta acción no se puede deshacer.')">
+                                            <i class="fas fa-trash"></i> Eliminar
+                                        </button>
+                                    </form>
+                                    @endif
+                                </td>
+                            </tr>
 
                             <!-- Mensaje mostrado cuando no hay fichas -->
                             @empty
-                                <tr>
-                                    <td colspan="9">
-                                        <div class="empty-state">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50"
-                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                                <circle cx="12" cy="12" r="10"></circle>
-                                                <line x1="12" y1="8" x2="12" y2="12">
-                                                </line>
-                                                <line x1="12" y1="16" x2="12.01" y2="16">
-                                                </line>
-                                            </svg>
-                                            <p>No hay fichas registradas</p>
-                                        </div>
-                                    </td>
-                                </tr>
+                            <tr>
+                                <td colspan="9">
+                                    <div class="empty-state">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                            <circle cx="12" cy="12" r="10"></circle>
+                                            <line x1="12" y1="8" x2="12" y2="12">
+                                            </line>
+                                            <line x1="12" y1="16" x2="12.01" y2="16">
+                                            </line>
+                                        </svg>
+                                        <p>No hay fichas registradas</p>
+                                    </div>
+                                </td>
+                            </tr>
                             @endforelse
                         </tbody>
                     </table>
@@ -246,10 +245,10 @@
                                     <select name="id_program" required>
                                         <option value="">Seleccione programa</option>
                                         @foreach ($programs as $pro)
-                                            <option value="{{ $pro->id }}"
-                                                @if (old('id_program') == $pro->id) selected @endif>
-                                                {{ $pro->name }}
-                                            </option>
+                                        <option value="{{ $pro->id }}"
+                                            @if (old('id_program')==$pro->id) selected @endif>
+                                            {{ $pro->name }}
+                                        </option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -260,24 +259,24 @@
                                     <select name="id_time" required>
                                         <option value="">Seleccione jornada</option>
                                         @foreach ($cohortimes as $tms)
-                                            <option value="{{ $tms->id }}"
-                                                @if (old('id_time') == $tms->id) selected @endif>
-                                                {{ $tms->name }}
-                                            </option>
+                                        <option value="{{ $tms->id }}"
+                                            @if (old('id_time')==$tms->id) selected @endif>
+                                            {{ $tms->name }}
+                                        </option>
                                         @endforeach
                                     </select>
                                 </div>
 
-                                 <!-- Campo: municipio -->
+                                <!-- Campo: municipio -->
                                 <div class="form-group">
                                     <label>Municipio</label>
                                     <select name="id_town" id="municipio" required>
                                         <option value="">Seleccione municipio</option>
                                         @foreach ($towns as $tn)
-                                            <option value="{{ $tn->id }}"
-                                                @if (old('id_town') == $tn->id) selected @endif>
-                                                {{ $tn->name }}
-                                            </option>
+                                        <option value="{{ $tn->id }}"
+                                            @if (old('id_town')==$tn->id) selected @endif>
+                                            {{ $tn->name }}
+                                        </option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -303,7 +302,7 @@
                                 </div>
                             </div>
 
-                             <!-- Botones del formulario -->
+                            <!-- Botones del formulario -->
                             <div class="form-actions">
                                 <button type="button" class="btn-cancel" onclick="closeModal()">Cancelar</button>
                                 <button type="submit" class="btn-submit">Guardar Ficha</button>
