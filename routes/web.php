@@ -12,6 +12,9 @@ use App\Http\Controllers\DbProgramacion\AuthController as ProgrammingAuthControl
 use App\Http\Controllers\DbProgramacion\CohortController;
 use App\Http\Controllers\DbProgramacion\ProgramanController;
 use App\Models\DbEntrada\User;
+use App\Models\DbProgramacion\Classroom;
+use App\Models\DbProgramacion\Cohort;
+use App\Models\DbProgramacion\Instructor;
 use Illuminate\Support\Facades\Route;
 //Pagina inicial
 Route::get('/', function () {
@@ -292,3 +295,4 @@ Route::delete('programming/admin/classroom_delete/{id}', [ProgramanController::c
 Route::put('programming/admin/classroom_update/{id}', [ProgramanController::class, 'classroom_update'])
     ->middleware('can:programing.ambiente_update')
     ->name('programing.ambiente_update');
+

@@ -81,38 +81,42 @@ class AuthController extends Controller
     // GESTION DE PROGRAMAS DE FORMACION
     public function programan_index()
     {
-        $programs = Program::with(['instructor.person'])->get();
-        $programan_level = Program_Level::all();
-        // Traer instructores con la relación 'person'
-        $instructors = Instructor::with('person')->get();
 
-        // JORNADAS
-        $cohortimes = CohorTime::all();
+        // INSTRUCTORES CON RELACIONES Y CALCULOS DE HORAS
+        $instructors = Instructor::with(['person', 'speciality', 'programming'])->get();
 
-        // NIVEL DEL PROGRAMA
-        $level_program = Program_Level::all();
+        foreach ($instructors as $instructor) {
 
-        // MUNICIPIOS
-        $towns = Town::all();
+            // HORAS PROGRAMADAS CON ESTADOS ACTIVOS
+            $horasProgramadas = $instructor->programming
+                ->whereIn('status', ['pendiente', 'en_ejecucion', 'finalizada_evaluada'])
+                ->sum('hours_duration');
 
-        // AMBIENTES
-        $ambientes = Classroom::with(['towns', 'Block'])->get();
+            // CALCULAR HORAS RESTANTES
+            $instructor->horas_restantes = max(0, $instructor->assigned_hours - $horasProgramadas);
+            $instructor->horas_programadas = $horasProgramadas;
+        }
 
-
-        $cohorts = Cohort::with(['program', 'competences'])
-            ->where('end_date', '>', \Carbon\Carbon::today())
-            ->get();
-
-        return view('pages.programming.Admin.programming_dashboard', compact(
-            'programs',
-            'instructors',
-            'programan_level',
-            'cohorts',
-            'cohortimes',
-            'level_program',
-            'towns',
-            'ambientes'
-        ));
+        // RETORNAR TODOS LOS DATOS USADOS EN EL DASHBOARD
+        return view('pages.programming.Admin.programming_dashboard', [
+            // PROGRAMAS CON SUS RESPECTIVOS INSTRUTORES
+            'programs' => Program::with(['instructor.person'])->get(),
+            // TRAER INSTRUCTORES CON LA RELACION 'PERSON' Y LAS HORAS CALCULADAS
+            'instructors' => $instructors,
+            // NIVELES DEL PROGRAMA
+            'level_program' => Program_Level::all(),
+            // JORNADAS
+            'cohortimes' => CohorTime::all(),
+            // MUNICIPIOS
+            'towns' => Town::all(),
+            // AMBIENTES
+            'ambientes' => Classroom::with(['towns', 'Block'])->get(),
+            // TRAE COHORTES VIGENTES CON SUS
+            'cohorts' => Cohort::with(['program', 'competences'])
+                ->where('end_date', '>', today())
+                ->get(),
+        ]);
     }
+
 
 }

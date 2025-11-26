@@ -520,6 +520,8 @@ class ProgramanController extends Controller
     //         'modo' => 'nuevo'
     //     ]);
     // }
+
+    // METODO PARA REGISTRAR UN PROGRAMA
     public function registerProgramming_index()
     {
         // Obtener todos los instructores con sus horas calculadas

@@ -71,6 +71,24 @@ class PersonSeeder extends Seeder
                 'address' => 'Avenida 7#11-22',
                 'phone_number' => '3037778888',
             ],
+            [
+                'id_position' => $positions['Aprendiz'],
+                'id_town' => $towns['Fonseca'],
+                'document_number' => '1120743357',
+                'name' => 'Andres Camilo Rincones Pontón',
+                'email' => 'andresrincones504@gmail.com',
+                'address' => 'Calle 20A #12-45',
+                'phone_number' => '3154125368',
+            ],
+            [
+                'id_position' => $positions['Aprendiz'],
+                'id_town' => $towns['Fonseca'],
+                'document_number' => '1120743284',
+                'name' => 'Rafa Andres Florez Gonzales',
+                'email' => 'floresrafael447@gmail.com',
+                'address' => 'Calle 14 #20-61',
+                'phone_number' => '3146613993',
+            ],
 
         ];
         // SE EVITA USAR "create()" PARA UN MEJOR RENDIMIENTO Y NO TENER QUE HACER UNA CONSULTA POR CADA REGISTRO
